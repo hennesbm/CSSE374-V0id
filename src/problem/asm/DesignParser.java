@@ -7,8 +7,7 @@ import org.objectweb.asm.Opcodes;
 
 public class DesignParser {
 	public static final String[] CLASSES= {
-		"puzzle.Creator",
-		"problem.ProcessRunner"
+		"headfirst.observer.weather.WeatherData"
 	};
 	/**
 	 * Reads in a list of Java Classes and reverse engineers their design.
@@ -22,10 +21,11 @@ public class DesignParser {
 	public static void main(String[] args) throws IOException {
 		
 		for (String className : CLASSES) {
-			System.out.println("====================");
+//			System.out.println("====================");
 			// ASM's ClassReader does the heavy lifting of parsing the compiled
 			// Java class
-			System.out.println("Analyzing: " + className);
+//			System.out.println("Analyzing: " + className);
+			System.out.println(className + "[");
 			ClassReader reader = new ClassReader(className);
 			
 			// make class declaration visitor to get superclass and interfaces
@@ -42,6 +42,7 @@ public class DesignParser {
 			// Tell the Reader to use our (heavily decorated) ClassVisitor to
 			// visit the class
 			reader.accept(methodVisitor, ClassReader.EXPAND_FRAMES);
+			System.out.println("]");
 		}
 	}
 }

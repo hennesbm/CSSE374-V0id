@@ -17,15 +17,18 @@ public class ClassMethodVisitor extends ClassVisitor {
 	@Override
 	public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
 		MethodVisitor toDecorate = super.visitMethod(access, name, desc, signature, exceptions);
-		System.out.println("--------------------");
+//		System.out.println("--------------------");
 
 		// TODO: delete the line below
-		System.out.println("method " + name);
+//		System.out.println("method " + name);
 		// TODO: create an internal representation of the current method and
 		// pass it to the methods below
 		addAccessLevel(access);
-		addReturnType(desc);
+		System.out.print(name + "(");
 		addArguments(desc);
+		System.out.print(") : ");
+		addReturnType(desc);
+		System.out.print("\\l");
 		// TODO: add the current method to your internal representation of the
 		// current class
 		// What is a good way for the code to remember what the current class
@@ -36,16 +39,16 @@ public class ClassMethodVisitor extends ClassVisitor {
 	void addAccessLevel(int access) {
 		String level = "";
 		if ((access & Opcodes.ACC_PUBLIC) != 0) {
-			level = "public";
+			level = "+";
 		} else if ((access & Opcodes.ACC_PROTECTED) != 0) {
-			level = "protected";
+			level = "-";
 		} else if ((access & Opcodes.ACC_PRIVATE) != 0) {
-			level = "private";
+			level = "#";
 		} else {
-			level = "default";
+			level = "";
 		}
 		// TODO: delete the next line
-		System.out.println("access level: " + level);
+		System.out.print(" " + level + " ");
 		// TODO: ADD this information to your representation of the current
 		// method.
 	}
@@ -53,9 +56,10 @@ public class ClassMethodVisitor extends ClassVisitor {
 	void addReturnType(String desc) {
 		String returnType = Type.getReturnType(desc).getClassName();
 		// TODO: delete the next line
-		System.out.println("return type: " + returnType);
+//		System.out.println("return type: " + returnType);
 		// TODO: ADD this information to your representation of the current
 		// method.
+		System.out.print(returnType);
 	}
 
 	void addArguments(String desc) {
@@ -63,9 +67,10 @@ public class ClassMethodVisitor extends ClassVisitor {
 		for (int i = 0; i < args.length; i++) {
 			String arg = args[i].getClassName();
 			// TODO: delete the next line
-			System.out.println("arg " + i + ": " + arg);
+//			System.out.print("arg " + i + ": " + arg);
 			// TODO: ADD this information to your representation of the current
 			// method.
+			System.out.print(arg + " " );
 		}
 	}
 
