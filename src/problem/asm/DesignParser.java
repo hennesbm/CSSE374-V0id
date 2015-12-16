@@ -7,10 +7,6 @@ import org.objectweb.asm.Opcodes;
 
 public class DesignParser {
 	public static final String[] CLASSES= {
-<<<<<<< Updated upstream
-=======
-		"puzzle.Creator",
->>>>>>> Stashed changes
 		"headfirst.observer.weather.WeatherData"
 	};
 	/**

@@ -8,6 +8,10 @@ public class ClassDeclarationVisitor extends ClassVisitor {
 	public ClassDeclarationVisitor(int api) {
 		super(api);
 	}
+	
+	public ClassDeclarationVisitor(int api, ClassVisitor decorated) {
+		super(api, decorated);
+	}
 
 	@Override
 	public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
@@ -25,7 +29,7 @@ public class ClassDeclarationVisitor extends ClassVisitor {
 		 super.visit(version, access, name, signature, superName,interfaces);
 		 System.out.println("}\"");
 		 System.out.println("];");
-		 System.out.println(namet[namet.length - 1] + " -> " + superNamet[superNamet.length - 1] + " [arrowhead=\"onormal\";");
+		 System.out.println(namet[namet.length - 1] + " -> " + superNamet[superNamet.length - 1] + " [arrowhead=\"onormal\"];");
 		 for (String[] i: interfacest){
 			 String inter = i[i.length - 1];
 			 System.out.println(namet[namet.length - 1] + " -> " + inter + " [arrowhead=\"onormal\", style=\"dashed\"];");
