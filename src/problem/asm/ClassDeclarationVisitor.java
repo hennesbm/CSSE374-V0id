@@ -8,10 +8,6 @@ public class ClassDeclarationVisitor extends ClassVisitor {
 	public ClassDeclarationVisitor(int api) {
 		super(api);
 	}
-	
-	public ClassDeclarationVisitor(int api, ClassVisitor decorated) {
-		super(api, decorated);
-	}
 
 	@Override
 	public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
