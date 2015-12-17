@@ -1,41 +1,54 @@
 package umlMaker.impl;
 
 import umlMaker.api.IField;
+import umlMaker.visitor.api.ITraverser;
+import umlMaker.visitor.api.IVisitor;
 
-public class Field implements IField {
+public class Field implements IField, ITraverser {
+	private int access;
+	private String name;
+	private String description;
+	private String signature;
+	private Object value;
 
-	public Field() {
-		// TODO Auto-generated constructor stub
+	public Field(int access, String name, String desc, String signature, Object value) {
+		this.access = access;
+		this.name = name;
+		this.description = desc;
+		this.signature = signature;
+		this.value = value;
 	}
 
 	@Override
 	public int getAccess() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.access;
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.name;
 	}
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.description;
 	}
 
 	@Override
 	public String getSignature() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.signature;
 	}
 
 	@Override
 	public Object getValue() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.value;
+	}
+
+	@Override
+	public void accept(IVisitor v) {
+		v.preVisit(this);
+		v.visit(this);
+		v.postVisit(this);
 	}
 
 }

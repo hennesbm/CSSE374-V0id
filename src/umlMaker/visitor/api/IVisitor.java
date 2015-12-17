@@ -14,7 +14,7 @@ public interface IVisitor {
 	public void visit(IMethod m);
 	public void postVisit(IMethod m);
 
-	public void preVisit(IDeclaration d);
-	public void visit(IDeclaration d);
-	public void postVisit(IDeclaration d);
+	public void preVisit(IDeclaration c);
+	public void visit(IDeclaration c);
+	public void postVisit(IDeclaration c);
 }

@@ -31,15 +31,15 @@ public abstract class VisitorAdapter implements IVisitor {
 	}
 
 	@Override
-	public void preVisit(IDeclaration d) {
+	public void preVisit(IDeclaration c) {
 	}
 
 	@Override
-	public void visit(IDeclaration d) {
+	public void visit(IDeclaration c) {
 	}
 
 	@Override
-	public void postVisit(IDeclaration d) {
+	public void postVisit(IDeclaration c) {
 	}
 
 }

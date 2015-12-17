@@ -1,6 +1,6 @@
 package umlMaker.api;
 
-public interface IDeclaration extends IComponent {
+public interface IDeclaration {
 	public int getVersion();
 	public int getAccess();
 	public String getName();
