@@ -41,7 +41,7 @@ public class ClassFieldVisitor extends ClassVisitor {
 		System.out.print(name + " : ");
 	}
 
-	void addAccessLevel(int access) {
+	String addAccessLevel(int access) {
 		String level = " ";
 		if ((access & Opcodes.ACC_PUBLIC) != 0) {
 			level = " + ";
@@ -53,9 +53,8 @@ public class ClassFieldVisitor extends ClassVisitor {
 			level = " ";
 			// TODO: Verify default symbol
 		}
-		// TODO: delete the next line
-		System.out.print(level);
 		// TODO: ADD this information to your representation of the current
 		// method.
+		return level;
 	}
 }
