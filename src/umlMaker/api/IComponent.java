@@ -1,5 +1,7 @@
 package umlMaker.api;
 
-public interface IComponent {
+import umlMaker.visitor.api.ITraverser;
 
+public interface IComponent extends ITraverser {
+	public String getType();
 }

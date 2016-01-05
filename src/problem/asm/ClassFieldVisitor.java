@@ -5,25 +5,34 @@ import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
+import umlMaker.api.IField;
+import umlMaker.api.IModel;
+import umlMaker.impl.Field;
+
 public class ClassFieldVisitor extends ClassVisitor {
-	public ClassFieldVisitor(int api) {
+	private IModel _model;
+
+	public ClassFieldVisitor(int api, IModel model) {
 		super(api);
+		this._model = model;
 	}
 
-	public ClassFieldVisitor(int api, ClassVisitor decorated) {
+	public ClassFieldVisitor(int api, ClassVisitor decorated, IModel model) {
 		super(api, decorated);
+		this._model = model;
 	}
 
 	public FieldVisitor visitField(int access, String name, String desc, String signature, Object value) {
 		FieldVisitor toDecorate = super.visitField(access, name, desc, signature, value);
 		String type = Type.getType(desc).getClassName();
 		// TODO: delete the line below
-
+		IField field = new Field(access, name, desc, signature, value);
+		this._model.getCurrentClass().addComponent(field);
 		// System.out.println(" " + type + " " + signature + "-----");
 
-		addAccessLevel(access);
-		addColon(name);
-		addEnter(type);
+//		addAccessLevel(access);
+//		addColon(name);
+//		addEnter(type);
 
 		// TODO: add this field to your internal representation of the current
 		// class.

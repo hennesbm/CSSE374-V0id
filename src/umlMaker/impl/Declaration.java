@@ -16,16 +16,15 @@ public class Declaration implements IDeclaration, ITraverser {
 	private String signature;
 	private String superName;
 	private String[] interfaces;
-	private Collection<IComponent> components;
+	private Collection<IComponent> components = new ArrayList<>();
 
-	public Declaration(int version, int access, String name, String signature, String superName, String[] interfaces, Collection<IComponent> components) {
+	public Declaration(int version, int access, String name, String signature, String superName, String[] interfaces) {
 		this.version = version;
 		this.access = access;
 		this.name = name;
 		this.signature = signature;
 		this.superName = superName;
-		this.interfaces = interfaces;
-		this.components = Collections.unmodifiableCollection(new ArrayList<>(components));
+		this.interfaces = interfaces;;
 	}
 
 	@Override
@@ -56,6 +55,16 @@ public class Declaration implements IDeclaration, ITraverser {
 	@Override
 	public String[] getInterfaces() {
 		return this.interfaces;
+	}
+	
+	@Override
+	public void addComponent(IComponent c) {
+		this.components.add(c);
+	}
+	
+	@Override
+	public Collection<IComponent> getComponents() {
+		return this.components;
 	}
 
 	@Override

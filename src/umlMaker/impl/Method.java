@@ -51,4 +51,9 @@ public class Method implements IMethod, ITraverser {
 		v.postVisit(this);
 	}
 
+	@Override
+	public String getType() {
+		return "Method";
+	}
+
 }

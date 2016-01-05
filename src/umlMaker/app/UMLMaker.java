@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import problem.asm.DesignParser;
 import umlMaker.api.IDeclaration;
 import umlMaker.impl.Declaration;
 import umlMaker.impl.UMLMakerOutputStream;
@@ -13,12 +14,16 @@ import umlMaker.visitor.api.IVisitor;
 public class UMLMaker {
 
 	public static void main(String[] args) throws IOException {
-		IDeclaration class1 = new Declaration(0, 0, null, null, null, args, null);
+		DesignParser parser = new DesignParser();
+		String[] classes = {
+				"headfirst.observer.weather.WeatherData"
+		};
+		parser.main(classes);
 
-		OutputStream xmlOut = new FileOutputStream("input_output/car.xml");
+		OutputStream xmlOut = new FileOutputStream("docs/UML.txt");
 		IVisitor xmlWriter = new UMLMakerOutputStream(xmlOut);
 
-		ITraverser traverser = (ITraverser) class1;
+		ITraverser traverser = (ITraverser) parser.model;
 		traverser.accept(xmlWriter);
 
 		xmlOut.close();

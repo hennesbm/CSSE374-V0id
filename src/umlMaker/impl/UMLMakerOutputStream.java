@@ -37,6 +37,8 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 
 	@Override
 	public void visit(IMethod m) {
+		if(m.getName().equals("<init>"))
+			return;
 		addAccessLevel(m.getAccess());
 		System.out.print(m.getName() + "(");
 		addArguments(m.getDescription());
@@ -51,6 +53,11 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 		System.out.println(namet[namet.length - 1] + "[");
 		System.out.println("shape=\"record\",");
 		System.out.print("label = \"{" + namet[namet.length - 1] + "|");
+	}
+	
+	@Override
+	public void visit(IDeclaration c) {
+		System.out.print("|");
 	}
 
 	@Override
@@ -84,7 +91,7 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 		} else {
 			level = "";
 		}
-		System.out.print(" " + level + " ");
+		System.out.print(level + " ");
 	}
 
 	void addReturnType(String desc) {

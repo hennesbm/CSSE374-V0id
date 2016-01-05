@@ -51,4 +51,9 @@ public class Field implements IField, ITraverser {
 		v.postVisit(this);
 	}
 
+	@Override
+	public String getType() {
+		return "Field";
+	}
+
 }
