@@ -14,16 +14,26 @@ public class UMLMaker {
 	public static void main(String[] args) throws IOException {
 		DesignParser parser = new DesignParser();
 		String[] classes = {
-				"headfirst.observer.weather.CurrentConditionsDisplay",
-				"headfirst.observer.weather.DisplayElement",
-				"headfirst.observer.weather.ForecastDisplay",
-				"headfirst.observer.weather.HeatIndexDisplay",
-				"headfirst.observer.weather.Observer",
-				"headfirst.observer.weather.StatisticsDisplay",
-				"headfirst.observer.weather.Subject",
-				"headfirst.observer.weather.WeatherData",
-				"headfirst.observer.weather.WeatherStation",
-				"headfirst.observer.weather.WeatherStationHeatIndex"
+				"problem.asm.ClassDeclarationVisitor",
+				"problem.asm.ClassFieldVisitor",
+				"problem.asm.ClassMEthodVisitor",
+				"problem.asm.DesignParser",
+				"problem.asm.FirstASM",
+				"umlMaker.api.IComponent",
+				"umlMaker.api.IDeclaration",
+				"umlMaker.api.IField",
+				"umlMaker.api.IMethod",
+				"umlMaker.api.IModel",
+				"umlMaker.app.UMLGenerator",
+				"umlMaker.app.UMLMaker",
+				"umlMaker.impl.Declaration",
+				"umlMaker.impl.Field",
+				"umlMaker.impl.Method",
+				"umlMaker.impl.Model",
+				"umlMaker.impl.UMLMakerOutputStream",
+				"umlMaker.visitor.api.ITraverser",
+				"umlMaker.visitor.api.IVisitor",
+				"umlMaker.visitor.api.VisitorAdapter"
 		};
 		parser.main(classes);
 
@@ -31,7 +41,7 @@ public class UMLMaker {
 		IVisitor xmlWriter = new UMLMakerOutputStream(xmlOut);
 
 		ITraverser traverser = (ITraverser) parser.model;
-		String title = "weather_example";
+		String title = "UMLMaker";
 		xmlOut.write("digraph ".getBytes());
 		xmlOut.write(title.getBytes());
 		xmlOut.write(" { rankdir=BT;".getBytes());
@@ -39,5 +49,7 @@ public class UMLMaker {
 		xmlOut.write("}".getBytes());
 
 		xmlOut.close();
+		UMLGenerator g = new UMLGenerator(title);
+		g.execute();
 	}
 }

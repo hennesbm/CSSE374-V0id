@@ -31,4 +31,5 @@ Instructions:
 1. Replace the CLASSES field in UMLMaker with the list of classes that are wanting to be used in the diagram.
 2. Make sure the project that you are taking the classes from in on the current build path for the UMLMaker project.
 3. Replace "title" with desired UML diagram name for saving purposes.
+	*NOTE: No spaces or special symbols can be in the file name. Use _ for spaces.
 4. Run UMLMaker as a Java Application. The finished UML diagram will be saved as a png under the given name in the docs folder of the UMLMaker project.
