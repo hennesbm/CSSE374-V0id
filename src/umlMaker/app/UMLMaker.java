@@ -24,7 +24,12 @@ public class UMLMaker {
 		IVisitor xmlWriter = new UMLMakerOutputStream(xmlOut);
 
 		ITraverser traverser = (ITraverser) parser.model;
+		String title = "weather_example";
+		xmlOut.write("digraph ".getBytes());
+		xmlOut.write(title.getBytes());
+		xmlOut.write(" {".getBytes());
 		traverser.accept(xmlWriter);
+		xmlOut.write("}".getBytes());
 
 		xmlOut.close();
 	}

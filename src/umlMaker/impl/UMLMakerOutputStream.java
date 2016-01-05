@@ -40,24 +40,24 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 		if(m.getName().equals("<init>"))
 			return;
 		addAccessLevel(m.getAccess());
-		System.out.print(m.getName() + "(");
+		write(m.getName() + "(");
 		addArguments(m.getDescription());
-		System.out.print(") : ");
+		write(") : ");
 		addReturnType(m.getDescription());
-		System.out.print("\\l");
+		write("\\l");
 	}
 
 	@Override
 	public void preVisit(IDeclaration c) {
 		String[] namet = c.getName().split("/");
-		System.out.println(namet[namet.length - 1] + "[");
-		System.out.println("shape=\"record\",");
-		System.out.print("label = \"{" + namet[namet.length - 1] + "|");
+		write(namet[namet.length - 1] + "[");
+		write("shape=\"record\",");
+		write("label = \"{" + namet[namet.length - 1] + "|");
 	}
 	
 	@Override
 	public void visit(IDeclaration c) {
-		System.out.print("|");
+		write("|");
 	}
 
 	@Override
@@ -69,14 +69,13 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 			interfacest.add(i.split("/"));
 		}
 
-		System.out.println("}\"");
-		System.out.println("];");
-		System.out.println(
+		write("}\"");
+		write("];");
+		write(
 				namet[namet.length - 1] + " -> " + superNamet[superNamet.length - 1] + " [arrowhead=\"onormal\"];");
 		for (String[] i : interfacest) {
 			String inter = i[i.length - 1];
-			System.out
-					.println(namet[namet.length - 1] + " -> " + inter + " [arrowhead=\"onormal\", style=\"dashed\"];");
+			write(namet[namet.length - 1] + " -> " + inter + " [arrowhead=\"onormal\", style=\"dashed\"];");
 		}
 	}
 
@@ -91,28 +90,28 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 		} else {
 			level = "";
 		}
-		System.out.print(level + " ");
+		write(level + " ");
 	}
 
 	void addReturnType(String desc) {
 		String returnType = Type.getReturnType(desc).getClassName();
-		System.out.print(returnType);
+		write(returnType);
 	}
 
 	void addArguments(String desc) {
 		Type[] args = Type.getArgumentTypes(desc);
 		for (int i = 0; i < args.length; i++) {
 			String arg = args[i].getClassName();
-			System.out.print(arg + " " );
+			write(arg + " " );
 		}
 	}
 	
 	private void addEnter(String signature) {
-		System.out.print(signature + "\\" + "l");
+		write(signature + "\\" + "l");
 
 	}
 
 	private void addColon(String name) {
-		System.out.print(name + " : ");
+		write(name + " : ");
 	}
 }
