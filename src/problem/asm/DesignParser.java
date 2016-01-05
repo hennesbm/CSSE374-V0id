@@ -25,7 +25,7 @@ public class DesignParser {
 			// ASM's ClassReader does the heavy lifting of parsing the compiled
 			// Java class
 //			System.out.println("Analyzing: " + className);
-			System.out.println(className + "[");
+//			System.out.println(className + "[");
 			ClassReader reader = new ClassReader(className);
 			
 			// make class declaration visitor to get superclass and interfaces
@@ -42,7 +42,7 @@ public class DesignParser {
 			// Tell the Reader to use our (heavily decorated) ClassVisitor to
 			// visit the class
 			reader.accept(methodVisitor, ClassReader.EXPAND_FRAMES);
-			System.out.println("\n]");
+//			System.out.println("\n]");
 		}
 	}
 }
