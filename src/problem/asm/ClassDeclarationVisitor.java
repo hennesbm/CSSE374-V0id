@@ -1,7 +1,5 @@
 package problem.asm;
 
-import java.util.ArrayList;
-
 import org.objectweb.asm.ClassVisitor;
 
 import umlMaker.api.IDeclaration;

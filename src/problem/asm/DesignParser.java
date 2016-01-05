@@ -23,6 +23,8 @@ public class DesignParser {
 	public void main(String[] args) throws IOException {
 		this.CLASSES = args;
 		
+		this.model = new Model();
+
 		for (String className : CLASSES) {
 //			System.out.println("====================");
 			// ASM's ClassReader does the heavy lifting of parsing the compiled
@@ -30,7 +32,6 @@ public class DesignParser {
 //			System.out.println("Analyzing: " + className);
 //			System.out.println(className + "[");
 			ClassReader reader = new ClassReader(className);
-			this.model = new Model();
 			
 			// make class declaration visitor to get superclass and interfaces
 			ClassVisitor decVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, this.model);

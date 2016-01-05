@@ -37,7 +37,7 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 
 	@Override
 	public void visit(IMethod m) {
-		if(m.getName().equals("<init>"))
+		if (m.getName().equals("<init>"))
 			return;
 		addAccessLevel(m.getAccess());
 		write(m.getName() + "(");
@@ -54,7 +54,7 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 		write("shape=\"record\",");
 		write("label = \"{" + namet[namet.length - 1] + "|");
 	}
-	
+
 	@Override
 	public void visit(IDeclaration c) {
 		write("|");
@@ -71,8 +71,8 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 
 		write("}\"");
 		write("];");
-		write(
-				namet[namet.length - 1] + " -> " + superNamet[superNamet.length - 1] + " [arrowhead=\"onormal\"];");
+		if(!superNamet[superNamet.length - 1].equals("Object"))
+			write(namet[namet.length - 1] + " -> " + superNamet[superNamet.length - 1] + " [arrowhead=\"onormal\"];");
 		for (String[] i : interfacest) {
 			String inter = i[i.length - 1];
 			write(namet[namet.length - 1] + " -> " + inter + " [arrowhead=\"onormal\", style=\"dashed\"];");
@@ -101,13 +101,17 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 	void addArguments(String desc) {
 		Type[] args = Type.getArgumentTypes(desc);
 		for (int i = 0; i < args.length; i++) {
-			String arg = args[i].getClassName();
-			write(arg + " " );
+			String[] namet = args[i].getClassName().split("\\.");
+			write(namet[namet.length - 1]);
+			if (i != args.length - 1)
+				write(", ");
 		}
 	}
-	
+
 	private void addEnter(String signature) {
-		write(signature + "\\" + "l");
+		String[] namet = signature.split("\\.");
+		write(namet[namet.length - 1]);
+		write("\\" + "l");
 
 	}
 

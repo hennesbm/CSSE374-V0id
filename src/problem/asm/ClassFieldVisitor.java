@@ -24,6 +24,7 @@ public class ClassFieldVisitor extends ClassVisitor {
 
 	public FieldVisitor visitField(int access, String name, String desc, String signature, Object value) {
 		FieldVisitor toDecorate = super.visitField(access, name, desc, signature, value);
+		@SuppressWarnings("unused")
 		String type = Type.getType(desc).getClassName();
 		// TODO: delete the line below
 		IField field = new Field(access, name, desc, signature, value);
@@ -40,12 +41,14 @@ public class ClassFieldVisitor extends ClassVisitor {
 		return toDecorate;
 	};
 
+	@SuppressWarnings("unused")
 	private void addEnter(String signature) {
 		// TODO deal with java.util.ArrayList
 		System.out.print(signature + "\\" + "l");
 
 	}
 
+	@SuppressWarnings("unused")
 	private void addColon(String name) {
 		System.out.print(name + " : ");
 	}

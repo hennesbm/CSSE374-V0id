@@ -2,7 +2,6 @@ package umlMaker.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 
 import umlMaker.api.IDeclaration;
 import umlMaker.api.IComponent;
