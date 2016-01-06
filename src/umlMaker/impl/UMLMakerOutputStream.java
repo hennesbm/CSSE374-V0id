@@ -33,6 +33,10 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 		addAccessLevel(f.getAccess());
 		addColon(f.getName());
 		addEnter(type);
+		if(f.getSignature() != null) {
+			addReturnTypeType(f.getSignature());
+		}
+		write("\\l");
 	}
 
 	@Override
@@ -44,6 +48,9 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 		addArguments(m.getDescription());
 		write(") : ");
 		addReturnType(m.getDescription());
+		if(m.getSignature() != null) {
+			addReturnTypeType(m.getSignature());
+		}
 		write("\\l");
 	}
 
@@ -98,6 +105,12 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 		String[] returnName = returnType.split("\\.");
 		write(returnName[returnName.length - 1]);
 	}
+	
+	void addReturnTypeType(String signature) {
+		String[] type = signature.split("/");
+		String[] type2 = type[type.length - 1].split(";");
+		write("\\<" + type2[0] + "\\>");
+	}
 
 	void addArguments(String desc) {
 		Type[] args = Type.getArgumentTypes(desc);
@@ -112,8 +125,6 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 	private void addEnter(String signature) {
 		String[] namet = signature.split("\\.");
 		write(namet[namet.length - 1]);
-		write("\\" + "l");
-
 	}
 
 	private void addColon(String name) {
