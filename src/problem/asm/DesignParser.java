@@ -1,6 +1,8 @@
 package problem.asm;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Opcodes;
@@ -9,7 +11,7 @@ import umlMaker.api.IModel;
 import umlMaker.impl.Model;
 
 public class DesignParser {
-	public String[] CLASSES;
+	public ArrayList<String> CLASSES;
 	public IModel model;
 	/**
 	 * Reads in a list of Java Classes and reverse engineers their design.
@@ -20,8 +22,8 @@ public class DesignParser {
 	 *            edu.rosehulman.csse374.ClassFieldVisitor java.lang.Math
 	 * @throws IOException
 	 */
-	public void main(String[] args) throws IOException {
-		this.CLASSES = args;
+	public void main(ArrayList<String> files) throws IOException {
+		this.CLASSES = files;
 		
 		this.model = new Model();
 

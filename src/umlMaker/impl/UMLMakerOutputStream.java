@@ -95,7 +95,8 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 
 	void addReturnType(String desc) {
 		String returnType = Type.getReturnType(desc).getClassName();
-		write(returnType);
+		String[] returnName = returnType.split("\\.");
+		write(returnName[returnName.length - 1]);
 	}
 
 	void addArguments(String desc) {
