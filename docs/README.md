@@ -2,6 +2,8 @@ UML Maker
 
 created by: Brandon Hennessey, Chi Zhang, Bo Peng
 
+M1
+
 --------------------
 
 Design:
@@ -33,3 +35,31 @@ Instructions:
 3. Replace "title" with desired UML diagram name for saving purposes.
 	*NOTE: No spaces or special symbols can be in the file name. Use _ for spaces.
 4. Run UMLMaker as a Java Application. The finished UML diagram will be saved as a png under the given name in the docs folder of the UMLMaker project.
+
+--------------------
+--------------------
+
+M2
+
+--------------------
+
+Design:
+
+We enhance  our class diagrams with minimal modifications. The design basically retrieves data from classes, especially focuses on types of the variables and keeps track of the relationship which generates corresponding arrows. Previous design almost works perfectly. We did make a few modifications to make it work.
+--------------------
+
+Responsibilities:
+
+- Brandon
+	worked on aggregation arrows. Help cleaning messy png graphs.
+	
+- Chi
+	Created UML diagrams and worked on use arrows.
+	
+- Bo
+	Worked on use arrows and aggregation arrows. Debugging and testing.
+	
+--------------------
+
+Instructions:
+	1. Run UMLMaker.java. The finished UML diagram will be saved as a png under the given name in the docs folder of the UMLMaker project.

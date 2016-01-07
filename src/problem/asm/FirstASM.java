@@ -13,6 +13,8 @@ public class FirstASM {
 		// Read in this class
 		ClassReader reader = new ClassReader("problem.asm.DesignParser");
 		
+		
+		
 		// Construct visitor to print out byte code
 		ClassVisitor visitor = new TraceClassVisitor(new PrintWriter(System.out));
 		
