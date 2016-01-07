@@ -11,7 +11,7 @@ import umlMaker.api.IModel;
 import umlMaker.impl.Model;
 
 public class DesignParser {
-	public ArrayList<String> CLASSES;
+	public static ArrayList<String> CLASSES;
 	public IModel model;
 	/**
 	 * Reads in a list of Java Classes and reverse engineers their design.
