@@ -5,9 +5,9 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
-import umlMaker.api.IMethod;
-import umlMaker.api.IModel;
-import umlMaker.impl.Method;
+import component.api.IMethod;
+import component.api.IModel;
+import component.impl.Method;
 
 public class ClassMethodVisitor extends ClassVisitor {
 	private IModel _model;

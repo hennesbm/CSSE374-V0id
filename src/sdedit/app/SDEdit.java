@@ -1,4 +1,4 @@
-package umlMaker.app;
+package sdedit.app;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,7 +11,7 @@ import umlMaker.impl.UMLMakerOutputStream;
 import visitor.api.ITraverser;
 import visitor.api.IVisitor;
 
-public class UMLMaker {
+public class SDEdit {
 
 	public static void main(String[] args) throws IOException {
 		DesignParser parser = new DesignParser();
@@ -33,7 +33,7 @@ public class UMLMaker {
 		xmlOut.write("}".getBytes());
 
 		xmlOut.close();
-		UMLGenerator g = new UMLGenerator(title);
+		SDEditGenerator g = new SDEditGenerator(title);
 		g.execute();
 	}
 }

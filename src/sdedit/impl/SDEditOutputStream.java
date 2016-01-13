@@ -1,4 +1,4 @@
-package umlMaker.impl;
+package sdedit.impl;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -16,10 +16,10 @@ import component.api.IMethod;
 import problem.asm.DesignParser;
 import visitor.api.VisitorAdapter;
 
-public class UMLMakerOutputStream extends VisitorAdapter {
+public class SDEditOutputStream extends VisitorAdapter {
 	private final OutputStream out;
 
-	public UMLMakerOutputStream(OutputStream out) throws IOException {
+	public SDEditOutputStream(OutputStream out) throws IOException {
 		this.out = out;
 	}
 

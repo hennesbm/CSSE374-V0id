@@ -7,8 +7,8 @@ import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Opcodes;
 
-import umlMaker.api.IModel;
-import umlMaker.impl.Model;
+import component.api.IModel;
+import component.impl.Model;
 
 public class DesignParser {
 	public static ArrayList<String> CLASSES;
@@ -23,7 +23,7 @@ public class DesignParser {
 	 * @throws IOException
 	 */
 	public void main(ArrayList<String> files) throws IOException {
-		this.CLASSES = files;
+		DesignParser.CLASSES = files;
 		
 		this.model = new Model();
 

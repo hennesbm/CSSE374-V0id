@@ -5,9 +5,9 @@ import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
-import umlMaker.api.IField;
-import umlMaker.api.IModel;
-import umlMaker.impl.Field;
+import component.api.IField;
+import component.api.IModel;
+import component.impl.Field;
 
 public class ClassFieldVisitor extends ClassVisitor {
 	private IModel _model;

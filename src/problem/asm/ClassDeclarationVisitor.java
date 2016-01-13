@@ -2,9 +2,9 @@ package problem.asm;
 
 import org.objectweb.asm.ClassVisitor;
 
-import umlMaker.api.IDeclaration;
-import umlMaker.api.IModel;
-import umlMaker.impl.Declaration;
+import component.api.IDeclaration;
+import component.api.IModel;
+import component.impl.Declaration;
 
 public class ClassDeclarationVisitor extends ClassVisitor {
 	private IModel _model;
