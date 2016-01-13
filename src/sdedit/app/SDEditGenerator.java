@@ -18,16 +18,17 @@ public class SDEditGenerator {
 			String f = new File("docs\\SDEdit.txt").getAbsoluteFile().getPath();
 			String y = "docs\\" + this.fileName + ".png";
 			String z = new File(y).getAbsoluteFile().getPath();
-			String path = "\"C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot\" -Tpng " + "\"" + f + "\"";
+			String app = "docs\\sdedit-4.2-beta1.exe";
+			String path = "\"" + new File(app).getAbsoluteFile().getPath() + "\"" + " -o " + "\"" + z +"\"" +  " -t png \"" + f + "\"";
 			Process p = Runtime.getRuntime().exec(path);
-			InputStream inputStream = p.getInputStream();
-			OutputStream outputStream = new FileOutputStream(new File(z));
-			int read = 0;
-			byte[] bytes = new byte[1024];
-			while ((read = inputStream.read(bytes)) != -1) {
-				outputStream.write(bytes, 0, read);
-			}
-			outputStream.close();
+//			InputStream inputStream = p.getInputStream();
+//			OutputStream outputStream = new FileOutputStream(new File(z));
+//			int read = 0;
+//			byte[] bytes = new byte[1024];
+//			while ((read = inputStream.read(bytes)) != -1) {
+//				outputStream.write(bytes, 0, read);
+//			}
+//			outputStream.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
