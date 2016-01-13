@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import directory.reader.DirectoryReader;
 import problem.asm.DesignParser;
-import umlMaker.impl.UMLMakerOutputStream;
+import sdedit.impl.SDEditOutputStream;
 import visitor.api.ITraverser;
 import visitor.api.IVisitor;
 
@@ -21,8 +21,8 @@ public class SDEdit {
 		
 		parser.main(files);
 
-		OutputStream xmlOut = new FileOutputStream("docs/UML.txt");
-		IVisitor xmlWriter = new UMLMakerOutputStream(xmlOut);
+		OutputStream xmlOut = new FileOutputStream("docs/SDEdit.txt");
+		IVisitor xmlWriter = new SDEditOutputStream(xmlOut);
 
 		ITraverser traverser = (ITraverser) parser.model;
 		String title = "AbstractPizzaFactory";

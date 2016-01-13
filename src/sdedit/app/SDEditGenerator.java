@@ -15,7 +15,7 @@ public class SDEditGenerator {
 
 	public void execute() {
 		try {
-			String f = new File("docs\\UML.txt").getAbsoluteFile().getPath();
+			String f = new File("docs\\SDEdit.txt").getAbsoluteFile().getPath();
 			String y = "docs\\" + this.fileName + ".png";
 			String z = new File(y).getAbsoluteFile().getPath();
 			String path = "\"C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot\" -Tpng " + "\"" + f + "\"";
