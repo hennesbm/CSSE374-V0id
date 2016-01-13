@@ -34,7 +34,7 @@ public class DesignParser {
 //			System.out.println("Analyzing: " + className);
 //			System.out.println(className + "[");
 			ClassReader reader = new ClassReader(className);
-			
+						
 			// make class declaration visitor to get superclass and interfaces
 			ClassVisitor decVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, this.model);
 			

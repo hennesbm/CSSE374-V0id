@@ -26,11 +26,7 @@ public class SDEdit {
 
 		ITraverser traverser = (ITraverser) parser.model;
 		String title = "AbstractPizzaFactory";
-		xmlOut.write("digraph ".getBytes());
-		xmlOut.write(title.getBytes());
-		xmlOut.write(" { rankdir=BT;".getBytes());
 		traverser.accept(xmlWriter);
-		xmlOut.write("}".getBytes());
 
 		xmlOut.close();
 		SDEditGenerator g = new SDEditGenerator(title);
