@@ -23,7 +23,8 @@ public class Declaration implements IDeclaration, ITraverser {
 		this.name = name;
 		this.signature = signature;
 		this.superName = superName;
-		this.interfaces = interfaces;;
+		this.interfaces = interfaces;
+		;
 	}
 
 	@Override
@@ -55,12 +56,12 @@ public class Declaration implements IDeclaration, ITraverser {
 	public String[] getInterfaces() {
 		return this.interfaces;
 	}
-	
+
 	@Override
 	public void addComponent(IComponent c) {
 		this.components.add(c);
 	}
-	
+
 	@Override
 	public Collection<IComponent> getComponents() {
 		return this.components;
@@ -69,8 +70,8 @@ public class Declaration implements IDeclaration, ITraverser {
 	@Override
 	public void accept(IVisitor v) {
 		v.preVisit(this);
-		for(IComponent p: this.components) {
-			ITraverser t = (ITraverser)p;
+		for (IComponent p : this.components) {
+			ITraverser t = (ITraverser) p;
 			t.accept(v);
 		}
 		v.postVisit(this);
