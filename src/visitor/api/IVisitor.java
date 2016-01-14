@@ -3,6 +3,7 @@ package visitor.api;
 import component.api.IDeclaration;
 import component.api.IField;
 import component.api.IMethod;
+import component.api.IStatement;
 
 public interface IVisitor {
 
@@ -17,4 +18,8 @@ public interface IVisitor {
 	public void preVisit(IDeclaration c);
 	public void visit(IDeclaration c);
 	public void postVisit(IDeclaration c);
+	
+	public void preVisit(IStatement s);
+	public void visit(IStatement s);
+	public void postVisit(IStatement s);
 }

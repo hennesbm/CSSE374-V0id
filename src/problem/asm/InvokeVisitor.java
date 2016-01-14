@@ -2,8 +2,11 @@ package problem.asm;
 
 import org.objectweb.asm.Handle;
 import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Type;
 
 import component.api.IModel;
+import component.api.IStatement;
+import component.impl.Statement;
 
 public class InvokeVisitor extends MethodVisitor {
 	private IModel _model;
@@ -18,13 +21,17 @@ public class InvokeVisitor extends MethodVisitor {
 	}
 	
 	@Override
-	public void visitInvokeDynamicInsn(String name, String desc, Handle bsm,
-            Object... bsmArgs) {
-		super.visitInvokeDynamicInsn(name, desc, bsm, bsmArgs);
-		System.out.println(name);
-		System.out.println(desc);
-		System.out.println(bsm);
-		System.out.println(bsmArgs);
+	public void visitMethodInsn(int opcode, String owner, String name, String desc, boolean itf) {
+		super.visitMethodInsn(opcode, owner, name, desc, itf);
+		IStatement statement = new Statement(opcode, owner, name, desc, itf);
+		this._model.getCurrentClass().addComponent(statement);
+//		System.out.println(owner);
+//		System.out.println(name);
+//		System.out.println(desc);
+//		System.out.println(itf);
+		//this._model.getCurrentClass().addComponent(c);
+//		System.out.println(bsm);
+//		System.out.println(bsmArgs);
 	}
 
 }
