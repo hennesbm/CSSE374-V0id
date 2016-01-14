@@ -16,7 +16,7 @@ public class UMLMaker {
 	public static void main(String[] args) throws IOException {
 		DesignParser parser = new DesignParser();
 		
-		DirectoryReader reader = new DirectoryReader("C:\\Users\\hennesbm\\Desktop\\CSSE374\\Labs\\Lab 2\\Lab2-3\\src", "headfirst.factory.pizzaaf");
+		DirectoryReader reader = new DirectoryReader("C:\\Users\\hennesbm\\Desktop\\CSSE374\\CSSE374V0id\\src");
 		ArrayList<String> files = reader.readDirectory();
 		
 		parser.main(files);
@@ -25,7 +25,7 @@ public class UMLMaker {
 		IVisitor xmlWriter = new UMLMakerOutputStream(xmlOut);
 
 		ITraverser traverser = (ITraverser) parser.model;
-		String title = "AbstractPizzaFactory";
+		String title = "UMLMaker2";
 		xmlOut.write("digraph ".getBytes());
 		xmlOut.write(title.getBytes());
 		xmlOut.write(" { rankdir=BT;".getBytes());
