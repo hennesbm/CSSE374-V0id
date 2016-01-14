@@ -98,6 +98,9 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 			write(namet[namet.length - 1] + " -> " + inter
 					+ " [arrowhead=\"onormal\", style=\"dashed\"];");
 		}
+		if(DesignParser.CLASSES == null){
+			return;
+		}
 		for (String clazz : DesignParser.CLASSES) {
 			for (IComponent j : c.getComponents()) {
 				String[] ca = c.getName().split("/");
@@ -182,19 +185,24 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 	}
 
 	void addReturnType(String desc) {
-		String returnType = Type.getReturnType(desc).getClassName();
-		String[] returnName = returnType.split("\\.");
-		write(returnName[returnName.length - 1]);
+		if(desc!=null){
+			String returnType = Type.getReturnType(desc).getClassName();
+			String[] returnName = returnType.split("\\.");
+			write(returnName[returnName.length - 1]);
+		}
 	}
 
 	void addArguments(String desc) {
-		Type[] args = Type.getArgumentTypes(desc);
-		for (int i = 0; i < args.length; i++) {
-			String[] namet = args[i].getClassName().split("\\.");
-			write(namet[namet.length - 1]);
-			if (i != args.length - 1)
-				write(", ");
+		if (desc!=null){
+			Type[] args = Type.getArgumentTypes(desc);
+			for (int i = 0; i < args.length; i++) {
+				String[] namet = args[i].getClassName().split("\\.");
+				write(namet[namet.length - 1]);
+				if (i != args.length - 1)
+					write(", ");
+			}
 		}
+
 	}
 
 	void addReturnTypeType(String signature) {
@@ -204,6 +212,9 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 	}
 
 	private void addEnter(String signature) {
+		if (signature == null){
+			return;
+		}
 		String[] namet = signature.split("\\.");
 		write(namet[namet.length - 1]);
 	}
