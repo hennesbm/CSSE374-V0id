@@ -3,6 +3,8 @@ package visitor.api;
 import component.api.IDeclaration;
 import component.api.IField;
 import component.api.IMethod;
+import component.api.ISingleton;
+import component.api.IStatement;
 
 public abstract class VisitorAdapter implements IVisitor {
 
@@ -40,6 +42,30 @@ public abstract class VisitorAdapter implements IVisitor {
 
 	@Override
 	public void postVisit(IDeclaration c) {
+	}
+	
+	@Override
+	public void preVisit(IStatement s) {
+	}
+	
+	@Override
+	public void visit(IStatement s) {
+	}
+	
+	@Override
+	public void postVisit(IStatement s) {
+	}
+	
+	@Override
+	public void preVisit(ISingleton s) {
+	}
+	
+	@Override
+	public void visit(ISingleton s) {
+	}
+	
+	@Override
+	public void postVisit(ISingleton s) {
 	}
 
 }

@@ -27,7 +27,7 @@ public class StatementTest {
 
 	@Test
 	public void testGetType() {
-		assertEquals("Statements", s.getType());
+		assertEquals("Statement", s.getType());
 	}
 
 	@Test

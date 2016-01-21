@@ -13,6 +13,8 @@ import component.api.IComponent;
 import component.api.IDeclaration;
 import component.api.IField;
 import component.api.IMethod;
+import component.api.IRelation;
+import component.api.ISingleton;
 import component.api.IStatement;
 import problem.asm.DesignParser;
 import visitor.api.VisitorAdapter;
@@ -34,14 +36,12 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 
 	@Override
 	public void visit(IField f) {
-		// TODO:change the description
 		String type = Type.getType(f.getDescription()).getClassName();
 		addAccessLevel(f.getAccess());
 		addColon(f.getName());
 		addEnter(type);
 		if (f.getSignature() != null) {
 			addReturnTypeType(f.getSignature());
-
 		}
 		write("\\l");
 
@@ -68,7 +68,14 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 		String[] namet = c.getName().split("/");
 		write(namet[namet.length - 1] + "[");
 		write("shape=\"record\",");
-		write("label = \"{" + namet[namet.length - 1] + "|");
+		ISingleton single = (ISingleton) c.getRelations().iterator().next();
+		if (single.isSingleton()) {
+			write("color=\"blue\",");
+			write("label = \"{" + namet[namet.length - 1] + "\\n");
+			write("\\<\\<Singleton\\>\\>|");
+		} else {
+			write("label = \"{" + namet[namet.length - 1] + "|");
+		}
 	}
 
 	@Override
@@ -90,12 +97,43 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 		write("}\"");
 		write("];");
 
-		if(DesignParser.CLASSES == null){
+		if (!superNamet[superNamet.length - 1].equals("Object"))
+			write(namet[namet.length - 1] + " -> " + superNamet[superNamet.length - 1] + " [arrowhead=\"onormal\"];");
+		for (String[] i : interfacest) {
+
+			String inter = i[i.length - 1];
+			write(namet[namet.length - 1] + " -> " + inter + " [arrowhead=\"onormal\", style=\"dashed\"];");
+		}
+		if (DesignParser.CLASSES == null) {
 			return;
 		}
 		for (String clazz : DesignParser.CLASSES) {
 			for (IComponent j : c.getComponents()) {
 				String[] ca = c.getName().split("/");
+
+				if (j.getType().equals("Field")) {
+					String name = j.getDescription();
+					String[] s = clazz.split("\\.");
+					String[] s2 = name.split("/");
+					String field = s[s.length - 1];
+					String name2 = s2[s2.length - 1].replace(";", "");
+					if (name2.equals(field)) {
+						if (!preventDuplicateUse.containsKey(ca[ca.length - 1] + field)) {
+							write(ca[ca.length - 1] + " -> " + field + "[arrowhead=\"vee\", style=\"dashed\"];");
+							preventDuplicateUse.put(ca[ca.length - 1] + field, 1);
+						}
+					}
+					if (j.getSignature() != null) {
+						String[] sig = j.getSignature().split("/");
+						String signature = sig[sig.length - 1].replace(";>;", "");
+						if (signature.equals(field)) {
+							if (!preventDuplicateAssociation.containsKey(ca[ca.length - 1] + signature)) {
+								write(ca[ca.length - 1] + " -> " + signature + "[arrowhead=\"vee\"];");
+								preventDuplicateAssociation.put(ca[ca.length - 1] + signature, 1);
+							}
+						}
+
+					}
 
 
 				if (j.getType().equals("Method")) {
@@ -105,81 +143,37 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 					String method = s[s.length - 1];
 					String name2 = s2[s2.length - 1].replace(";", "");
 					if (name2.equals(method)) {
-						if (!preventDuplicateAssociation
-								.containsKey(ca[ca.length - 1] + method)) {
-							write(ca[ca.length - 1] + " -> " + method
-									+ "[arrowhead=\"vee\"];\n");
-							preventDuplicateAssociation.put(ca[ca.length - 1]
-									+ method, 1);
-							preventDuplicateUse.put(ca[ca.length - 1]
-									+ method, 1);
+
+						if (!preventDuplicateAssociation.containsKey(ca[ca.length - 1] + method)) {
+							write(ca[ca.length - 1] + " -> " + method + "[arrowhead=\"vee\"];");
+							preventDuplicateAssociation.put(ca[ca.length - 1] + method, 1);
+
 						}
 					}
 					if (j.getSignature() != null) {
 						String[] sig = j.getSignature().split("/");
 						String signature = sig[sig.length - 1].replace(";>;", "");
-						if(signature.equals(method)){
+						if (signature.equals(method)) {
 							if (!preventDuplicateAssociation.containsKey(ca[ca.length - 1] + signature)) {
-								write(ca[ca.length - 1] + " -> " + signature + "[arrowhead=\"vee\"];\n");
-								preventDuplicateAssociation.put(ca[ca.length - 1]+signature, 1);
-								preventDuplicateUse.put(ca[ca.length - 1]+ method, 1);
+
+								write(ca[ca.length - 1] + " -> " + signature + "[arrowhead=\"vee\"];");
+								preventDuplicateAssociation.put(ca[ca.length - 1] + signature, 1);
 							}
 						}
 					}
 				}
-				if (j.getType().equals("Field")) {
-					String name = j.getDescription();
-					String[] s = clazz.split("\\.");
-					String[] s2 = name.split("/");
-					String field = s[s.length - 1];
-					String name2 = s2[s2.length - 1].replace(";", "");
-					if (j.getSignature() != null) {
-						String[] sig = j.getSignature().split("/");
-						String signature = sig[sig.length - 1].replace(";>;", "");
-						if(signature.equals(field)){
-							if (!preventDuplicateAssociation.containsKey(ca[ca.length - 1]
-									+ signature)) {
-						write(ca[ca.length - 1] + " -> "
-								+ signature
-								+ "[arrowhead=\"vee\"];\n");
-						preventDuplicateAssociation.put(
-								ca[ca.length - 1] + signature, 1);
-						preventDuplicateUse.put(ca[ca.length - 1] + signature,
-								1);
-					}
-						}
-						
-					}
-					if (name2.equals(field)) {
-						if (!preventDuplicateUse.containsKey(ca[ca.length - 1]
-								+ field)) {
-							write(ca[ca.length - 1] + " -> " + field
-									+ "[arrowhead=\"vee\", style=\"dashed\"];\n");
-							preventDuplicateUse.put(ca[ca.length - 1] + field,
-									1);
-						}
-					}
-
-
+			}
+		}
+		for (IRelation r : c.getRelations()) {
+			if (r.getType().equals("Singleton")) {
+				ISingleton single = (ISingleton) r;
+				if (single.isSingleton()) {
+					String[] classNameExtended = c.getName().split("/");
+					String className = classNameExtended[classNameExtended.length - 1];
+					write(className + " -> " + className + "[arrowhead=\"vee\"];");
 				}
-
 			}
-
 		}
-		if (!superNamet[superNamet.length - 1].equals("Object"))
-			write(namet[namet.length - 1] + " -> "
-					+ superNamet[superNamet.length - 1]
-					+ " [arrowhead=\"onormal\"];\n");
-		for (String[] i : interfacest) {
-			String inter = i[i.length - 1];
-			if (!preventDuplicateUse.containsKey(namet[namet.length - 1]
-					+ inter)) {
-				write(namet[namet.length - 1] + " -> " + inter
-						+ " [arrowhead=\"onormal\", style=\"dashed\"];\n");
-			}
-
-		}
-
 	}
 
 	void addAccessLevel(int access) {
@@ -197,7 +191,7 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 	}
 
 	void addReturnType(String desc) {
-		if(desc!=null){
+		if (desc != null) {
 			String returnType = Type.getReturnType(desc).getClassName();
 			String[] returnName = returnType.split("\\.");
 			write(returnName[returnName.length - 1]);
@@ -205,7 +199,7 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 	}
 
 	void addArguments(String desc) {
-		if (desc!=null){
+		if (desc != null) {
 			Type[] args = Type.getArgumentTypes(desc);
 			for (int i = 0; i < args.length; i++) {
 				String[] namet = args[i].getClassName().split("\\.");
@@ -224,7 +218,7 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 	}
 
 	private void addEnter(String signature) {
-		if (signature == null){
+		if (signature == null) {
 			return;
 		}
 		String[] namet = signature.split("\\.");
@@ -233,23 +227,5 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 
 	private void addColon(String name) {
 		write(name + " : ");
-	}
-
-	@Override
-	public void preVisit(IStatement s) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void visit(IStatement s) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void postVisit(IStatement s) {
-		// TODO Auto-generated method stub
-		
 	}
 }

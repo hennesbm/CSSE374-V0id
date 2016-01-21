@@ -5,6 +5,7 @@ import org.objectweb.asm.ClassVisitor;
 import component.api.IDeclaration;
 import component.api.IModel;
 import component.impl.Declaration;
+import component.impl.Singleton;
 
 public class ClassDeclarationVisitor extends ClassVisitor {
 	private IModel _model;
@@ -21,6 +22,7 @@ public class ClassDeclarationVisitor extends ClassVisitor {
 		// "+Arrays.toString(interfaces));
 
 		IDeclaration declaration = new Declaration(version, access, name, signature, superName, interfaces);
+		declaration.addRelation(new Singleton());
 		this._model.setCurrentClass(declaration);
 		this._model.addCurrentClass();
 

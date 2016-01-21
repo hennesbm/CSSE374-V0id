@@ -46,6 +46,7 @@ M2
 Design:
 
 We enhance  our class diagrams with minimal modifications. The design basically retrieves data from classes, especially focuses on types of the variables and keeps track of the relationship which generates corresponding arrows. Previous design almost works perfectly. We did make a few modifications to make it work.
+
 --------------------
 
 Responsibilities:
@@ -63,3 +64,68 @@ Responsibilities:
 
 Instructions:
 	1. Run UMLMaker.java. The finished UML diagram will be saved as a png under the given name in the docs folder of the UMLMaker project.
+	
+--------------------
+--------------------
+
+M3
+
+--------------------
+
+Design:
+
+We attempted to get the information needed from the ClassReader in order to show the method calls and their order in a Sequence Diagram generated using SDEdit. This involved a pattern of generating the document similar to our UMLMaker.
+
+-------------------
+
+Responsibilities:
+
+- Brandon
+	Worked on making a new visitor to attain the needed information from our ClassReader
+	
+- Chi
+	Worked on identifying the needed information in order to correctly generate and make the various calls on the sequence diagram
+	
+- Bo
+	Set up the generator for the text file to be put into SDEdit and finalized the formatting of the information
+	
+-------------------
+
+Instructions:
+	*Instructions are similar to that of our UMLMaker.
+	1. Copy/paste the directory name into the corresponding spot in the SDEdit file. Be sure to add extra backslashes where needed. If only certain packages are needing to be used, specify the package name after the directory name.
+	2. Place the name of the generated png file in the title spot.
+	3. Run SDEdit. The final Sequence Diagram will be under docs and titled with the given name.
+	
+--------------------
+--------------------
+
+M4
+
+--------------------
+
+Design:
+
+We added the functionality to our UMLMaker to identify Singleton instances within the code. These are then highlighted blue on the resulting diagram and show the correct composition arrow pointing back to the given class.
+
+--------------------
+
+Responsibilities:
+
+- Brandon
+	Created IRelations and the corresponding Singleton relation
+	
+- Chi
+	Created the comparison diagrams
+	Aided Bo in fixing the bugs from Milestone 3
+	
+- Bo
+	Worked on fixing the bugs from Milestone 3 and displaying the information in the Sequence Diagrams correctly
+	
+--------------------
+
+Instructions:
+	* The operating instructions are the exact same as previous milestones.
+	
+--------------------
+--------------------

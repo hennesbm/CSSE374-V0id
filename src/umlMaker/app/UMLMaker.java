@@ -26,7 +26,7 @@ public class UMLMaker {
 		IVisitor xmlWriter = new UMLMakerOutputStream(xmlOut);
 
 		ITraverser traverser = (ITraverser) parser.model;
-		String title = "UMLMaker2";
+		String title = "Chocolate";
 		xmlOut.write("digraph ".getBytes());
 		xmlOut.write(title.getBytes());
 		xmlOut.write(" { rankdir=BT;".getBytes());

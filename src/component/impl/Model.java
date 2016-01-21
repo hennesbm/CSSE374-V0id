@@ -7,6 +7,7 @@ import component.api.IComponent;
 import component.api.IDeclaration;
 import component.api.IModel;
 import sdedit.impl.SDEditOutputStream;
+import component.api.IRelation;
 import visitor.api.ITraverser;
 import visitor.api.IVisitor;
 
@@ -23,7 +24,7 @@ public class Model implements IModel, ITraverser {
 	public void addCurrentClass() {
 		this.classList.add(this.currentClass);
 	}
-	
+
 	@Override
 	public IDeclaration getCurrentClass() {
 		return this.currentClass;
@@ -36,12 +37,21 @@ public class Model implements IModel, ITraverser {
 			v.preVisit(clazz);
 
 			String type = "Field";
+			boolean change = false;
 			if (clazz.getComponents().size() > 0) {
 				for (IComponent p : clazz.getComponents()) {
-					if(!p.getType().equals(type))
+					if (!p.getType().equals(type) && !change) {
 						v.visit(clazz);
+						change = true;
+					}
 					p.accept(v);
 					type = p.getType();
+				}
+			}
+			
+			if (clazz.getRelations().size() > 0) {
+				for (IRelation p : clazz.getRelations()) {
+					p.accept(v);
 				}
 			}
 
