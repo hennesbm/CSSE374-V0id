@@ -7,6 +7,8 @@ import org.objectweb.asm.Type;
 
 import component.api.IMethod;
 import component.api.IModel;
+import component.api.IRelation;
+import component.api.ISingleton;
 import component.impl.Method;
 
 public class ClassMethodVisitor extends ClassVisitor {
@@ -28,22 +30,30 @@ public class ClassMethodVisitor extends ClassVisitor {
 	@Override
 	public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
 		MethodVisitor toDecorate = super.visitMethod(access, name, desc, signature, exceptions);
-		MethodVisitor newMethodVisitor  = new InvokeVisitor(this.api, toDecorate, this._model);
-		//newMethodVisitor.visitInvokeInsn(access, name, desc);
-		
-//		System.out.println("--------------------");
+		MethodVisitor newMethodVisitor = new InvokeVisitor(this.api, toDecorate, this._model);
+		// newMethodVisitor.visitInvokeInsn(access, name, desc);
+
+		// System.out.println("--------------------");
 		IMethod method = new Method(access, name, desc, signature, exceptions);
+		if (Type.getReturnType(desc).getClassName() != null) {
+			if (Type.getReturnType(desc).getClassName().equals(this._model.getCurrentClass().getName().replaceAll("/", "."))) {
+				ISingleton single = (ISingleton) this._model.getCurrentClass().getRelations().iterator().next();
+				if (single.getType().equals("Singleton")) {
+					single.setMethod();
+				}
+			}
+		}
 		this._model.getCurrentClass().addComponent(method);
 		// TODO: delete the line below
-//		System.out.println("method " + name);
+		// System.out.println("method " + name);
 		// TODO: create an internal representation of the current method and
 		// pass it to the methods below
-//		addAccessLevel(access);
-//		System.out.print(name + "(");
-//		addArguments(desc);
-//		System.out.print(") : ");
-//		addReturnType(desc);
-//		System.out.print("\\l");
+		// addAccessLevel(access);
+		// System.out.print(name + "(");
+		// addArguments(desc);
+		// System.out.print(") : ");
+		// addReturnType(desc);
+		// System.out.print("\\l");
 		// TODO: add the current method to your internal representation of the
 		// current class
 		// What is a good way for the code to remember what the current class
@@ -71,7 +81,7 @@ public class ClassMethodVisitor extends ClassVisitor {
 	void addReturnType(String desc) {
 		String returnType = Type.getReturnType(desc).getClassName();
 		// TODO: delete the next line
-//		System.out.println("return type: " + returnType);
+		// System.out.println("return type: " + returnType);
 		// TODO: ADD this information to your representation of the current
 		// method.
 		System.out.print(returnType);
@@ -82,10 +92,10 @@ public class ClassMethodVisitor extends ClassVisitor {
 		for (int i = 0; i < args.length; i++) {
 			String arg = args[i].getClassName();
 			// TODO: delete the next line
-//			System.out.print("arg " + i + ": " + arg);
+			// System.out.print("arg " + i + ": " + arg);
 			// TODO: ADD this information to your representation of the current
 			// method.
-			System.out.print(arg + " " );
+			System.out.print(arg + " ");
 		}
 	}
 

@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import component.api.IComponent;
 import component.api.IDeclaration;
+import component.api.IRelation;
 import visitor.api.ITraverser;
 import visitor.api.IVisitor;
 
@@ -16,6 +17,7 @@ public class Declaration implements IDeclaration, ITraverser {
 	private String superName;
 	private String[] interfaces;
 	private Collection<IComponent> components = new ArrayList<>();
+	private Collection<IRelation> relations = new ArrayList<>();
 
 	public Declaration(int version, int access, String name, String signature, String superName, String[] interfaces) {
 		this.version = version;
@@ -66,11 +68,25 @@ public class Declaration implements IDeclaration, ITraverser {
 	public Collection<IComponent> getComponents() {
 		return this.components;
 	}
+	
+	@Override
+	public void addRelation(IRelation r) {
+		this.relations.add(r);
+	}
+	
+	@Override
+	public Collection<IRelation> getRelations() {
+		return this.relations;
+	}
 
 	@Override
 	public void accept(IVisitor v) {
 		v.preVisit(this);
 		for (IComponent p : this.components) {
+			ITraverser t = (ITraverser) p;
+			t.accept(v);
+		}
+		for (IRelation p : this.relations) {
 			ITraverser t = (ITraverser) p;
 			t.accept(v);
 		}

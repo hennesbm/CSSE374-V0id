@@ -3,6 +3,7 @@ package visitor.api;
 import component.api.IDeclaration;
 import component.api.IField;
 import component.api.IMethod;
+import component.api.ISingleton;
 import component.api.IStatement;
 
 public interface IVisitor {
@@ -22,4 +23,8 @@ public interface IVisitor {
 	public void preVisit(IStatement s);
 	public void visit(IStatement s);
 	public void postVisit(IStatement s);
+	
+	public void preVisit(ISingleton s);
+	public void visit(ISingleton s);
+	public void postVisit(ISingleton s);
 }
