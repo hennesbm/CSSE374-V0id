@@ -4,6 +4,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import directory.reader.DirectoryReader;
 import problem.asm.DesignParser;
@@ -16,7 +20,7 @@ public class SDEdit {
 	public static void main(String[] args) throws IOException {
 		DesignParser parser = new DesignParser();
 		
-		DirectoryReader reader = new DirectoryReader("D:\\Bo Peng\\Development\\CSSE374\\Lab2-3\\src", "headfirst.factory.pizzas","Pizza.java","toString");
+		DirectoryReader reader = new DirectoryReader("D:\\Bo Peng\\Development\\CSSE374-project\\CSSE374V0id\\src", "sdedit.app","SDEdit.java","<init>");
 		ArrayList<String> files = reader.readDirectory();
 		
 		parser.main(files);
@@ -25,13 +29,9 @@ public class SDEdit {
 		IVisitor xmlWriter = new SDEditOutputStream(xmlOut);
 
 		ITraverser traverser = (ITraverser) parser.model;
-		String title = "AbstractPizzaFactory";
+		String title = "Milestone3Sequence";
 		traverser.accept(xmlWriter);
-		
 		checkAndChange();
-		
-		
-		
 		for(String d: SDEditOutputStream.declare){
 			write(xmlOut,d);
 		}
@@ -79,7 +79,7 @@ public class SDEdit {
 			last = mark2.get(0);
 		for(int i=0; i<mark2.size();i++){
 			if(last!=0){
-				methods.add(mark3.get(i), "arg"+first+":"+"arg"+last+".new"+"\n");
+				methods.add(mark3.get(i-1)+1, "arg"+first+":"+"arg"+last+".new"+"\n");
 			}
 			
 			first = last;
@@ -114,8 +114,60 @@ public class SDEdit {
 			}
 		}
 		
+		ArrayList<Integer> remove = new ArrayList<Integer>();
+		for(int i=methods.size()-1; i>=0; i--){
+			//String arg1 = methods.get(i).split(":")[0];
+			
+			if(methods.get(i).contains("new")){
+				for(int j = i - 1; j >=0 ; j--){
+					if(methods.get(j).length() > 0){
+						String arg2 = methods.get(j).split(":")[1].split("\\.")[0];
+						//System.out.println(arg2 + " " + methods.get(i).split(":")[1].split("\\.")[0]);
+						if(arg2.equals(methods.get(i).split(":")[1].split("\\.")[0])){
+							remove.add(j);
+						}
+					}
+				}
+			}
+			
+		}
+		Collections.sort(remove);
+		for(int i = remove.size()-1; i>=0; i--){
+			SDEditOutputStream.methods.set(remove.get(i), "");
+		}
+		SDEditOutputStream.methods.removeAll(Arrays.asList("",null));
 		
+		Map<String, Integer> fix = new HashMap<String, Integer>();
+		for(int i =methods.size()-1; i>=1; i--){
+			if(methods.get(i).length()!=0 && methods.get(i-1).length()!=0){
+				String pa1 = methods.get(i).split(":")[0];
+				String pa2 = methods.get(i).split(":")[1].split("\\.")[0];
+				String pa3 = methods.get(i-1).split(":")[0];
+				String pa4 = methods.get(i-1).split(":")[1].split("\\.")[0];
+				if(!pa1.equals(pa3) && !pa2.equals(pa3) && !pa1.equals(pa4) && !pa2.equals(pa4)){
+					fix.put(pa3+":"+pa1+".destroy\n", i);
+				}
+			}
+
+		}
 		
+		for(String key: fix.keySet()){
+			SDEditOutputStream.methods.add(fix.get(key),key);
+		}
+		
+		ArrayList<Integer> re = new ArrayList<Integer>();
+		
+		for(int i =methods.size()-1; i>=0; i--){
+				String pa1 = methods.get(i).split(":")[0];
+				String pa2 = methods.get(i).split(":")[1].split("\\.")[0];
+				if(pa1.equals(pa2)){
+					re.add(i);
+				}
+
+		}
+		for(int a: re){
+			methods.remove(a);
+		}
 		
 	}
 }
