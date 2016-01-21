@@ -6,4 +6,6 @@ public interface IStatement extends IComponent{
 	public String getName();
 	public String getDescription();
 	public boolean ifInterface();
+	public String getClassName();
+	public String getMethodName();
 }

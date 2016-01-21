@@ -12,7 +12,9 @@ import component.impl.Model;
 
 public class DesignParser {
 	public static ArrayList<String> CLASSES;
+	public static String markedSelected;
 	public IModel model;
+	
 	/**
 	 * Reads in a list of Java Classes and reverse engineers their design.
 	 *
@@ -51,5 +53,6 @@ public class DesignParser {
 			reader.accept(methodVisitor, ClassReader.EXPAND_FRAMES);
 //			System.out.println("\n]");
 		}
+		System.out.println("End Of Code");
 	}
 }

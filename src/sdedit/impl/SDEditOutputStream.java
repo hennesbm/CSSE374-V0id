@@ -14,14 +14,23 @@ import component.api.IDeclaration;
 import component.api.IField;
 import component.api.IMethod;
 import component.api.IStatement;
+import directory.reader.DirectoryReader;
 import problem.asm.DesignParser;
 import visitor.api.VisitorAdapter;
 
 public class SDEditOutputStream extends VisitorAdapter {
 	private final OutputStream out;
-
+	private int classFlag = 0;
+	private int methodFlag = 0;
+	private Map<String, String> fieldMap;
+	private int counter = 0;
+	public static  ArrayList<String> declare;
+	public static  ArrayList<String> methods;
 	public SDEditOutputStream(OutputStream out) throws IOException {
+		this.fieldMap = new HashMap<String, String>();
 		this.out = out;
+		declare = new ArrayList<String>();
+		methods = new ArrayList<String>();
 	}
 
 	private void write(String m) {
@@ -33,28 +42,45 @@ public class SDEditOutputStream extends VisitorAdapter {
 	}
 
 	@Override
-	public void visit(IField f) {
+	public void preVisit(IField f){
+		
+		if(this.classFlag == 1 && this.methodFlag == 1){
+			String name = DirectoryReader.className.replaceAll("\\.", "/");
+			if(!this.fieldMap.containsKey(name.substring(0, name.length()-5))){
+				this.declare.add("arg"+counter+":"+name.substring(0, name.length()-5).replaceAll("Ljava", "java")+"\n");
+				//write("arg"+counter+":"+name.substring(0, name.length()-5).replaceAll("Ljava", "java")+"\n");
+				this.fieldMap.put(name.substring(0, name.length()-5), "arg"+counter);
+				counter++;
+			}
 
+			
+			if(!this.fieldMap.containsKey(f.getDescription())){
+				this.declare.add("arg"+counter+":"+f.getDescription().replaceAll(";", "").replaceAll("Ljava", "java")+"\n");
+				//write("arg"+counter+":"+f.getDescription().replaceAll(";", "").replaceAll("Ljava", "java")+"\n");
+				this.fieldMap.put(f.getDescription(), "arg"+counter);
+				counter++;
+			}
+		}
 	}
-
-	@Override
-	public void visit(IMethod m) {
-
-	}
+	
 
 	@Override
 	public void preVisit(IDeclaration c) {
-
-	}
-
-	@Override
-	public void visit(IDeclaration c) {
+		if(DirectoryReader.className!=null){
+			String[] sc = c.getName().split("/");
+			String[] sn = DirectoryReader.className.split("\\.");
+//			System.out.println(sc[sc.length-1]);
+//			System.out.println(sn[sn.length-2]);
+			if(sc[sc.length-1].equals(sn[sn.length-2])){
+				this.classFlag = 1;
+				
+				//System.out.println(sc[sc.length-1]);
+			}
+		}else{
+			this.classFlag = 0;
+		}
 		
-	}
-
-	@Override
-	public void postVisit(IDeclaration c) {
-
+		
 	}
 
 	void addAccessLevel(int access) {
@@ -93,22 +119,47 @@ public class SDEditOutputStream extends VisitorAdapter {
 		write("\\<" + type2[0] + "\\>");
 	}
 
-	private void addEnter(String signature) {
-		String[] namet = signature.split("\\.");
-		write(namet[namet.length - 1]);
-	}
-
-	private void addColon(String name) {
-		write(name + " : ");
-	}
-
 	@Override
 	public void preVisit(IStatement s) {
 		//write("----PreVisitStart----\n");
-		write(s.getOwner()+ ":arg."+s.getName()+"\n");
+		if(this.classFlag == 1){
+			if (this.fieldMap.get(s.getClassName()) == null){
+				this.fieldMap.put(s.getClassName(), "arg"+this.counter);
+				this.declare.add("arg"+counter+":"+s.getClassName()+"\n");
+				//write("arg"+counter+":"+s.getClassName()+"\n");
+				counter++;
+				
+			}
+			String commandL = this.fieldMap.get(s.getClassName()) + ":" ;
+			if(this.fieldMap.get(s.getOwner()) == null){
+				this.fieldMap.put(s.getOwner(), "arg"+this.counter);
+				this.declare.add("arg"+counter+":"+s.getOwner()+"\n");
+				//write("arg"+counter+":"+s.getOwner()+"\n");
+				counter++;
+			}
+			
+			String commandR = this.fieldMap.get(s.getOwner())+ "." + s.getName()+"()\n";
+			String command = commandL + commandR;
+			if(command.contains("<init>")){
+				command = command.replaceAll("[()]","" ).replaceAll("<init>", "new");
+			}
+			this.methods.add(command);
+			//write(command);
+			
+		}
+		
 		//write("----PreVisitEnds----\n");
 	}
 
+	@Override
+	public void visit(IMethod m){
+		if(m.getName().equals(DirectoryReader.method)){
+			this.methodFlag = 1;
+		}else{
+			this.methodFlag = 0;
+		}
+	}
+	
 	@Override
 	public void visit(IStatement s) {
 		// TODO Auto-generated method stub
@@ -120,4 +171,5 @@ public class SDEditOutputStream extends VisitorAdapter {
 		// TODO Auto-generated method stub
 		
 	}
+
 }

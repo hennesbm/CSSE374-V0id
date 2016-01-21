@@ -24,12 +24,14 @@ public class DirectoryReader {
 	public DirectoryReader(String folder, String directory, String className, String method) {
 		this.projectFolder = folder;
 		this.projectDirectory = directory;
-		this.className = className;
+		this.className = directory+"."+ className;
 		this.method = method;
 	}
 	
 	
 	public ArrayList<String> readDirectory() {
+		
+		
 		String[] directoryAdjust = this.projectDirectory.split("\\.");
 		String folderName = "";
 		for(String directoryName : directoryAdjust) {

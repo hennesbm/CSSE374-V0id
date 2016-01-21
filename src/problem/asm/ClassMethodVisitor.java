@@ -28,7 +28,8 @@ public class ClassMethodVisitor extends ClassVisitor {
 	@Override
 	public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
 		MethodVisitor toDecorate = super.visitMethod(access, name, desc, signature, exceptions);
-		MethodVisitor newMethodVisitor  = new InvokeVisitor(this.api, toDecorate, this._model);
+		MethodVisitor newMethodVisitor  = new InvokeVisitor(this.api, toDecorate, this._model, name);
+		
 		//newMethodVisitor.visitInvokeInsn(access, name, desc);
 		
 //		System.out.println("--------------------");

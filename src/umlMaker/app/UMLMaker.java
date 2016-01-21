@@ -16,7 +16,8 @@ public class UMLMaker {
 	public static void main(String[] args) throws IOException {
 		DesignParser parser = new DesignParser();
 		
-		DirectoryReader reader = new DirectoryReader("C:\\Users\\hennesbm\\Desktop\\CSSE374\\CSSE374V0id\\src");
+		DirectoryReader reader = new DirectoryReader("D:\\Bo Peng\\Development\\CSSE374-project\\Lab1-2-Solution\\src");
+
 		ArrayList<String> files = reader.readDirectory();
 		
 		parser.main(files);

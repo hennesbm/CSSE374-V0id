@@ -89,54 +89,14 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 
 		write("}\"");
 		write("];");
-		if (!superNamet[superNamet.length - 1].equals("Object"))
-			write(namet[namet.length - 1] + " -> "
-					+ superNamet[superNamet.length - 1]
-					+ " [arrowhead=\"onormal\"];");
-		for (String[] i : interfacest) {
 
-			String inter = i[i.length - 1];
-			write(namet[namet.length - 1] + " -> " + inter
-					+ " [arrowhead=\"onormal\", style=\"dashed\"];");
-		}
 		if(DesignParser.CLASSES == null){
 			return;
 		}
 		for (String clazz : DesignParser.CLASSES) {
 			for (IComponent j : c.getComponents()) {
 				String[] ca = c.getName().split("/");
-				if (j.getType().equals("Field")) {
-					String name = j.getDescription();
-					String[] s = clazz.split("\\.");
-					String[] s2 = name.split("/");
-					String field = s[s.length - 1];
-					String name2 = s2[s2.length - 1].replace(";", "");
-					if (name2.equals(field)) {
-						if (!preventDuplicateUse.containsKey(ca[ca.length - 1]
-								+ field)) {
-							write(ca[ca.length - 1] + " -> " + field
-									+ "[arrowhead=\"vee\", style=\"dashed\"];");
-							preventDuplicateUse.put(ca[ca.length - 1] + field,
-									1);
-						}
-					}
-					if (j.getSignature() != null) {
-						String[] sig = j.getSignature().split("/");
-						String signature = sig[sig.length - 1].replace(";>;", "");
-						if(signature.equals(field)){
-							if (!preventDuplicateAssociation.containsKey(ca[ca.length - 1]
-									+ signature)) {
-						write(ca[ca.length - 1] + " -> "
-								+ signature
-								+ "[arrowhead=\"vee\"];");
-						preventDuplicateAssociation.put(
-								ca[ca.length - 1] + signature, 1);
-					}
-						}
-						
-					}
 
-				}
 
 				if (j.getType().equals("Method")) {
 					String name = j.getDescription().split("\\)")[0];
@@ -148,8 +108,10 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 						if (!preventDuplicateAssociation
 								.containsKey(ca[ca.length - 1] + method)) {
 							write(ca[ca.length - 1] + " -> " + method
-									+ "[arrowhead=\"vee\"];");
+									+ "[arrowhead=\"vee\"];\n");
 							preventDuplicateAssociation.put(ca[ca.length - 1]
+									+ method, 1);
+							preventDuplicateUse.put(ca[ca.length - 1]
 									+ method, 1);
 						}
 					}
@@ -158,13 +120,62 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 						String signature = sig[sig.length - 1].replace(";>;", "");
 						if(signature.equals(method)){
 							if (!preventDuplicateAssociation.containsKey(ca[ca.length - 1] + signature)) {
-								write(ca[ca.length - 1] + " -> " + signature + "[arrowhead=\"vee\"];");
+								write(ca[ca.length - 1] + " -> " + signature + "[arrowhead=\"vee\"];\n");
 								preventDuplicateAssociation.put(ca[ca.length - 1]+signature, 1);
+								preventDuplicateUse.put(ca[ca.length - 1]+ method, 1);
 							}
 						}
 					}
 				}
+				if (j.getType().equals("Field")) {
+					String name = j.getDescription();
+					String[] s = clazz.split("\\.");
+					String[] s2 = name.split("/");
+					String field = s[s.length - 1];
+					String name2 = s2[s2.length - 1].replace(";", "");
+					if (j.getSignature() != null) {
+						String[] sig = j.getSignature().split("/");
+						String signature = sig[sig.length - 1].replace(";>;", "");
+						if(signature.equals(field)){
+							if (!preventDuplicateAssociation.containsKey(ca[ca.length - 1]
+									+ signature)) {
+						write(ca[ca.length - 1] + " -> "
+								+ signature
+								+ "[arrowhead=\"vee\"];\n");
+						preventDuplicateAssociation.put(
+								ca[ca.length - 1] + signature, 1);
+						preventDuplicateUse.put(ca[ca.length - 1] + signature,
+								1);
+					}
+						}
+						
+					}
+					if (name2.equals(field)) {
+						if (!preventDuplicateUse.containsKey(ca[ca.length - 1]
+								+ field)) {
+							write(ca[ca.length - 1] + " -> " + field
+									+ "[arrowhead=\"vee\", style=\"dashed\"];\n");
+							preventDuplicateUse.put(ca[ca.length - 1] + field,
+									1);
+						}
+					}
 
+
+				}
+
+			}
+
+		}
+		if (!superNamet[superNamet.length - 1].equals("Object"))
+			write(namet[namet.length - 1] + " -> "
+					+ superNamet[superNamet.length - 1]
+					+ " [arrowhead=\"onormal\"];\n");
+		for (String[] i : interfacest) {
+			String inter = i[i.length - 1];
+			if (!preventDuplicateUse.containsKey(namet[namet.length - 1]
+					+ inter)) {
+				write(namet[namet.length - 1] + " -> " + inter
+						+ " [arrowhead=\"onormal\", style=\"dashed\"];\n");
 			}
 
 		}

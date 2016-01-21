@@ -1,10 +1,12 @@
 package component.impl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import component.api.IComponent;
 import component.api.IDeclaration;
 import component.api.IModel;
+import sdedit.impl.SDEditOutputStream;
 import visitor.api.ITraverser;
 import visitor.api.IVisitor;
 
@@ -26,7 +28,8 @@ public class Model implements IModel, ITraverser {
 	public IDeclaration getCurrentClass() {
 		return this.currentClass;
 	}
-
+	
+	
 	@Override
 	public void accept(IVisitor v) {
 		for (IDeclaration clazz : this.classList) {
@@ -44,6 +47,8 @@ public class Model implements IModel, ITraverser {
 
 			v.postVisit(clazz);
 		}
+
+
 	}
 
 }
