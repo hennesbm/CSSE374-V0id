@@ -13,6 +13,7 @@ import component.api.IComponent;
 import component.api.IDeclaration;
 import component.api.IField;
 import component.api.IMethod;
+import component.api.IStatement;
 import problem.asm.DesignParser;
 import visitor.api.VisitorAdapter;
 
@@ -221,5 +222,23 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 
 	private void addColon(String name) {
 		write(name + " : ");
+	}
+
+	@Override
+	public void preVisit(IStatement s) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void visit(IStatement s) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void postVisit(IStatement s) {
+		// TODO Auto-generated method stub
+		
 	}
 }

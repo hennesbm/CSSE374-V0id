@@ -9,6 +9,8 @@ public class DirectoryReader {
 	private String projectFolder;
 	private ArrayList<String> files = new ArrayList<String>();
 	private ArrayList<String> directories = new ArrayList<String>();
+	public static String method;
+	public static String className;
 
 	public DirectoryReader(String folder) {
 		this.projectFolder = folder;
@@ -18,7 +20,15 @@ public class DirectoryReader {
 		this.projectFolder = folder;
 		this.projectDirectory = directory;
 	}
-
+	
+	public DirectoryReader(String folder, String directory, String className, String method) {
+		this.projectFolder = folder;
+		this.projectDirectory = directory;
+		this.className = className;
+		this.method = method;
+	}
+	
+	
 	public ArrayList<String> readDirectory() {
 		String[] directoryAdjust = this.projectDirectory.split("\\.");
 		String folderName = "";

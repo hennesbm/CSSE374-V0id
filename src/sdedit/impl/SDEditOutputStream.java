@@ -13,6 +13,7 @@ import component.api.IComponent;
 import component.api.IDeclaration;
 import component.api.IField;
 import component.api.IMethod;
+import component.api.IStatement;
 import problem.asm.DesignParser;
 import visitor.api.VisitorAdapter;
 
@@ -33,137 +34,26 @@ public class SDEditOutputStream extends VisitorAdapter {
 
 	@Override
 	public void visit(IField f) {
-		// TODO:change the description
-		String type = Type.getType(f.getDescription()).getClassName();
-		addAccessLevel(f.getAccess());
-		addColon(f.getName());
-		addEnter(type);
-		if (f.getSignature() != null) {
-			addReturnTypeType(f.getSignature());
-
-		}
-		write("\\l");
 
 	}
 
 	@Override
 	public void visit(IMethod m) {
-		if (m.getName().equals("<init>"))
-			return;
-		addAccessLevel(m.getAccess());
-		write(m.getName() + "(");
-		addArguments(m.getDescription());
-		write(") : ");
-		addReturnType(m.getDescription());
-		if (m.getSignature() != null) {
-			addReturnTypeType(m.getSignature());
 
-		}
-		write("\\l");
 	}
 
 	@Override
 	public void preVisit(IDeclaration c) {
-		String[] namet = c.getName().split("/");
-		write(namet[namet.length - 1] + "[");
-		write("shape=\"record\",");
-		write("label = \"{" + namet[namet.length - 1] + "|");
+
 	}
 
 	@Override
 	public void visit(IDeclaration c) {
-		write("|");
+		
 	}
 
 	@Override
 	public void postVisit(IDeclaration c) {
-		Map<String, Integer> preventDuplicateUse = new HashMap<String, Integer>();
-		Map<String, Integer> preventDuplicateAssociation = new HashMap<String, Integer>();
-		String[] namet = c.getName().split("/");
-		String[] superNamet = c.getSuperClass().split("/");
-		ArrayList<String[]> interfacest = new ArrayList<String[]>();
-		for (String i : c.getInterfaces()) {
-			interfacest.add(i.split("/"));
-		}
-
-		write("}\"");
-		write("];");
-		if (!superNamet[superNamet.length - 1].equals("Object"))
-			write(namet[namet.length - 1] + " -> "
-					+ superNamet[superNamet.length - 1]
-					+ " [arrowhead=\"onormal\"];");
-		for (String[] i : interfacest) {
-
-			String inter = i[i.length - 1];
-			write(namet[namet.length - 1] + " -> " + inter
-					+ " [arrowhead=\"onormal\", style=\"dashed\"];");
-		}
-		for (String clazz : DesignParser.CLASSES) {
-			for (IComponent j : c.getComponents()) {
-				String[] ca = c.getName().split("/");
-				if (j.getType().equals("Field")) {
-					String name = j.getDescription();
-					String[] s = clazz.split("\\.");
-					String[] s2 = name.split("/");
-					String field = s[s.length - 1];
-					String name2 = s2[s2.length - 1].replace(";", "");
-					if (name2.equals(field)) {
-						if (!preventDuplicateUse.containsKey(ca[ca.length - 1]
-								+ field)) {
-							write(ca[ca.length - 1] + " -> " + field
-									+ "[arrowhead=\"vee\", style=\"dashed\"];");
-							preventDuplicateUse.put(ca[ca.length - 1] + field,
-									1);
-						}
-					}
-					if (j.getSignature() != null) {
-						String[] sig = j.getSignature().split("/");
-						String signature = sig[sig.length - 1].replace(";>;", "");
-						if(signature.equals(field)){
-							if (!preventDuplicateAssociation.containsKey(ca[ca.length - 1]
-									+ signature)) {
-						write(ca[ca.length - 1] + " -> "
-								+ signature
-								+ "[arrowhead=\"vee\"];");
-						preventDuplicateAssociation.put(
-								ca[ca.length - 1] + signature, 1);
-					}
-						}
-						
-					}
-
-				}
-
-				if (j.getType().equals("Method")) {
-					String name = j.getDescription().split("\\)")[0];
-					String[] s = clazz.split("\\.");
-					String[] s2 = name.split("/");
-					String method = s[s.length - 1];
-					String name2 = s2[s2.length - 1].replace(";", "");
-					if (name2.equals(method)) {
-						if (!preventDuplicateAssociation
-								.containsKey(ca[ca.length - 1] + method)) {
-							write(ca[ca.length - 1] + " -> " + method
-									+ "[arrowhead=\"vee\"];");
-							preventDuplicateAssociation.put(ca[ca.length - 1]
-									+ method, 1);
-						}
-					}
-					if (j.getSignature() != null) {
-						String[] sig = j.getSignature().split("/");
-						String signature = sig[sig.length - 1].replace(";>;", "");
-						if(signature.equals(method)){
-							if (!preventDuplicateAssociation.containsKey(ca[ca.length - 1] + signature)) {
-								write(ca[ca.length - 1] + " -> " + signature + "[arrowhead=\"vee\"];");
-								preventDuplicateAssociation.put(ca[ca.length - 1]+signature, 1);
-							}
-						}
-					}
-				}
-
-			}
-
-		}
 
 	}
 
@@ -210,5 +100,24 @@ public class SDEditOutputStream extends VisitorAdapter {
 
 	private void addColon(String name) {
 		write(name + " : ");
+	}
+
+	@Override
+	public void preVisit(IStatement s) {
+		//write("----PreVisitStart----\n");
+		write(s.getOwner()+ ":arg."+s.getName()+"\n");
+		//write("----PreVisitEnds----\n");
+	}
+
+	@Override
+	public void visit(IStatement s) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void postVisit(IStatement s) {
+		// TODO Auto-generated method stub
+		
 	}
 }

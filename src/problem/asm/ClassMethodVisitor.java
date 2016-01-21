@@ -28,7 +28,9 @@ public class ClassMethodVisitor extends ClassVisitor {
 	@Override
 	public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
 		MethodVisitor toDecorate = super.visitMethod(access, name, desc, signature, exceptions);
-		toDecorate = new InvokeVisitor(this.api, toDecorate, this._model);
+		MethodVisitor newMethodVisitor  = new InvokeVisitor(this.api, toDecorate, this._model);
+		//newMethodVisitor.visitInvokeInsn(access, name, desc);
+		
 //		System.out.println("--------------------");
 		IMethod method = new Method(access, name, desc, signature, exceptions);
 		this._model.getCurrentClass().addComponent(method);
@@ -46,7 +48,7 @@ public class ClassMethodVisitor extends ClassVisitor {
 		// current class
 		// What is a good way for the code to remember what the current class
 		// is?
-		return toDecorate;
+		return newMethodVisitor;
 	}
 
 	void addAccessLevel(int access) {
