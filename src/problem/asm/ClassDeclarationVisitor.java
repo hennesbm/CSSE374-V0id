@@ -5,7 +5,6 @@ import org.objectweb.asm.ClassVisitor;
 import component.api.IDeclaration;
 import component.api.IModel;
 import component.impl.Declaration;
-import component.impl.Singleton;
 
 public class ClassDeclarationVisitor extends ClassVisitor {
 	private IModel _model;

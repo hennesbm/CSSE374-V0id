@@ -16,7 +16,7 @@ public class UMLMaker {
 	public static void main(String[] args) throws IOException {
 		DesignParser parser = new DesignParser();
 		
-		DirectoryReader reader = new DirectoryReader("D:\\Bo Peng\\Development\\CSSE374-project\\Lab1-2-Solution\\src");
+		DirectoryReader reader = new DirectoryReader("C:\\Users\\hennesbm\\Desktop\\CSSE374\\Labs\\Lab 4\\Lab4-2-Singleton\\src","headfirst.singleton.chocolate");
 
 		ArrayList<String> files = reader.readDirectory();
 		

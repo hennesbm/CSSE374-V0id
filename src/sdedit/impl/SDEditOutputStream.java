@@ -15,7 +15,6 @@ import component.api.IStatement;
 import component.impl.Field;
 import component.impl.Method;
 import directory.reader.DirectoryReader;
-import problem.asm.DesignParser;
 import visitor.api.VisitorAdapter;
 
 public class SDEditOutputStream extends VisitorAdapter {
@@ -42,6 +41,7 @@ public class SDEditOutputStream extends VisitorAdapter {
 		}
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public void preVisit(IComponent c) {
 		if (c.getType().equals("Field")) {
@@ -130,6 +130,7 @@ public class SDEditOutputStream extends VisitorAdapter {
 		write("\\<" + type2[0] + "\\>");
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public void preVisit(IStatement s) {
 		// write("----PreVisitStart----\n");
