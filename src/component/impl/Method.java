@@ -1,10 +1,10 @@
 package component.impl;
 
-import component.api.IMethod;
+import component.api.IComponent;
 import visitor.api.ITraverser;
 import visitor.api.IVisitor;
 
-public class Method implements IMethod, ITraverser {
+public class Method implements IComponent, ITraverser {
 	private int access;
 	private String name;
 	private String description;
@@ -19,7 +19,6 @@ public class Method implements IMethod, ITraverser {
 		this.exceptions = exceptions;
 	}
 
-	@Override
 	public int getAccess() {
 		return this.access;
 	}
@@ -39,7 +38,6 @@ public class Method implements IMethod, ITraverser {
 		return this.signature;
 	}
 
-	@Override
 	public String[] getExceptions() {
 		return this.exceptions;
 	}

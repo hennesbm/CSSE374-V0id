@@ -1,12 +1,10 @@
 package component.impl;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import component.api.IComponent;
 import component.api.IDeclaration;
 import component.api.IModel;
-import sdedit.impl.SDEditOutputStream;
 import component.api.IRelation;
 import visitor.api.ITraverser;
 import visitor.api.IVisitor;

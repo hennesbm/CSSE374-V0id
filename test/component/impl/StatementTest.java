@@ -13,6 +13,8 @@ public class StatementTest {
 	private String name;
 	private String desc;
 	private boolean inter;
+	private String className;
+	private String methodName;
 
 	public StatementTest() {
 
@@ -21,8 +23,10 @@ public class StatementTest {
 		owner = "Chi Zhang";
 		name = "MYDECLARATION";
 		inter = true;
+		className = null;
+		methodName = null;
 
-		s = new Statement(opcode, owner, name, desc, true);
+		s = new Statement(opcode, owner, name, desc, true, className, methodName);
 	}
 
 	@Test

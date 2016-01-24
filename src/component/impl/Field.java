@@ -1,10 +1,10 @@
 package component.impl;
 
-import component.api.IField;
+import component.api.IComponent;
 import visitor.api.ITraverser;
 import visitor.api.IVisitor;
 
-public class Field implements IField, ITraverser {
+public class Field implements IComponent, ITraverser {
 	private int access;
 	private String name;
 	private String description;
@@ -19,7 +19,6 @@ public class Field implements IField, ITraverser {
 		this.value = value;
 	}
 
-	@Override
 	public int getAccess() {
 		return this.access;
 	}
@@ -39,7 +38,6 @@ public class Field implements IField, ITraverser {
 		return this.signature;
 	}
 
-	@Override
 	public Object getValue() {
 		return this.value;
 	}

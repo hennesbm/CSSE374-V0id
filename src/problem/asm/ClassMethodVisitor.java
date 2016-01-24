@@ -5,11 +5,9 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
-import component.api.IMethod;
 import component.api.IModel;
-import component.api.IRelation;
-import component.api.ISingleton;
 import component.impl.Method;
+import component.impl.Singleton;
 
 public class ClassMethodVisitor extends ClassVisitor {
 	private IModel _model;
@@ -33,10 +31,10 @@ public class ClassMethodVisitor extends ClassVisitor {
 		MethodVisitor newMethodVisitor  = new InvokeVisitor(this.api, toDecorate, this._model, name);
 		// newMethodVisitor.visitInvokeInsn(access, name, desc);
 
-		IMethod method = new Method(access, name, desc, signature, exceptions);
+		Method method = new Method(access, name, desc, signature, exceptions);
 		if (Type.getReturnType(desc).getClassName() != null) {
 			if (Type.getReturnType(desc).getClassName().equals(this._model.getCurrentClass().getName().replaceAll("/", "."))) {
-				ISingleton single = (ISingleton) this._model.getCurrentClass().getRelations().iterator().next();
+				Singleton single = (Singleton) this._model.getCurrentClass().getRelations().iterator().next();
 				if (single.getType().equals("Singleton")) {
 					single.setMethod();
 				}

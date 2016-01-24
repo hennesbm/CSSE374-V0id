@@ -5,11 +5,9 @@ import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
-import component.api.IField;
 import component.api.IModel;
-import component.api.IRelation;
-import component.api.ISingleton;
 import component.impl.Field;
+import component.impl.Singleton;
 
 public class ClassFieldVisitor extends ClassVisitor {
 	private IModel _model;
@@ -29,10 +27,10 @@ public class ClassFieldVisitor extends ClassVisitor {
 		@SuppressWarnings("unused")
 		String type = Type.getType(desc).getClassName();
 		// TODO: delete the line below
-		IField field = new Field(access, name, desc, signature, value);
+		Field field = new Field(access, name, desc, signature, value);
 		if (Type.getType(desc).getClassName() != null) {
 			if (Type.getType(desc).getClassName().equals(this._model.getCurrentClass().getName().replaceAll("/", "."))) {
-				ISingleton single = (ISingleton) this._model.getCurrentClass().getRelations().iterator().next();
+				Singleton single = (Singleton) this._model.getCurrentClass().getRelations().iterator().next();
 				if (single.getType().equals("Singleton")) {
 					single.setField();
 				}

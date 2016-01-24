@@ -10,9 +10,6 @@ import java.io.IOException;
 import org.junit.Test;
 
 import problem.asm.DesignParser;
-import component.api.IDeclaration;
-import component.api.IField;
-import component.api.IMethod;
 import component.impl.Declaration;
 import component.impl.Field;
 import component.impl.Method;
@@ -27,7 +24,7 @@ public class TestUMLMakerImpl {
 		FileOutputStream fop = new FileOutputStream(out);
 		UMLMakerOutputStream stream = new UMLMakerOutputStream(fop);
 		String[] interfaces = {"Interface 1","Interface 2"};
-		IDeclaration id = new Declaration(87, 4, "This_is_a_test", "Bo Peng", "I'm Super Name",interfaces);
+		Declaration id = new Declaration(87, 4, "This_is_a_test", "Bo Peng", "I'm Super Name",interfaces);
 		stream.preVisit(id);
 		stream.visit(id);
 		DesignParser d = new DesignParser();
@@ -41,7 +38,7 @@ public class TestUMLMakerImpl {
 		String out = new File("docs\\TestUMLMakerImpl.txt").getAbsoluteFile().getPath();
 		FileOutputStream fop = new FileOutputStream(out);
 		UMLMakerOutputStream stream = new UMLMakerOutputStream(fop);
-		IField ife = new Field(2, "This is a name", "This is a desc", "This.is.a.signature", null);
+		Field ife = new Field(2, "This is a name", "This is a desc", "This.is.a.signature", null);
 		stream.preVisit(ife);
 		stream.visit(ife);
 		DesignParser d = new DesignParser();
@@ -55,7 +52,7 @@ public class TestUMLMakerImpl {
 		String out = new File("docs\\TestUMLMakerImpl.txt").getAbsoluteFile().getPath();
 		FileOutputStream fop = new FileOutputStream(out);
 		UMLMakerOutputStream stream = new UMLMakerOutputStream(fop);
-		IMethod im = new Method(2, "This is a name", null, "This.is.a.signature", null);
+		Method im = new Method(2, "This is a name", null, "This.is.a.signature", null);
 		stream.preVisit(im);
 		stream.visit(im);
 		DesignParser d = new DesignParser();

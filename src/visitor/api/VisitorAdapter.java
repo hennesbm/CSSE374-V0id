@@ -1,49 +1,47 @@
 package visitor.api;
 
+import component.api.IComponent;
 import component.api.IDeclaration;
-import component.api.IField;
-import component.api.IMethod;
-import component.api.ISingleton;
+import component.api.IRelation;
 import component.api.IStatement;
 
 public abstract class VisitorAdapter implements IVisitor {
-
 	@Override
-	public void preVisit(IField f) {
+	public void preVisit(IDeclaration d) {
 	}
 
 	@Override
-	public void visit(IField f) {
+	public void visit(IDeclaration d) {
 	}
 
 	@Override
-	public void postVisit(IField f) {
+	public void postVisit(IDeclaration d) {
 	}
 
 	@Override
-	public void preVisit(IMethod m) {
+	public void preVisit(IComponent c) {
 	}
 
 	@Override
-	public void visit(IMethod m) {
+	public void visit(IComponent c) {
 	}
 
 	@Override
-	public void postVisit(IMethod m) {
+	public void postVisit(IComponent c) {
 	}
 
 	@Override
-	public void preVisit(IDeclaration c) {
+	public void preVisit(IRelation r) {
 	}
 
 	@Override
-	public void visit(IDeclaration c) {
+	public void visit(IRelation r) {
 	}
 
 	@Override
-	public void postVisit(IDeclaration c) {
+	public void postVisit(IRelation r) {
 	}
-	
+
 	@Override
 	public void preVisit(IStatement s) {
 	}
@@ -55,17 +53,4 @@ public abstract class VisitorAdapter implements IVisitor {
 	@Override
 	public void postVisit(IStatement s) {
 	}
-	
-	@Override
-	public void preVisit(ISingleton s) {
-	}
-	
-	@Override
-	public void visit(ISingleton s) {
-	}
-	
-	@Override
-	public void postVisit(ISingleton s) {
-	}
-
 }

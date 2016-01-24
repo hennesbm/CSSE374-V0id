@@ -11,11 +11,10 @@ import org.objectweb.asm.Type;
 
 import component.api.IComponent;
 import component.api.IDeclaration;
-import component.api.IField;
-import component.api.IMethod;
 import component.api.IRelation;
-import component.api.ISingleton;
-import component.api.IStatement;
+import component.impl.Field;
+import component.impl.Method;
+import component.impl.Singleton;
 import problem.asm.DesignParser;
 import visitor.api.VisitorAdapter;
 
@@ -35,32 +34,32 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 	}
 
 	@Override
-	public void visit(IField f) {
-		String type = Type.getType(f.getDescription()).getClassName();
-		addAccessLevel(f.getAccess());
-		addColon(f.getName());
-		addEnter(type);
-		if (f.getSignature() != null) {
-			addReturnTypeType(f.getSignature());
+	public void visit(IComponent c) {
+		if (c.getType().equals("Field")) {
+			Field f = (Field) c;
+			String type = Type.getType(f.getDescription()).getClassName();
+			addAccessLevel(f.getAccess());
+			addColon(f.getName());
+			addEnter(type);
+			if (f.getSignature() != null) {
+				addReturnTypeType(f.getSignature());
+			}
+			write("\\l");
+		} else if (c.getType().equals("Method")) {
+			Method m = (Method) c;
+			if (m.getName().equals("<init>"))
+				return;
+			addAccessLevel(m.getAccess());
+			write(m.getName() + "(");
+			addArguments(m.getDescription());
+			write(") : ");
+			addReturnType(m.getDescription());
+			if (m.getSignature() != null) {
+				addReturnTypeType(m.getSignature());
+
+			}
+			write("\\l");
 		}
-		write("\\l");
-
-	}
-
-	@Override
-	public void visit(IMethod m) {
-		if (m.getName().equals("<init>"))
-			return;
-		addAccessLevel(m.getAccess());
-		write(m.getName() + "(");
-		addArguments(m.getDescription());
-		write(") : ");
-		addReturnType(m.getDescription());
-		if (m.getSignature() != null) {
-			addReturnTypeType(m.getSignature());
-
-		}
-		write("\\l");
 	}
 
 	@Override
@@ -68,7 +67,7 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 		String[] namet = c.getName().split("/");
 		write(namet[namet.length - 1] + "[");
 		write("shape=\"record\",");
-		ISingleton single = (ISingleton) c.getRelations().iterator().next();
+		Singleton single = (Singleton) c.getRelations().iterator().next();
 		if (single.isSingleton()) {
 			write("color=\"blue\",");
 			write("label = \"{" + namet[namet.length - 1] + "\\n");
@@ -134,9 +133,9 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 						}
 
 					}
+				}
 
-
-				if (j.getType().equals("Method")) {
+				else if (j.getType().equals("Method")) {
 					String name = j.getDescription().split("\\)")[0];
 					String[] s = clazz.split("\\.");
 					String[] s2 = name.split("/");
@@ -166,7 +165,7 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 		}
 		for (IRelation r : c.getRelations()) {
 			if (r.getType().equals("Singleton")) {
-				ISingleton single = (ISingleton) r;
+				Singleton single = (Singleton) r;
 				if (single.isSingleton()) {
 					String[] classNameExtended = c.getName().split("/");
 					String className = classNameExtended[classNameExtended.length - 1];

@@ -1,10 +1,10 @@
 package component.impl;
 
-import component.api.ISingleton;
+import component.api.IRelation;
 import visitor.api.ITraverser;
 import visitor.api.IVisitor;
 
-public class Singleton implements ISingleton, ITraverser {
+public class Singleton implements IRelation, ITraverser {
 	private boolean field = false;
 	private boolean method = false;
 		
@@ -26,23 +26,18 @@ public class Singleton implements ISingleton, ITraverser {
 		v.visit(this);
 		v.postVisit(this);
 	}
-	@Override
 	public boolean isField() {
 		return this.field;
 	}
-	@Override
 	public void setField() {
 		this.field = true;
 	}
-	@Override
 	public void setMethod() {
 		this.method = true;
 	}
-	@Override
 	public boolean isMethod() {
 		return this.method;
 	}
-	@Override
 	public boolean isSingleton() {
 		return (isField() && isMethod());
 	}

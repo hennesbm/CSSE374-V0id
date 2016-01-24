@@ -22,7 +22,6 @@ public class ClassDeclarationVisitor extends ClassVisitor {
 		// "+Arrays.toString(interfaces));
 
 		IDeclaration declaration = new Declaration(version, access, name, signature, superName, interfaces);
-		declaration.addRelation(new Singleton());
 		this._model.setCurrentClass(declaration);
 		this._model.addCurrentClass();
 

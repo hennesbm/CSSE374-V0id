@@ -1,30 +1,24 @@
 package visitor.api;
 
+import component.api.IComponent;
 import component.api.IDeclaration;
-import component.api.IField;
-import component.api.IMethod;
-import component.api.ISingleton;
+import component.api.IRelation;
 import component.api.IStatement;
 
 public interface IVisitor {
+	public void preVisit(IDeclaration d);
+	public void visit(IDeclaration d);
+	public void postVisit(IDeclaration d);
 
-	public void preVisit(IField f);
-	public void visit(IField f);
-	public void postVisit(IField f);
+	public void preVisit(IComponent c);
+	public void visit(IComponent c);
+	public void postVisit(IComponent c);
 	
-	public void preVisit(IMethod m);
-	public void visit(IMethod m);
-	public void postVisit(IMethod m);
-
-	public void preVisit(IDeclaration c);
-	public void visit(IDeclaration c);
-	public void postVisit(IDeclaration c);
+	public void preVisit(IRelation r);
+	public void visit(IRelation r);
+	public void postVisit(IRelation r);
 	
 	public void preVisit(IStatement s);
 	public void visit(IStatement s);
 	public void postVisit(IStatement s);
-	
-	public void preVisit(ISingleton s);
-	public void visit(ISingleton s);
-	public void postVisit(ISingleton s);
 }

@@ -42,7 +42,9 @@ public class SingletonTest {
 	}
 
 	@Test
-	public void testIsSingleTon() {
+	public void testIsSingleton() {
+		s.setField();
+		s.setMethod();
 		assertEquals(s.isSingleton(), true);
 	}
 }
