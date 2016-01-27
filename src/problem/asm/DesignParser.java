@@ -53,6 +53,6 @@ public class DesignParser {
 			reader.accept(methodVisitor, ClassReader.EXPAND_FRAMES);
 //			System.out.println("\n]");
 		}
-		System.out.println("End Of Code");
+//		System.out.println("End Of Code");
 	}
 }

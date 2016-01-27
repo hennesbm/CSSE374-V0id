@@ -24,14 +24,14 @@ public class InvokeVisitor extends MethodVisitor {
 	public void visitMethodInsn(int opcode, String owner, String name, String desc, boolean itf) {
 		//this._model.getCurrentClass()
 		super.visitMethodInsn(opcode, owner, name, desc, itf);
-		System.out.println("Current Class:" + this._model.getCurrentClass().getName());
+//		System.out.println("Current Class:" + this._model.getCurrentClass().getName());
 		IStatement statement = new Statement(opcode, owner, name, desc, itf, this._model.getCurrentClass().getName(),this.methodname);
 		this._model.getCurrentClass().addComponent(statement);
-		System.out.println("Arguments Type:" + owner);
-		System.out.println("Current Statement's Method Type:" + name);
-		System.out.println("Current Statement's Return Type:" + desc);
-		System.out.println("Does Current Statement's Method Has Interface :" + itf);
-		System.out.println();
+//		System.out.println("Arguments Type:" + owner);
+//		System.out.println("Current Statement's Method Type:" + name);
+//		System.out.println("Current Statement's Return Type:" + desc);
+//		System.out.println("Does Current Statement's Method Has Interface :" + itf);
+//		System.out.println();
 		//this._model.getCurrentClass().addComponent(c);
 //		System.out.println(bsm);
 //		System.out.println(bsmArgs);
