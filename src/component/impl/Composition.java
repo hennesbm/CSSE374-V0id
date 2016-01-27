@@ -18,16 +18,4 @@ public class Composition implements IRelation, ITraverser {
 		return "Composition";
 	}
 
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getReference() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

@@ -5,6 +5,13 @@ import visitor.api.ITraverser;
 import visitor.api.IVisitor;
 
 public class Uses implements IRelation, ITraverser {
+	private String className;
+	private String referenceName;
+	
+	public Uses(String className, String referenceName) {
+		this.className = className;
+		this.referenceName = referenceName;
+	}
 
 	@Override
 	public void accept(IVisitor v) {
@@ -17,15 +24,12 @@ public class Uses implements IRelation, ITraverser {
 	public String getType() {
 		return "Uses";
 	}
-
-	@Override
-	public String getName() {
-		return null;
+	
+	public String getClassName() {
+		return this.className;
 	}
 
-	@Override
-	public String getReference() {
-		return null;
+	public String getReferenceName() {
+		return this.referenceName;
 	}
-
 }

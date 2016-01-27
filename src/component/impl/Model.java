@@ -46,14 +46,14 @@ public class Model implements IModel, ITraverser {
 					type = p.getType();
 				}
 			}
+
+			v.postVisit(clazz);
 			
 			if (clazz.getRelations().size() > 0) {
 				for (IRelation p : clazz.getRelations()) {
 					p.accept(v);
 				}
 			}
-
-			v.postVisit(clazz);
 		}
 
 
