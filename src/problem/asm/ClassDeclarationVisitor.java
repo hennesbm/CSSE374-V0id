@@ -10,6 +10,7 @@ import com.sun.org.apache.xpath.internal.compiler.OpCodes;
 import component.api.IDeclaration;
 import component.api.IModel;
 import component.impl.Declaration;
+import component.impl.Extend;
 
 
 public class ClassDeclarationVisitor extends ClassVisitor {

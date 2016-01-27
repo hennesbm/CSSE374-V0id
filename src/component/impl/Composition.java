@@ -23,15 +23,4 @@ public class Composition implements IRelation, ITraverser {
 		return "Composition";
 	}
 
-	@Override
-	public String getName() {
-		return this.classname;
-	}
-
-	@Override
-	public String getReference() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

@@ -22,18 +22,8 @@ public class Extend implements IRelation, ITraverser {
 	public String getType() {
 		return "Extend";
 	}
-
-	@Override
-	public String getName() {
-		return this.classname;
-	}
-
-	@Override
-	public String getReference() {
-		return this.classextended;
-	}
 	
-	public void setRegerence(String classextended){
+	public void setReference(String classextended){
 		this.classextended = classextended;
 	}
 

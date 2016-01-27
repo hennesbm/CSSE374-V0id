@@ -26,14 +26,4 @@ public class Implement implements IRelation, ITraverser {
 		return "Implement";
 	}
 
-	@Override
-	public String getName() {
-		return this.classname;
-	}
-
-	@Override
-	public String getReference() {
-		return Arrays.toString(this.implementedclasses);
-	}
-
 }

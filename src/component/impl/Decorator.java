@@ -17,18 +17,6 @@ public class Decorator implements IRelation, ITraverser{
 	public String getType() {
 		return  "Decorator";
 	}
-
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getReference() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	
 
