@@ -44,6 +44,7 @@ public class MethodTest {
 		assertEquals(this.signature, this.m.getSignature());
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testGetExceptions() {
 		assertEquals(this.exceptions, this.m.getExceptions());

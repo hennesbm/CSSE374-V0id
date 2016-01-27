@@ -15,6 +15,7 @@ import component.api.IRelation;
 import component.impl.Field;
 import component.impl.Method;
 import component.impl.Singleton;
+import component.impl.Uses;
 import problem.asm.DesignParser;
 import visitor.api.VisitorAdapter;
 
@@ -63,18 +64,36 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 	}
 
 	@Override
+	public void visit(IRelation r) {
+		if (r.getType().equals("Singleton")) {
+			Singleton s = (Singleton) r;
+			write(s.getClassName() + " -> " + s.getClassName() + "[arrowhead=\"vee\"];");
+		}
+		else if(r.getType().equals("Uses")) {
+			Uses u = (Uses) r;
+			write(u.getClassName() + " -> " + u.getReferenceName() + "[arrowhead=\"vee\", style=\"dashed\"];");
+		}
+	}
+
+	@Override
 	public void preVisit(IDeclaration c) {
 		String[] namet = c.getName().split("/");
 		write(namet[namet.length - 1] + "[");
 		write("shape=\"record\",");
-		Singleton single = (Singleton) c.getRelations().iterator().next();
-		if (single.isSingleton()) {
-			write("color=\"blue\",");
-			write("label = \"{" + namet[namet.length - 1] + "\\n");
-			write("\\<\\<Singleton\\>\\>|");
-		} else {
-			write("label = \"{" + namet[namet.length - 1] + "|");
+		for (IRelation r : c.getRelations()) {
+			if (r.getType().equals("Singleton")) {
+				write("color = \"blue\";");
+				break;
+			}
 		}
+		write("label = \"{" + namet[namet.length - 1] + "\\n");
+		for (IRelation r : c.getRelations()) {
+			if (r.getType().equals("Singleton")) {
+				write("\\<\\<Singleton\\>\\>");
+				break;
+			}
+		}
+		write("|");
 	}
 
 	@Override
@@ -84,8 +103,8 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 
 	@Override
 	public void postVisit(IDeclaration c) {
-		Map<String, Integer> preventDuplicateUse = new HashMap<String, Integer>();
-		Map<String, Integer> preventDuplicateAssociation = new HashMap<String, Integer>();
+//		Map<String, Integer> preventDuplicateUse = new HashMap<String, Integer>();
+//		Map<String, Integer> preventDuplicateAssociation = new HashMap<String, Integer>();
 		String[] namet = c.getName().split("/");
 		String[] superNamet = c.getSuperClass().split("/");
 		ArrayList<String[]> interfacest = new ArrayList<String[]>();
@@ -106,73 +125,63 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 		if (DesignParser.CLASSES == null) {
 			return;
 		}
-		for (String clazz : DesignParser.CLASSES) {
-			for (IComponent j : c.getComponents()) {
-				String[] ca = c.getName().split("/");
-
-				if (j.getType().equals("Field")) {
-					String name = j.getDescription();
-					String[] s = clazz.split("\\.");
-					String[] s2 = name.split("/");
-					String field = s[s.length - 1];
-					String name2 = s2[s2.length - 1].replace(";", "");
-					if (name2.equals(field)) {
-						if (!preventDuplicateUse.containsKey(ca[ca.length - 1] + field)) {
-							write(ca[ca.length - 1] + " -> " + field + "[arrowhead=\"vee\", style=\"dashed\"];");
-							preventDuplicateUse.put(ca[ca.length - 1] + field, 1);
-						}
-					}
-					if (j.getSignature() != null) {
-						String[] sig = j.getSignature().split("/");
-						String signature = sig[sig.length - 1].replace(";>;", "");
-						if (signature.equals(field)) {
-							if (!preventDuplicateAssociation.containsKey(ca[ca.length - 1] + signature)) {
-								write(ca[ca.length - 1] + " -> " + signature + "[arrowhead=\"vee\"];");
-								preventDuplicateAssociation.put(ca[ca.length - 1] + signature, 1);
-							}
-						}
-
-					}
-				}
-
-				else if (j.getType().equals("Method")) {
-					String name = j.getDescription().split("\\)")[0];
-					String[] s = clazz.split("\\.");
-					String[] s2 = name.split("/");
-					String method = s[s.length - 1];
-					String name2 = s2[s2.length - 1].replace(";", "");
-					if (name2.equals(method)) {
-
-						if (!preventDuplicateAssociation.containsKey(ca[ca.length - 1] + method)) {
-							write(ca[ca.length - 1] + " -> " + method + "[arrowhead=\"vee\"];");
-							preventDuplicateAssociation.put(ca[ca.length - 1] + method, 1);
-
-						}
-					}
-					if (j.getSignature() != null) {
-						String[] sig = j.getSignature().split("/");
-						String signature = sig[sig.length - 1].replace(";>;", "");
-						if (signature.equals(method)) {
-							if (!preventDuplicateAssociation.containsKey(ca[ca.length - 1] + signature)) {
-
-								write(ca[ca.length - 1] + " -> " + signature + "[arrowhead=\"vee\"];");
-								preventDuplicateAssociation.put(ca[ca.length - 1] + signature, 1);
-							}
-						}
-					}
-				}
-			}
-		}
-		for (IRelation r : c.getRelations()) {
-			if (r.getType().equals("Singleton")) {
-				Singleton single = (Singleton) r;
-				if (single.isSingleton()) {
-					String[] classNameExtended = c.getName().split("/");
-					String className = classNameExtended[classNameExtended.length - 1];
-					write(className + " -> " + className + "[arrowhead=\"vee\"];");
-				}
-			}
-		}
+//		for (String clazz : DesignParser.CLASSES) {
+//			for (IComponent j : c.getComponents()) {
+//				String[] ca = c.getName().split("/");
+//
+//				if (j.getType().equals("Field")) {
+//					String name = j.getDescription();
+//					String[] s = clazz.split("\\.");
+//					String[] s2 = name.split("/");
+//					String field = s[s.length - 1];
+//					String name2 = s2[s2.length - 1].replace(";", "");
+//					if (name2.equals(field)) {
+//						if (!preventDuplicateUse.containsKey(ca[ca.length - 1] + field)) {
+//							write(ca[ca.length - 1] + " -> " + field + "[arrowhead=\"vee\", style=\"dashed\"];");
+//							preventDuplicateUse.put(ca[ca.length - 1] + field, 1);
+//						}
+//					}
+//					if (j.getSignature() != null) {
+//						String[] sig = j.getSignature().split("/");
+//						String signature = sig[sig.length - 1].replace(";>;", "");
+//						if (signature.equals(field)) {
+//							if (!preventDuplicateAssociation.containsKey(ca[ca.length - 1] + signature)) {
+//								write(ca[ca.length - 1] + " -> " + signature + "[arrowhead=\"vee\"];");
+//								preventDuplicateAssociation.put(ca[ca.length - 1] + signature, 1);
+//							}
+//						}
+//
+//					}
+//				}
+//
+//				else if (j.getType().equals("Method")) {
+//					String name = j.getDescription().split("\\)")[0];
+//					String[] s = clazz.split("\\.");
+//					String[] s2 = name.split("/");
+//					String method = s[s.length - 1];
+//					String name2 = s2[s2.length - 1].replace(";", "");
+//					if (name2.equals(method)) {
+//
+//						if (!preventDuplicateAssociation.containsKey(ca[ca.length - 1] + method)) {
+//							write(ca[ca.length - 1] + " -> " + method + "[arrowhead=\"vee\"];");
+//							preventDuplicateAssociation.put(ca[ca.length - 1] + method, 1);
+//
+//						}
+//					}
+//					if (j.getSignature() != null) {
+//						String[] sig = j.getSignature().split("/");
+//						String signature = sig[sig.length - 1].replace(";>;", "");
+//						if (signature.equals(method)) {
+//							if (!preventDuplicateAssociation.containsKey(ca[ca.length - 1] + signature)) {
+//
+//								write(ca[ca.length - 1] + " -> " + signature + "[arrowhead=\"vee\"];");
+//								preventDuplicateAssociation.put(ca[ca.length - 1] + signature, 1);
+//							}
+//						}
+//					}
+//				}
+//			}
+//		}
 	}
 
 	void addAccessLevel(int access) {

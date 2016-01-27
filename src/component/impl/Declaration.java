@@ -29,8 +29,6 @@ public class Declaration implements IDeclaration, ITraverser {
 		this.signature = signature;
 		this.superName = superName;
 		this.interfaces = interfaces;
-		addRelation(new Singleton(name));
-		//this.isabstract = isabstract;
 	}
 
 	@Override

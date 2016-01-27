@@ -1,4 +1,4 @@
-package umlMaker.app;
+package decoratorPatternTest;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -7,28 +7,27 @@ import java.util.ArrayList;
 
 import directory.reader.DirectoryReader;
 import problem.asm.DesignParser;
+import umlMaker.app.UMLGenerator;
 import umlMaker.impl.UMLMakerOutputStream;
 import visitor.api.ITraverser;
 import visitor.api.IVisitor;
 
-public class UMLMaker {
-
+public class TestDecoratorPattern {
 	public static void main(String[] args) throws IOException {
 		DesignParser parser = new DesignParser();
-		
 
-		DirectoryReader reader = new DirectoryReader("C:\\Users\\hennesbm\\Desktop\\CSSE374\\CSSE374V0id\\src");
-
+		DirectoryReader reader = new DirectoryReader(
+				"C:\\Users\\hennesbm\\Desktop\\CSSE374\\Labs\\Lab 4\\Lab4-2-Singleton\\src", "test.decoratorPattern");
 
 		ArrayList<String> files = reader.readDirectory();
-		
+
 		parser.main(files);
 
-		OutputStream xmlOut = new FileOutputStream("docs/UML.txt");
+		OutputStream xmlOut = new FileOutputStream("docs/UMLTestAdapterPattern.txt");
 		IVisitor xmlWriter = new UMLMakerOutputStream(xmlOut);
 
 		ITraverser traverser = (ITraverser) parser.model;
-		String title = "UsesTest";
+		String title = "DecoratorPattern";
 		xmlOut.write("digraph ".getBytes());
 		xmlOut.write(title.getBytes());
 		xmlOut.write(" { rankdir=BT;".getBytes());

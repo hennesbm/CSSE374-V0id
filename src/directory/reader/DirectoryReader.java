@@ -21,6 +21,7 @@ public class DirectoryReader {
 		this.projectDirectory = directory;
 	}
 	
+	@SuppressWarnings("static-access")
 	public DirectoryReader(String folder, String directory, String className, String method) {
 		this.projectFolder = folder;
 		this.projectDirectory = directory;
@@ -75,5 +76,15 @@ public class DirectoryReader {
 
 	private boolean containsDirectory() {
 		return this.directories.size() > 0;
+	}
+	
+	@SuppressWarnings("static-access")
+	public String getClassName() {
+		return this.className;
+	}
+	
+	@SuppressWarnings("static-access")
+	public String getMethod() {
+		return this.method;
 	}
 }

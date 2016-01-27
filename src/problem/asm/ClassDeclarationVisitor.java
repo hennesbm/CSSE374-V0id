@@ -10,9 +10,7 @@ import com.sun.org.apache.xpath.internal.compiler.OpCodes;
 import component.api.IDeclaration;
 import component.api.IModel;
 import component.impl.Declaration;
-import component.impl.Extend;
-import component.impl.Implement;
-import component.impl.Singleton;
+
 
 public class ClassDeclarationVisitor extends ClassVisitor {
 	private IModel _model;
@@ -24,18 +22,8 @@ public class ClassDeclarationVisitor extends ClassVisitor {
 
 	@Override
 	public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
-		this.declaration = new Declaration(version, access, name, signature, superName, interfaces);
-		System.out.println("Class: "+name+" extends "+superName+" implements "+Arrays.toString(interfaces));
-		
-		Implement imp = new Implement(name, interfaces);
-		declaration.addRelation(imp);
-		
-//		if ((access & Opcodes.ACC_ABSTRACT) != 0 && (access & Opcodes.ACC_INTERFACE) == 0){
-//			this.declaration = new Declaration(version, access, name, signature, superName, interfaces, true);
-//		}else{
-//			this.declaration = new Declaration(version, access, name, signature, superName, interfaces, false);
-//		}
-		
+
+		IDeclaration declaration = new Declaration(version, access, name, signature, superName, interfaces);
 		this._model.setCurrentClass(declaration);
 //		String nameforextend = name.replaceAll("/", ".");
 //		String supernameforextend = superName.replaceAll("/", ".");
