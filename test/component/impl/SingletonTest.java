@@ -11,7 +11,7 @@ public class SingletonTest {
 	private Singleton s;
 
 	public SingletonTest() {
-		s = new Singleton();
+		s = new Singleton(null);
 	}
 
 	@Test

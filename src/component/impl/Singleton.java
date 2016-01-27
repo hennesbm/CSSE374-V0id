@@ -7,14 +7,19 @@ import visitor.api.IVisitor;
 public class Singleton implements IRelation, ITraverser {
 	private boolean field = false;
 	private boolean method = false;
-		
+	private String classname = "";	
+	
+	public Singleton(String classname){
+		this.classname = classname;
+	}
+	
 	@Override
 	public String getType() {
 		return "Singleton";
 	}
 	@Override
 	public String getName() {
-		return null;
+		return this.classname;
 	}
 	@Override
 	public String getReference() {
@@ -41,4 +46,5 @@ public class Singleton implements IRelation, ITraverser {
 	public boolean isSingleton() {
 		return (isField() && isMethod());
 	}
+	
 }

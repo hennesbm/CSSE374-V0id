@@ -3,6 +3,8 @@ package component.impl;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.objectweb.asm.Opcodes;
+
 import component.api.IComponent;
 import component.api.IDeclaration;
 import component.api.IRelation;
@@ -18,6 +20,7 @@ public class Declaration implements IDeclaration, ITraverser {
 	private String[] interfaces;
 	private Collection<IComponent> components = new ArrayList<>();
 	private Collection<IRelation> relations = new ArrayList<>();
+	//private boolean isabstract = false;
 
 	public Declaration(int version, int access, String name, String signature, String superName, String[] interfaces) {
 		this.version = version;
@@ -26,7 +29,8 @@ public class Declaration implements IDeclaration, ITraverser {
 		this.signature = signature;
 		this.superName = superName;
 		this.interfaces = interfaces;
-		addRelation(new Singleton());
+		addRelation(new Singleton(name));
+		//this.isabstract = isabstract;
 	}
 
 	@Override
@@ -91,6 +95,20 @@ public class Declaration implements IDeclaration, ITraverser {
 			t.accept(v);
 		}
 		v.postVisit(this);
+	}
+	
+	public boolean isAbstract(){
+		if((access & Opcodes.ACC_ABSTRACT) != 0 && (access & Opcodes.ACC_INTERFACE) == 0){
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isInterface(){
+		if((access & Opcodes.ACC_ABSTRACT) != 0 && (access & Opcodes.ACC_INTERFACE) != 0){
+			return true;
+		}
+		return false;
 	}
 
 }

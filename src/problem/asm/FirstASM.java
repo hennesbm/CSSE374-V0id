@@ -11,7 +11,7 @@ public class FirstASM {
 
 	public static void main(String[] args) throws IOException {
 		// Read in this class
-		ClassReader reader = new ClassReader("problem.asm.DesignParser");
+		ClassReader reader = new ClassReader("headfirst.decorator.starbuzz.CondimentDecorator");
 		
 		
 		

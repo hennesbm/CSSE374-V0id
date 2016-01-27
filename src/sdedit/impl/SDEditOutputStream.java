@@ -25,6 +25,7 @@ public class SDEditOutputStream extends VisitorAdapter {
 	private Map<String, String> fieldMap;
 	private int counter = 0;
 	public static ArrayList<String> declare;
+	
 	public static ArrayList<String> methods;
 
 	public SDEditOutputStream(OutputStream out) throws IOException {

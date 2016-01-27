@@ -1,16 +1,11 @@
 package component.impl;
 
-import component.api.IRelation;
 import visitor.api.ITraverser;
 import visitor.api.IVisitor;
+import component.api.IRelation;
 
-public class Composition implements IRelation, ITraverser {
+public class Decorator implements IRelation, ITraverser{
 
-	
-	private String classname = "";
-	public Composition(String classname){
-		this.classname = classname;
-	}
 	@Override
 	public void accept(IVisitor v) {
 		v.preVisit(this);
@@ -20,12 +15,13 @@ public class Composition implements IRelation, ITraverser {
 
 	@Override
 	public String getType() {
-		return "Composition";
+		return  "Decorator";
 	}
 
 	@Override
 	public String getName() {
-		return this.classname;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -33,5 +29,7 @@ public class Composition implements IRelation, ITraverser {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
 
 }
