@@ -26,7 +26,9 @@ public class PatternParser {
 						
 			ClassVisitor adaptVisitor = new AdapterVisitor(Opcodes.ASM5, singletonVisitor, this.model);
 			
-			reader.accept(adaptVisitor, ClassReader.EXPAND_FRAMES);
+			ClassVisitor decoratorVisitor = new ClassDecoratorVisitor(Opcodes.ASM5, adaptVisitor, this.model);
+			
+			reader.accept(decoratorVisitor, ClassReader.EXPAND_FRAMES);
 		}
 	}
 }

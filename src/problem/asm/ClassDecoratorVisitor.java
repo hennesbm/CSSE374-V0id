@@ -9,6 +9,7 @@ import org.objectweb.asm.Type;
 
 import component.api.IDeclaration;
 import component.api.IModel;
+import component.api.IPattern;
 import component.api.IRelation;
 import component.impl.Component;
 import component.impl.Decorator;
@@ -16,6 +17,7 @@ import component.impl.Decorator;
 public class ClassDecoratorVisitor extends ClassVisitor {
 	private IModel _model;
 	private ArrayList<IDeclaration> superclass;
+	private IDeclaration current;
 	
 	public ClassDecoratorVisitor(int api, IModel model) {
 		super(api);
@@ -30,12 +32,14 @@ public class ClassDecoratorVisitor extends ClassVisitor {
 	}
 	@Override
 	public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
+		for(IDeclaration d: this._model.getAllClasses()){
+			if(d.getName().equals(name)){
+				this.current = d;
+			}
+			
+		}
+		
 		super.visit(version, access, name, signature, superName, interfaces);
-		System.out.println("name: " + name);
-		System.out.println("signature: " + signature);
-		System.out.println("superName: " + superName);
-		System.out.println("interfaces: " + Arrays.toString(interfaces));
-		System.out.println();
 	}
 
 		
@@ -49,33 +53,30 @@ public class ClassDecoratorVisitor extends ClassVisitor {
 		System.out.println("classtype-field: " + Type.getType(desc).getClassName());
 		
 		
-	
-		findAllSuper(this.superclass,this._model.getCurrentClass().getName());
-		
-		for(IDeclaration s: superclass){
-			String description = Type.getType(desc).getClassName().replaceAll("\\.", "/");
+
+			findAllSuper(this.superclass,this.current.getName());
 			
-			if(s.getName().equals(description)){
-				boolean flag = false;
-				for(IRelation r: s.getRelations()){
-					if(r.getType().equals("Component")){
-						flag = true;
-					}
-				}
-				if(!flag){
-					s.addRelation(new Component());
-				}
-				Decorator dec = new Decorator(s.getName());
-				//System.out.println(this._model.getCurrentClass().getName() + "->" + s.getName());
-				this._model.getCurrentClass().addRelation(dec);
+			for(IDeclaration s: superclass){
+				String description = Type.getType(desc).getClassName().replaceAll("\\.", "/");
 				
+				if(s.getName().equals(description)){
+					boolean flag = false;
+					
+					for(IPattern p: s.getPatterns()){
+						if(p.getType().equals("Component")){
+							flag = true;
+						}
+					}
+					if(!flag){
+						s.addPattern(new Decorator(this.current.getName(), "Component"));
+					}
+					Decorator dec = new Decorator(this.current.getName(),s.getName(),"Decorator");
+					this.current.addPattern(dec);
 
-
+				}
+				
 			}
-			
-		}
-		
-		
+			this.superclass.clear();
 		System.out.println();
 		
 		
@@ -88,7 +89,7 @@ public class ClassDecoratorVisitor extends ClassVisitor {
 		
 		for(IDeclaration c: classlist){
 			if(c.getName().equals(classname)){
-				if(!this._model.getCurrentClass().getName().equals(c.getName()) && !l.contains(c)){
+				if(!this.current.getName().equals(c.getName()) && !l.contains(c)){
 					l.add(c);
 				}
 				

@@ -55,6 +55,7 @@ public class DesignParser {
 			ClassVisitor usesVisitor = new UsesVisitor(Opcodes.ASM5, implementationVisitor, this.model);
 			
 			ClassVisitor compositionVisitor = new CompositionVisitor(Opcodes.ASM5, usesVisitor, this.model);
+			
 			// Tell the Reader to use our (heavily decorated) ClassVisitor to
 			// visit the class
 			reader.accept(compositionVisitor, ClassReader.EXPAND_FRAMES);

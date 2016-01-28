@@ -2,13 +2,24 @@ package component.impl;
 
 import visitor.api.ITraverser;
 import visitor.api.IVisitor;
+import component.api.IPattern;
 import component.api.IRelation;
 
-public class Decorator implements IRelation, ITraverser{
+public class Decorator implements IPattern {
 
-	private String decorated;
-	public Decorator(String decorated){
-		this.decorated = decorated;
+	private String decorates;
+	private String className;
+	private String component;
+	
+	public Decorator(String className, String component){
+		this.className = className;
+		this.component = component;
+	}
+	
+	public Decorator(String className, String decorates, String component){
+		this.className = className;
+		this.decorates = decorates;
+		this.component = component;
 	}
 	
 	@Override
@@ -23,10 +34,23 @@ public class Decorator implements IRelation, ITraverser{
 		return  "Decorator";
 	}
 	
-	public String getDecorated(){
-		return this.decorated;
+	public String getDecorates(){
+		return this.decorates;
+	}
+
+	@Override
+	public String getComponent() {
+		return this.component;
+	}
+
+	@Override
+	public String getColor() {
+		return "Green";
 	}
 	
+	public String getClassName(){
+		return this.className;
+	}
 	
 
 }

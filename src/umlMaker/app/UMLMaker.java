@@ -18,7 +18,7 @@ public class UMLMaker {
 		DesignParser parser = new DesignParser();
 		PatternParser parser2 = new PatternParser();
 		
-		DirectoryReader reader = new DirectoryReader("C:\\Users\\hennesbm\\Desktop\\CSSE374\\AdapterExample\\src");
+		DirectoryReader reader = new DirectoryReader("D:\\Bo Peng\\Development\\CSSE374\\Lab2-1\\src", "headfirst.decorator.starbuzz");
 
 		ArrayList<String> files = reader.readDirectory();
 		
@@ -29,7 +29,7 @@ public class UMLMaker {
 		IVisitor xmlWriter = new UMLMakerOutputStream(xmlOut);
 
 		ITraverser traverser = (ITraverser) parser2.model;
-		String title = "TurkeyAdapter";
+		String title = "Lab2_1";
 		xmlOut.write("digraph ".getBytes());
 		xmlOut.write(title.getBytes());
 		xmlOut.write(" { \n\trankdir=BT;\n\t".getBytes());
