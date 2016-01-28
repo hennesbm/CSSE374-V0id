@@ -17,7 +17,7 @@ public class TestDecoratorPattern {
 		DesignParser parser = new DesignParser();
 
 		DirectoryReader reader = new DirectoryReader(
-				"C:\\Users\\hennesbm\\Desktop\\CSSE374\\Labs\\Lab 4\\Lab4-2-Singleton\\src", "test.decoratorPattern");
+				"D:\\Bo Peng\\Development\\CSSE374\\CSSE374V0id\\test", "decoratorPattern");
 
 		ArrayList<String> files = reader.readDirectory();
 
@@ -35,7 +35,7 @@ public class TestDecoratorPattern {
 		xmlOut.write("}".getBytes());
 
 		xmlOut.close();
-		UMLGenerator g = new UMLGenerator(title);
+		UMLGenerator g = new UMLGenerator(title, "docs/UMLTestAdapterPattern.txt");
 		g.execute();
 	}
 }

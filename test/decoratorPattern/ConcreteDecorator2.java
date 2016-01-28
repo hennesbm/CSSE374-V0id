@@ -1,7 +1,9 @@
 package decoratorPattern;
 
 public class ConcreteDecorator2 extends AbstractDecorator {
-
+	
+	IComponent c;
+	
 	@Override
 	public void method1() {
 		System.out.println("This is ConcreteDecorator2 Method 1.");

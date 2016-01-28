@@ -35,7 +35,7 @@ public class TestAdapterPattern {
 		xmlOut.write("}".getBytes());
 
 		xmlOut.close();
-		UMLGenerator g = new UMLGenerator(title);
+		UMLGenerator g = new UMLGenerator(title, "docs/UMLTestAdapterPattern.txt");
 		g.execute();
 	}
 }

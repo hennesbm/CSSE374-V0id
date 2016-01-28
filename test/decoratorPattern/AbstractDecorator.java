@@ -1,7 +1,7 @@
 package decoratorPattern;
 
 public abstract class AbstractDecorator implements IComponent {
-	protected IComponent c;
+	public IComponent c;
 
 	public abstract void method1();
 

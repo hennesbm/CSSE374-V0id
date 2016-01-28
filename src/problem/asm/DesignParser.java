@@ -50,6 +50,7 @@ public class DesignParser {
 			// specific tasks
 			ClassVisitor extensionVisitor = new ExtensionVisitor(Opcodes.ASM5, methodVisitor, this.model);
 			
+<<<<<<< HEAD
 			ClassVisitor implementationVisitor = new ImplementationVisitor(Opcodes.ASM5, extensionVisitor, this.model);
 						
 			ClassVisitor usesVisitor = new UsesVisitor(Opcodes.ASM5, implementationVisitor, this.model);
@@ -58,6 +59,15 @@ public class DesignParser {
 			// Tell the Reader to use our (heavily decorated) ClassVisitor to
 			// visit the class
 			reader.accept(compositionVisitor, ClassReader.EXPAND_FRAMES);
+=======
+			ClassVisitor usesVisitor = new UsesVisitor(Opcodes.ASM5, singletonVisitor, this.model);
+			
+			ClassVisitor decoratorVisitor = new ClassDecoratorVisitor(Opcodes.ASM5, usesVisitor, this.model);
+			
+			// Tell the Reader to use our (heavily decorated) ClassVisitor to
+			// visit the class
+			reader.accept(decoratorVisitor, ClassReader.EXPAND_FRAMES);
+>>>>>>> origin/master
 //			System.out.println("\n]");
 		}
 //		System.out.println("End Of Code");

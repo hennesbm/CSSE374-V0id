@@ -6,6 +6,11 @@ import component.api.IRelation;
 
 public class Decorator implements IRelation, ITraverser{
 
+	private String decorated;
+	public Decorator(String decorated){
+		this.decorated = decorated;
+	}
+	
 	@Override
 	public void accept(IVisitor v) {
 		v.preVisit(this);
@@ -16,6 +21,10 @@ public class Decorator implements IRelation, ITraverser{
 	@Override
 	public String getType() {
 		return  "Decorator";
+	}
+	
+	public String getDecorated(){
+		return this.decorated;
 	}
 	
 	

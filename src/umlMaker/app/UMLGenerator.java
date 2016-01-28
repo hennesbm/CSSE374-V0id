@@ -9,15 +9,23 @@ import java.io.OutputStream;
 
 public class UMLGenerator {
 	String fileName;
+	String path;
 
-	public UMLGenerator(String fileName) {
+	public UMLGenerator(String fileName, String path) {
 		this.fileName = fileName;
+		this.path = path;
 	}
 
 	public void execute() {
 		try {
+<<<<<<< HEAD
 			String f = new File("docs\\input_output\\UML.txt").getAbsoluteFile().getPath();
 			String y = "images\\" + this.fileName + ".png";
+=======
+			//"docs\\UML.txt"
+			String f = new File(path).getAbsoluteFile().getPath();
+			String y = "docs\\" + this.fileName + ".png";
+>>>>>>> origin/master
 			String z = new File(y).getAbsoluteFile().getPath();
 			String path = "\"graphviz\\Graphviz2.38\\bin\\dot\" -Tpng " + "\"" + f + "\"";
 			Process p = Runtime.getRuntime().exec(path);
@@ -38,7 +46,7 @@ public class UMLGenerator {
 	}
 
 	public static void main(String[] args) {
-		UMLGenerator unifier = new UMLGenerator("Test0");
+		UMLGenerator unifier = new UMLGenerator("Test0","docs\\UML.txt");
 		unifier.execute();
 	}
 }
