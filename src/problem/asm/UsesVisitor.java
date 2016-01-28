@@ -39,8 +39,7 @@ public class UsesVisitor extends ClassVisitor {
 			if (r.getType().equals("Uses")) {
 				Uses u = (Uses) r;
 				if (u.getClassName().equals(classNameParts[classNameParts.length - 1])
-						&& u.getReferenceName().equals(referenceName)) {
-					return;
+						&& u.getReferenceName().equals(referenceName)) {					return;
 				}
 			}
 		}

@@ -10,13 +10,9 @@ import component.api.IComponent;
 import component.api.IDeclaration;
 import component.api.IPattern;
 import component.api.IRelation;
-<<<<<<< HEAD
 import component.impl.Adapter;
 import component.impl.Composition;
 import component.impl.Extends;
-=======
-import component.impl.Decorator;
->>>>>>> origin/master
 import component.impl.Field;
 import component.impl.Implements;
 import component.impl.Method;
@@ -80,17 +76,18 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 		}
 		write("\n");
 	}
-	
+
 	@Override
 	public void visit(IPattern p) {
 		write("\t");
-		if(p.getType().equals("Singleton")) {
-			Singleton s = (Singleton)p;
+		if (p.getType().equals("Singleton")) {
+			Singleton s = (Singleton) p;
 			write(s.getClassName() + " -> " + s.getClassName() + "[arrowhead=\"vee\"];");
-		} else if(p.getType().equals("Adapter")) {
-			Adapter a = (Adapter)p;
-			if(a.getComponent().equals("Adapter")) {
-				write(a.getClassName() + " -> " + a.getAdaptee() + "[arrowhead=\"vee\", label=\"\\<\\<adapts\\>\\>\"];");
+		} else if (p.getType().equals("Adapter")) {
+			Adapter a = (Adapter) p;
+			if (a.getComponent().equals("Adapter")) {
+				write(a.getClassName() + " -> " + a.getAdaptee()
+						+ "[arrowhead=\"vee\", label=\"\\<\\<adapts\\>\\>\"];");
 			}
 		}
 		write("\n");
@@ -99,7 +96,6 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 	@Override
 	public void preVisit(IDeclaration c) {
 		String[] namet = c.getName().split("/");
-<<<<<<< HEAD
 		write("\n\t" + namet[namet.length - 1] + "[\n\t\t");
 		write("shape=\"record\",\n\t\t");
 		if (!c.getPatterns().isEmpty()) {
@@ -108,38 +104,6 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 		write("label = \"{" + namet[namet.length - 1] + "\\n");
 		if (!c.getPatterns().isEmpty()) {
 			write("\\<\\<" + c.getPatterns().iterator().next().getComponent() + "\\>\\>\n\t\t");
-=======
-		write(namet[namet.length - 1] + "[");
-		write("shape=\"record\",");
-		for (IRelation r : c.getRelations()) {
-			if (r.getType().equals("Singleton")) {
-				write("fillcolor = \"blue\";style=\"filled\";");
-				break;
-			}
-			if (r.getType().equals("Decorator")) {
-				write("fillcolor = \"green\";style=\"filled\";");
-				break;
-			}
-			if (r.getType().equals("Component")) {
-				write("fillcolor = \"green\";style=\"filled\";");
-				break;
-			}
-		}
-		write("label = \"{" + namet[namet.length - 1] + "\\n");
-		for (IRelation r : c.getRelations()) {
-			if (r.getType().equals("Singleton")) {
-				write("\\<\\<Singleton\\>\\>");
-				break;
-			}
-			if (r.getType().equals("Decorator")) {
-				write("\\<\\<Decorator\\>\\>");
-				break;
-			}
-			if (r.getType().equals("Component")) {
-				write("\\<\\<Component\\>\\>");
-				break;
-			}
->>>>>>> origin/master
 		}
 		write("\n\t\t|\n\t\t");
 	}
@@ -151,55 +115,18 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 
 	@Override
 	public void postVisit(IDeclaration c) {
-<<<<<<< HEAD
 		write("}\"\n\t");
 		write("];\n\n");
-=======
-//		Map<String, Integer> preventDuplicateUse = new HashMap<String, Integer>();
-//		Map<String, Integer> preventDuplicateAssociation = new HashMap<String, Integer>();
-		String[] namet = c.getName().split("/");
-		String[] superNamet = c.getSuperClass().split("/");
-		ArrayList<String[]> interfacest = new ArrayList<String[]>();
-		for (String i : c.getInterfaces()) {
-			interfacest.add(i.split("/"));
-		}
-
-		write("}\"");
-		write("];");
-
-		if (!superNamet[superNamet.length - 1].equals("Object"))
-			write(namet[namet.length - 1] + " -> " + superNamet[superNamet.length - 1] + " [arrowhead=\"onormal\"];");
-		for (String[] i : interfacest) {
-
-			String inter = i[i.length - 1];
-			write(namet[namet.length - 1] + " -> " + inter + " [arrowhead=\"onormal\", style=\"dashed\"];");
-		}
-		
-		for (IRelation r : c.getRelations()) {
-			if (r.getType().equals("Decorator")) {
-				Decorator rdec = (Decorator)r;
-				String[] rreference = rdec.getDecorated().split("/");
-				write(namet[namet.length - 1] + " -> " + rreference[rreference.length - 1] + " [arrowhead=\"onormal\", label = \"<<decorates>>\"];");
-				break;
-				//"label = "" "
-			}
-		}
-		
-		if (DesignParser.CLASSES == null) {
-			return;
-		}
-
->>>>>>> origin/master
 	}
 
 	private void addAccessLevel(int access) {
 		String level = "";
 		if ((access & Opcodes.ACC_PUBLIC) != 0) {
 			level = "+";
-		} else if ((access & Opcodes.ACC_PRIVATE) != 0) {
-			level = "-";
 		} else if ((access & Opcodes.ACC_PROTECTED) != 0) {
 			level = "#";
+		} else if ((access & Opcodes.ACC_PRIVATE) != 0) {
+			level = "-";
 		} else {
 			level = "";
 		}

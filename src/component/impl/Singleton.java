@@ -4,6 +4,7 @@ import component.api.IPattern;
 import visitor.api.IVisitor;
 
 public class Singleton implements IPattern {
+
 	private String className;
 		
 	public Singleton(String className) {
@@ -21,7 +22,7 @@ public class Singleton implements IPattern {
 		v.visit(this);
 		v.postVisit(this);
 	}
-
+	
 	@Override
 	public String getComponent() {
 		return "Singleton";

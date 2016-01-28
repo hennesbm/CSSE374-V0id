@@ -12,7 +12,7 @@ public class Composition implements IRelation, ITraverser {
 		this.className = className;
 		this.referenceName = referenceName;
 	}
-
+	
 	@Override
 	public void accept(IVisitor v) {
 		v.preVisit(this);
@@ -32,4 +32,5 @@ public class Composition implements IRelation, ITraverser {
 	public String getReferenceName() {
 		return this.referenceName;
 	}
+
 }

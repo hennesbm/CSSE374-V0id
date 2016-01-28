@@ -15,9 +15,7 @@ import component.impl.Decorator;
 
 public class ClassDecoratorVisitor extends ClassVisitor {
 	private IModel _model;
-	private boolean isDecorator;
 	private ArrayList<IDeclaration> superclass;
-	private ArrayList<IDeclaration> components;
 	
 	public ClassDecoratorVisitor(int api, IModel model) {
 		super(api);
@@ -86,7 +84,7 @@ public class ClassDecoratorVisitor extends ClassVisitor {
 	
 	public void findAllSuper(ArrayList<IDeclaration> l, String classname){
 		ArrayList<String> currentsupernames = new ArrayList<String>();
-		ArrayList<IDeclaration> classlist = this._model.getClassList();
+		ArrayList<IDeclaration> classlist = this._model.getAllClasses();
 		
 		for(IDeclaration c: classlist){
 			if(c.getName().equals(classname)){

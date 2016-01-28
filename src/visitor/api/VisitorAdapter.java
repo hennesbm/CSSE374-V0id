@@ -42,7 +42,7 @@ public abstract class VisitorAdapter implements IVisitor {
 	@Override
 	public void postVisit(IRelation r) {
 	}
-	
+
 	@Override
 	public void preVisit(IPattern p) {
 	}
@@ -54,7 +54,7 @@ public abstract class VisitorAdapter implements IVisitor {
 	@Override
 	public void postVisit(IPattern p) {
 	}
-
+	
 	@Override
 	public void preVisit(IStatement s) {
 	}

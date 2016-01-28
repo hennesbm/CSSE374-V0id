@@ -14,6 +14,11 @@ public class SingletonTest {
 	}
 	
 	@Test
+	public void testGetClassName() {
+		assertEquals("Test", s.getClassName());
+	}
+
+	@Test
 	public void testGetType() {
 		assertEquals("Singleton", s.getType());
 	}

@@ -18,16 +18,10 @@ public class UMLGenerator {
 
 	public void execute() {
 		try {
-<<<<<<< HEAD
 			String f = new File("docs\\input_output\\UML.txt").getAbsoluteFile().getPath();
 			String y = "images\\" + this.fileName + ".png";
-=======
-			//"docs\\UML.txt"
-			String f = new File(path).getAbsoluteFile().getPath();
-			String y = "docs\\" + this.fileName + ".png";
->>>>>>> origin/master
 			String z = new File(y).getAbsoluteFile().getPath();
-			String path = "\"graphviz\\Graphviz2.38\\bin\\dot\" -Tpng " + "\"" + f + "\"";
+			String path = "\"C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot\" -Tpng " + "\"" + f + "\"";
 			Process p = Runtime.getRuntime().exec(path);
 			InputStream inputStream = p.getInputStream();
 			File file = new File(z);

@@ -12,8 +12,7 @@ public class Field implements IComponent, ITraverser {
 	private Object value;
 	private String className;
 
-	public Field(int access, String name, String desc, String signature, Object value, String className) {
-		this.access = access;
+	public Field(int access, String name, String desc, String signature, Object value, String className) {		this.access = access;
 		this.name = name;
 		this.description = desc;
 		this.signature = signature;

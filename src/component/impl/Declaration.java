@@ -110,7 +110,7 @@ public class Declaration implements IDeclaration, ITraverser {
 		}
 		return false;
 	}
-
+	
 	@Override
 	public Collection<IPattern> getPatterns() {
 		return this.patterns;

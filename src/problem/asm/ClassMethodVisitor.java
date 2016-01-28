@@ -27,9 +27,9 @@ public class ClassMethodVisitor extends ClassVisitor {
 		MethodVisitor toDecorate = super.visitMethod(access, name, desc, signature, exceptions);
 		MethodVisitor newMethodVisitor  = new InvokeVisitor(this.api, toDecorate, this._model, name);
 		// newMethodVisitor.visitInvokeInsn(access, name, desc);
+
 		String[] classNameParts = this._model.getCurrentClass().getName().split("/");
-		Method method = new Method(access, name, desc, signature, exceptions, classNameParts[classNameParts.length - 1]);
-		this._model.getCurrentClass().addComponent(method);
+		Method method = new Method(access, name, desc, signature, exceptions, classNameParts[classNameParts.length - 1]);		this._model.getCurrentClass().addComponent(method);
 		return newMethodVisitor;
 	}
 }

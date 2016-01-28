@@ -20,7 +20,7 @@ public class TestUMLMakerImpl {
 
 	@Test
 	public void testVisitDeclaration() throws IOException {
-		String out = new File("docs\\input_output\\TestUMLMakerImpl.txt").getAbsoluteFile().getPath();
+		String out = new File("docs\\TestUMLMakerImpl.txt").getAbsoluteFile().getPath();
 		FileOutputStream fop = new FileOutputStream(out);
 		UMLMakerOutputStream stream = new UMLMakerOutputStream(fop);
 		String[] interfaces = {"Interface 1","Interface 2"};
@@ -37,7 +37,7 @@ public class TestUMLMakerImpl {
 	
 	@Test
 	public void testVisitField() throws IOException {
-		String out = new File("docs\\input_output\\TestUMLMakerImpl.txt").getAbsoluteFile().getPath();
+		String out = new File("docs\\TestUMLMakerImpl.txt").getAbsoluteFile().getPath();
 		FileOutputStream fop = new FileOutputStream(out);
 		UMLMakerOutputStream stream = new UMLMakerOutputStream(fop);
 		Field ife = new Field(2, "This is a name", "This is a desc", "This.is.a.signature", null, null);
@@ -53,7 +53,7 @@ public class TestUMLMakerImpl {
 	
 	@Test
 	public void testVisitMethod() throws IOException {
-		String out = new File("docs\\input_output\\TestUMLMakerImpl.txt").getAbsoluteFile().getPath();
+		String out = new File("docs\\TestUMLMakerImpl.txt").getAbsoluteFile().getPath();
 		FileOutputStream fop = new FileOutputStream(out);
 		UMLMakerOutputStream stream = new UMLMakerOutputStream(fop);
 		Method im = new Method(2, "This is a name", null, "This.is.a.signature", null, null);

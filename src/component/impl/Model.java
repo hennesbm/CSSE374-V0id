@@ -30,11 +30,6 @@ public class Model implements IModel, ITraverser {
 	}
 	
 	@Override
-	public ArrayList<IDeclaration> getClassList(){
-		return this.classList;
-	}
-	
-	@Override
 	public void accept(IVisitor v) {
 		for (IDeclaration clazz : this.classList) {
 			v.preVisit(clazz);
@@ -65,12 +60,14 @@ public class Model implements IModel, ITraverser {
 					p.accept(v);
 				}
 			}
-		
 		}
+
+
 	}
 
 	@Override
 	public ArrayList<IDeclaration> getAllClasses() {
 		return this.classList;
 	}
+
 }

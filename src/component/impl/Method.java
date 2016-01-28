@@ -12,8 +12,7 @@ public class Method implements IComponent, ITraverser {
 	private String[] exceptions;
 	private String className;
 
-	public Method(int access, String name, String desc, String signature, String[] exceptions, String className) {
-		this.access = access;
+	public Method(int access, String name, String desc, String signature, String[] exceptions, String className) {		this.access = access;
 		this.name = name;
 		this.description = desc;
 		this.signature = signature;

@@ -24,7 +24,7 @@ public class SingletonVisitor extends ClassVisitor {
 		super(api, decorated);
 		this._model = model;
 	}
-
+	
 	public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
 		super.visit(version, access, name, signature, superName, interfaces);
 		this.currentClass = name;
