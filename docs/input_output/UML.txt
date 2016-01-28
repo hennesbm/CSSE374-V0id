@@ -1,0 +1,75 @@
+digraph TurkeyAdapter { 
+	rankdir=BT;
+	splines=ortho;
+
+	Duck[
+		shape="record",
+		color = "red";
+		label = "{Duck\n\<\<Target\>\>
+		
+		|
+		|
+		+ quack() : void\l
+		+ fly() : void\l
+		}"
+	];
+
+	Duck -> Object [arrowhead="onormal"];
+	
+	
+	
+	
+
+	MallardDuck[
+		shape="record",
+		label = "{MallardDuck\n
+		|
+		|
+		+ MallardDuck() : void\l
+		+ quack() : void\l
+		+ fly() : void\l
+		}"
+	];
+
+	MallardDuck -> Object [arrowhead="onormal"];
+	MallardDuck -> Duck[arrowhead="onormal", style="dashed"];
+
+	Turkey[
+		shape="record",
+		color = "red";
+		label = "{Turkey\n\<\<Adaptee\>\>
+		
+		|
+		|
+		+ gobble() : void\l
+		+ fly() : void\l
+		}"
+	];
+
+	Turkey -> Object [arrowhead="onormal"];
+	
+	
+	
+	
+
+	TurkeyAdapater[
+		shape="record",
+		color = "red";
+		label = "{TurkeyAdapater\n\<\<Adapter\>\>
+		
+		|
+		 turkey : Turkey\l
+		|
+		+ TurkeyAdapater(Turkey) : void\l
+		+ quack() : void\l
+		+ fly() : void\l
+		}"
+	];
+
+	TurkeyAdapater -> Object [arrowhead="onormal"];
+	TurkeyAdapater -> Duck[arrowhead="onormal", style="dashed"];
+	TurkeyAdapater -> Turkey[arrowhead="vee"];
+	TurkeyAdapater -> Turkey[arrowhead="vee", style="dashed"];
+	TurkeyAdapater -> Turkey[arrowhead="vee", label="\<\<adapts\>\>"];
+
+}

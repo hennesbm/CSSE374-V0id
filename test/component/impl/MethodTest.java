@@ -21,7 +21,7 @@ public class MethodTest {
 		this.signature = "Chi Zhang";
 		this.exceptions = new String[100];
 
-		m = new Method(access, name, description, signature, exceptions);
+		m = new Method(access, name, description, signature, exceptions, null);
 	}
 
 	@Test

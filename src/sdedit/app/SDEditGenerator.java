@@ -1,5 +1,6 @@
 package sdedit.app;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 
@@ -12,13 +13,16 @@ public class SDEditGenerator {
 
 	public void execute() {
 		try {
-			String f = new File("docs\\SDEdit.txt").getAbsoluteFile().getPath();
-			String y = "docs\\" + this.fileName + ".png";
+			String f = new File("docs\\input_output\\SDEdit.txt").getAbsoluteFile().getPath();
+			String y = "images\\" + this.fileName + ".png";
 			String z = new File(y).getAbsoluteFile().getPath();
 			String app = "sdedit\\sdedit-4.2-beta1.exe";
 			String path = "\"" + new File(app).getAbsoluteFile().getPath() + "\"" + " -o " + "\"" + z +"\"" +  " -t png \"" + f + "\"";
 			@SuppressWarnings("unused")
 			Process p = Runtime.getRuntime().exec(path);
+			File file = new File(z);
+			Desktop dsk = Desktop.getDesktop();
+			dsk.open(file);
 //			InputStream inputStream = p.getInputStream();
 //			OutputStream outputStream = new FileOutputStream(new File(z));
 //			int read = 0;

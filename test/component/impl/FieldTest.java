@@ -20,7 +20,7 @@ public class FieldTest {
 		desc = "this is a test";
 		signature = "Chi Zhang";
 		value = new Object();
-		this.f = new Field(access, name, desc, signature, value);
+		this.f = new Field(access, name, desc, signature, value, null);
 	}
 
 	@Test

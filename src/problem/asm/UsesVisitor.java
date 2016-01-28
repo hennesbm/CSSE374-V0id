@@ -27,10 +27,7 @@ public class UsesVisitor extends ClassVisitor {
 		for (Type type : Type.getArgumentTypes(desc)) {
 			String typeName = type.toString();
 			String[] typeParts = typeName.split("\\.");
-			if (!typeParts[0].equals("java") && !typeParts[0].equals("int") && !typeParts[0].equals("boolean")
-					&& !typeParts[0].equals("org")) {
-				setUsesRelation(typeParts[typeParts.length - 1]);
-			}
+			setUsesRelation(typeParts[typeParts.length - 1]);
 		}
 		return toDecorate;
 	}
@@ -41,7 +38,8 @@ public class UsesVisitor extends ClassVisitor {
 		for (IRelation r : this._model.getCurrentClass().getRelations()) {
 			if (r.getType().equals("Uses")) {
 				Uses u = (Uses) r;
-				if(u.getClassName().equals(classNameParts[classNameParts.length - 1]) && u.getReferenceName().equals(referenceName)){
+				if (u.getClassName().equals(classNameParts[classNameParts.length - 1])
+						&& u.getReferenceName().equals(referenceName)) {
 					return;
 				}
 			}

@@ -21,8 +21,9 @@ public class ClassFieldVisitor extends ClassVisitor {
 
 	public FieldVisitor visitField(int access, String name, String desc, String signature, Object value) {
 		FieldVisitor toDecorate = super.visitField(access, name, desc, signature, value);
-		Field field = new Field(access, name, desc, signature, value);
+		String[] classNameParts = this._model.getCurrentClass().getName().split("/");
+		Field field = new Field(access, name, desc, signature, value, classNameParts[classNameParts.length - 1]);
 		this._model.getCurrentClass().addComponent(field);
 		return toDecorate;
-	};
+	}
 }

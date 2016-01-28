@@ -10,13 +10,15 @@ public class Method implements IComponent, ITraverser {
 	private String description;
 	private String signature;
 	private String[] exceptions;
+	private String className;
 
-	public Method(int access, String name, String desc, String signature, String[] exceptions) {
+	public Method(int access, String name, String desc, String signature, String[] exceptions, String className) {
 		this.access = access;
 		this.name = name;
 		this.description = desc;
 		this.signature = signature;
 		this.exceptions = exceptions;
+		this.className = className;
 	}
 
 	public int getAccess() {
@@ -52,6 +54,10 @@ public class Method implements IComponent, ITraverser {
 	@Override
 	public String getType() {
 		return "Method";
+	}
+	
+	public String getClassName() {
+		return this.className;
 	}
 
 }

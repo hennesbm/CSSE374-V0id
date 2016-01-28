@@ -10,13 +10,15 @@ public class Field implements IComponent, ITraverser {
 	private String description;
 	private String signature;
 	private Object value;
+	private String className;
 
-	public Field(int access, String name, String desc, String signature, Object value) {
+	public Field(int access, String name, String desc, String signature, Object value, String className) {
 		this.access = access;
 		this.name = name;
 		this.description = desc;
 		this.signature = signature;
 		this.value = value;
+		this.className = className;
 	}
 
 	public int getAccess() {
@@ -52,6 +54,10 @@ public class Field implements IComponent, ITraverser {
 	@Override
 	public String getType() {
 		return "Field";
+	}
+	
+	public String getClassName() {
+		return this.className;
 	}
 
 }

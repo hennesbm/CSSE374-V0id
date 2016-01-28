@@ -11,6 +11,8 @@ public interface IDeclaration {
 	public String[] getInterfaces();
 	public void addComponent(IComponent c);
 	public Collection<IComponent> getComponents();
-	Collection<IRelation> getRelations();
-	void addRelation(IRelation r);
+	public Collection<IRelation> getRelations();
+	public void addRelation(IRelation r);
+	public Collection<IPattern> getPatterns();
+	public void addPattern(IPattern p);
 }

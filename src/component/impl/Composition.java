@@ -5,12 +5,14 @@ import visitor.api.ITraverser;
 import visitor.api.IVisitor;
 
 public class Composition implements IRelation, ITraverser {
-
+	private String className;
+	private String referenceName;
 	
-	private String classname = "";
-	public Composition(String classname){
-		this.classname = classname;
+	public Composition(String className, String referenceName) {
+		this.className = className;
+		this.referenceName = referenceName;
 	}
+
 	@Override
 	public void accept(IVisitor v) {
 		v.preVisit(this);
@@ -22,5 +24,12 @@ public class Composition implements IRelation, ITraverser {
 	public String getType() {
 		return "Composition";
 	}
+	
+	public String getClassName() {
+		return this.className;
+	}
 
+	public String getReferenceName() {
+		return this.referenceName;
+	}
 }

@@ -1,5 +1,6 @@
 package umlMaker.app;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,19 +16,22 @@ public class UMLGenerator {
 
 	public void execute() {
 		try {
-			String f = new File("docs\\UML.txt").getAbsoluteFile().getPath();
-			String y = "docs\\" + this.fileName + ".png";
+			String f = new File("docs\\input_output\\UML.txt").getAbsoluteFile().getPath();
+			String y = "images\\" + this.fileName + ".png";
 			String z = new File(y).getAbsoluteFile().getPath();
-			String path = "\"C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot\" -Tpng " + "\"" + f + "\"";
+			String path = "\"graphviz\\Graphviz2.38\\bin\\dot\" -Tpng " + "\"" + f + "\"";
 			Process p = Runtime.getRuntime().exec(path);
 			InputStream inputStream = p.getInputStream();
-			OutputStream outputStream = new FileOutputStream(new File(z));
+			File file = new File(z);
+			OutputStream outputStream = new FileOutputStream(file);
 			int read = 0;
 			byte[] bytes = new byte[1024];
 			while ((read = inputStream.read(bytes)) != -1) {
 				outputStream.write(bytes, 0, read);
 			}
 			outputStream.close();
+			Desktop dsk = Desktop.getDesktop();
+			dsk.open(file);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -2,21 +2,22 @@ package umlMaker.impl;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
 import component.api.IComponent;
 import component.api.IDeclaration;
+import component.api.IPattern;
 import component.api.IRelation;
+import component.impl.Adapter;
+import component.impl.Composition;
+import component.impl.Extends;
 import component.impl.Field;
+import component.impl.Implements;
 import component.impl.Method;
 import component.impl.Singleton;
 import component.impl.Uses;
-import problem.asm.DesignParser;
 import visitor.api.VisitorAdapter;
 
 public class UMLMakerOutputStream extends VisitorAdapter {
@@ -42,155 +43,88 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 			addAccessLevel(f.getAccess());
 			addColon(f.getName());
 			addEnter(type);
-			if (f.getSignature() != null) {
-				addReturnTypeType(f.getSignature());
-			}
-			write("\\l");
 		} else if (c.getType().equals("Method")) {
 			Method m = (Method) c;
-			if (m.getName().equals("<init>"))
-				return;
 			addAccessLevel(m.getAccess());
-			write(m.getName() + "(");
+			if (m.getName().equals("<init>")) {
+				write(m.getClassName() + "(");
+			} else {
+				write(m.getName() + "(");
+			}
 			addArguments(m.getDescription());
 			write(") : ");
 			addReturnType(m.getDescription());
-			if (m.getSignature() != null) {
-				addReturnTypeType(m.getSignature());
-
-			}
-			write("\\l");
 		}
+		write("\\l\n\t\t");
 	}
 
 	@Override
 	public void visit(IRelation r) {
-		if (r.getType().equals("Singleton")) {
-			Singleton s = (Singleton) r;
-			write(s.getClassName() + " -> " + s.getClassName() + "[arrowhead=\"vee\"];");
-		}
-		else if(r.getType().equals("Uses")) {
+		write("\t");
+		if (r.getType().equals("Extends")) {
+			Extends e = (Extends) r;
+			write(e.getClassName() + " -> " + e.getReferenceName() + " [arrowhead=\"onormal\"];");
+		} else if (r.getType().equals("Implements")) {
+			Implements i = (Implements) r;
+			write(i.getClassName() + " -> " + i.getReferenceName() + "[arrowhead=\"onormal\", style=\"dashed\"];");
+		} else if (r.getType().equals("Uses")) {
 			Uses u = (Uses) r;
 			write(u.getClassName() + " -> " + u.getReferenceName() + "[arrowhead=\"vee\", style=\"dashed\"];");
+		} else if (r.getType().equals("Composition")) {
+			Composition c = (Composition) r;
+			write(c.getClassName() + " -> " + c.getReferenceName() + "[arrowhead=\"vee\"];");
 		}
+		write("\n");
+	}
+	
+	@Override
+	public void visit(IPattern p) {
+		write("\t");
+		if(p.getType().equals("Singleton")) {
+			Singleton s = (Singleton)p;
+			write(s.getClassName() + " -> " + s.getClassName() + "[arrowhead=\"vee\"];");
+		} else if(p.getType().equals("Adapter")) {
+			Adapter a = (Adapter)p;
+			if(a.getComponent().equals("Adapter")) {
+				write(a.getClassName() + " -> " + a.getAdaptee() + "[arrowhead=\"vee\", label=\"\\<\\<adapts\\>\\>\"];");
+			}
+		}
+		write("\n");
 	}
 
 	@Override
 	public void preVisit(IDeclaration c) {
 		String[] namet = c.getName().split("/");
-		write(namet[namet.length - 1] + "[");
-		write("shape=\"record\",");
-		for (IRelation r : c.getRelations()) {
-			if (r.getType().equals("Singleton")) {
-				write("color = \"blue\";");
-				break;
-			}
+		write("\n\t" + namet[namet.length - 1] + "[\n\t\t");
+		write("shape=\"record\",\n\t\t");
+		if (!c.getPatterns().isEmpty()) {
+			write("color = \"" + c.getPatterns().iterator().next().getColor() + "\";\n\t\t");
 		}
 		write("label = \"{" + namet[namet.length - 1] + "\\n");
-		for (IRelation r : c.getRelations()) {
-			if (r.getType().equals("Singleton")) {
-				write("\\<\\<Singleton\\>\\>");
-				break;
-			}
+		if (!c.getPatterns().isEmpty()) {
+			write("\\<\\<" + c.getPatterns().iterator().next().getComponent() + "\\>\\>\n\t\t");
 		}
-		write("|");
+		write("\n\t\t|\n\t\t");
 	}
 
 	@Override
 	public void visit(IDeclaration c) {
-		write("|");
+		write("|\n\t\t");
 	}
 
 	@Override
 	public void postVisit(IDeclaration c) {
-//		Map<String, Integer> preventDuplicateUse = new HashMap<String, Integer>();
-//		Map<String, Integer> preventDuplicateAssociation = new HashMap<String, Integer>();
-		String[] namet = c.getName().split("/");
-		String[] superNamet = c.getSuperClass().split("/");
-		ArrayList<String[]> interfacest = new ArrayList<String[]>();
-		for (String i : c.getInterfaces()) {
-			interfacest.add(i.split("/"));
-		}
-
-		write("}\"");
-		write("];");
-
-		if (!superNamet[superNamet.length - 1].equals("Object"))
-			write(namet[namet.length - 1] + " -> " + superNamet[superNamet.length - 1] + " [arrowhead=\"onormal\"];");
-		for (String[] i : interfacest) {
-
-			String inter = i[i.length - 1];
-			write(namet[namet.length - 1] + " -> " + inter + " [arrowhead=\"onormal\", style=\"dashed\"];");
-		}
-		if (DesignParser.CLASSES == null) {
-			return;
-		}
-//		for (String clazz : DesignParser.CLASSES) {
-//			for (IComponent j : c.getComponents()) {
-//				String[] ca = c.getName().split("/");
-//
-//				if (j.getType().equals("Field")) {
-//					String name = j.getDescription();
-//					String[] s = clazz.split("\\.");
-//					String[] s2 = name.split("/");
-//					String field = s[s.length - 1];
-//					String name2 = s2[s2.length - 1].replace(";", "");
-//					if (name2.equals(field)) {
-//						if (!preventDuplicateUse.containsKey(ca[ca.length - 1] + field)) {
-//							write(ca[ca.length - 1] + " -> " + field + "[arrowhead=\"vee\", style=\"dashed\"];");
-//							preventDuplicateUse.put(ca[ca.length - 1] + field, 1);
-//						}
-//					}
-//					if (j.getSignature() != null) {
-//						String[] sig = j.getSignature().split("/");
-//						String signature = sig[sig.length - 1].replace(";>;", "");
-//						if (signature.equals(field)) {
-//							if (!preventDuplicateAssociation.containsKey(ca[ca.length - 1] + signature)) {
-//								write(ca[ca.length - 1] + " -> " + signature + "[arrowhead=\"vee\"];");
-//								preventDuplicateAssociation.put(ca[ca.length - 1] + signature, 1);
-//							}
-//						}
-//
-//					}
-//				}
-//
-//				else if (j.getType().equals("Method")) {
-//					String name = j.getDescription().split("\\)")[0];
-//					String[] s = clazz.split("\\.");
-//					String[] s2 = name.split("/");
-//					String method = s[s.length - 1];
-//					String name2 = s2[s2.length - 1].replace(";", "");
-//					if (name2.equals(method)) {
-//
-//						if (!preventDuplicateAssociation.containsKey(ca[ca.length - 1] + method)) {
-//							write(ca[ca.length - 1] + " -> " + method + "[arrowhead=\"vee\"];");
-//							preventDuplicateAssociation.put(ca[ca.length - 1] + method, 1);
-//
-//						}
-//					}
-//					if (j.getSignature() != null) {
-//						String[] sig = j.getSignature().split("/");
-//						String signature = sig[sig.length - 1].replace(";>;", "");
-//						if (signature.equals(method)) {
-//							if (!preventDuplicateAssociation.containsKey(ca[ca.length - 1] + signature)) {
-//
-//								write(ca[ca.length - 1] + " -> " + signature + "[arrowhead=\"vee\"];");
-//								preventDuplicateAssociation.put(ca[ca.length - 1] + signature, 1);
-//							}
-//						}
-//					}
-//				}
-//			}
-//		}
+		write("}\"\n\t");
+		write("];\n\n");
 	}
 
-	void addAccessLevel(int access) {
+	private void addAccessLevel(int access) {
 		String level = "";
 		if ((access & Opcodes.ACC_PUBLIC) != 0) {
 			level = "+";
-		} else if ((access & Opcodes.ACC_PROTECTED) != 0) {
-			level = "-";
 		} else if ((access & Opcodes.ACC_PRIVATE) != 0) {
+			level = "-";
+		} else if ((access & Opcodes.ACC_PROTECTED) != 0) {
 			level = "#";
 		} else {
 			level = "";
@@ -198,7 +132,7 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 		write(level + " ");
 	}
 
-	void addReturnType(String desc) {
+	private void addReturnType(String desc) {
 		if (desc != null) {
 			String returnType = Type.getReturnType(desc).getClassName();
 			String[] returnName = returnType.split("\\.");
@@ -206,7 +140,7 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 		}
 	}
 
-	void addArguments(String desc) {
+	private void addArguments(String desc) {
 		if (desc != null) {
 			Type[] args = Type.getArgumentTypes(desc);
 			for (int i = 0; i < args.length; i++) {
@@ -217,12 +151,6 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 			}
 		}
 
-	}
-
-	void addReturnTypeType(String signature) {
-		String[] type = signature.split("/");
-		String[] type2 = type[type.length - 1].split(";");
-		write("\\<" + type2[0] + "\\>");
 	}
 
 	private void addEnter(String signature) {

@@ -48,12 +48,16 @@ public class DesignParser {
 			
 			// TODO: add more DECORATORS here in later milestones to accomplish
 			// specific tasks
-			ClassVisitor singletonVisitor = new SingletonVisitor(Opcodes.ASM5, methodVisitor, this.model);
+			ClassVisitor extensionVisitor = new ExtensionVisitor(Opcodes.ASM5, methodVisitor, this.model);
 			
-			ClassVisitor usesVisitor = new UsesVisitor(Opcodes.ASM5, singletonVisitor, this.model);
+			ClassVisitor implementationVisitor = new ImplementationVisitor(Opcodes.ASM5, extensionVisitor, this.model);
+						
+			ClassVisitor usesVisitor = new UsesVisitor(Opcodes.ASM5, implementationVisitor, this.model);
+			
+			ClassVisitor compositionVisitor = new CompositionVisitor(Opcodes.ASM5, usesVisitor, this.model);
 			// Tell the Reader to use our (heavily decorated) ClassVisitor to
 			// visit the class
-			reader.accept(usesVisitor, ClassReader.EXPAND_FRAMES);
+			reader.accept(compositionVisitor, ClassReader.EXPAND_FRAMES);
 //			System.out.println("\n]");
 		}
 //		System.out.println("End Of Code");

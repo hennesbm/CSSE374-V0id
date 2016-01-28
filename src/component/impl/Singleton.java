@@ -1,11 +1,9 @@
 package component.impl;
 
-import component.api.IRelation;
-import visitor.api.ITraverser;
+import component.api.IPattern;
 import visitor.api.IVisitor;
 
-public class Singleton implements IRelation, ITraverser {
-
+public class Singleton implements IPattern {
 	private String className;
 		
 	public Singleton(String className) {
@@ -16,17 +14,26 @@ public class Singleton implements IRelation, ITraverser {
 	public String getType() {
 		return "Singleton";
 	}
-
-	
-	public String getClassName() {
-		return this.className;
-	}
 	
 	@Override
 	public void accept(IVisitor v) {
 		v.preVisit(this);
 		v.visit(this);
 		v.postVisit(this);
+	}
+
+	@Override
+	public String getComponent() {
+		return "Singleton";
+	}
+
+	@Override
+	public String getColor() {
+		return "blue";
+	}
+	
+	public String getClassName() {
+		return this.className;
 	}
 
 

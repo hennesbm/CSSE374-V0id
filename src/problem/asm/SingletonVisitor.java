@@ -10,6 +10,7 @@ import component.impl.Singleton;
 
 public class SingletonVisitor extends ClassVisitor {
 	private IModel _model;
+	private String currentClass;
 	private boolean isSingleton = false;
 	private boolean isField = false;
 	private boolean isMethod = false;
@@ -22,6 +23,11 @@ public class SingletonVisitor extends ClassVisitor {
 	public SingletonVisitor(int api, ClassVisitor decorated, IModel model) {
 		super(api, decorated);
 		this._model = model;
+	}
+
+	public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
+		super.visit(version, access, name, signature, superName, interfaces);
+		this.currentClass = name;
 	}
 
 	public FieldVisitor visitField(int access, String name, String desc, String signature, Object value) {
@@ -70,7 +76,6 @@ public class SingletonVisitor extends ClassVisitor {
 
 	private void setSingleton() {
 		this.isSingleton = true;
-		String[] classNameParts = this._model.getCurrentClass().getName().split("/");
-		this._model.getCurrentClass().addRelation(new Singleton(classNameParts[classNameParts.length - 1]));
+		this._model.getCurrentClass().addPattern(new Singleton(this.currentClass.split("/")[0]));
 	}
 }

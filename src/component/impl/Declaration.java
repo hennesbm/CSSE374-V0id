@@ -7,6 +7,7 @@ import org.objectweb.asm.Opcodes;
 
 import component.api.IComponent;
 import component.api.IDeclaration;
+import component.api.IPattern;
 import component.api.IRelation;
 import visitor.api.ITraverser;
 import visitor.api.IVisitor;
@@ -20,6 +21,7 @@ public class Declaration implements IDeclaration, ITraverser {
 	private String[] interfaces;
 	private Collection<IComponent> components = new ArrayList<>();
 	private Collection<IRelation> relations = new ArrayList<>();
+	private Collection<IPattern> patterns = new ArrayList<>();
 	//private boolean isabstract = false;
 
 	public Declaration(int version, int access, String name, String signature, String superName, String[] interfaces) {
@@ -107,6 +109,16 @@ public class Declaration implements IDeclaration, ITraverser {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public Collection<IPattern> getPatterns() {
+		return this.patterns;
+	}
+
+	@Override
+	public void addPattern(IPattern p) {
+		this.patterns.add(p);
 	}
 
 }

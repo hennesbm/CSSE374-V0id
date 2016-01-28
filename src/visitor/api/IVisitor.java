@@ -2,6 +2,7 @@ package visitor.api;
 
 import component.api.IComponent;
 import component.api.IDeclaration;
+import component.api.IPattern;
 import component.api.IRelation;
 import component.api.IStatement;
 
@@ -17,6 +18,10 @@ public interface IVisitor {
 	public void preVisit(IRelation r);
 	public void visit(IRelation r);
 	public void postVisit(IRelation r);
+	
+	public void preVisit(IPattern p);
+	public void visit(IPattern p);
+	public void postVisit(IPattern p);
 	
 	public void preVisit(IStatement s);
 	public void visit(IStatement s);

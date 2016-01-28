@@ -2,6 +2,7 @@ package visitor.api;
 
 import component.api.IComponent;
 import component.api.IDeclaration;
+import component.api.IPattern;
 import component.api.IRelation;
 import component.api.IStatement;
 
@@ -40,6 +41,18 @@ public abstract class VisitorAdapter implements IVisitor {
 
 	@Override
 	public void postVisit(IRelation r) {
+	}
+	
+	@Override
+	public void preVisit(IPattern p) {
+	}
+
+	@Override
+	public void visit(IPattern p) {
+	}
+
+	@Override
+	public void postVisit(IPattern p) {
 	}
 
 	@Override

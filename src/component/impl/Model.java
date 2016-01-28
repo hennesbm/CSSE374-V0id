@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import component.api.IComponent;
 import component.api.IDeclaration;
 import component.api.IModel;
+import component.api.IPattern;
 import component.api.IRelation;
 import visitor.api.ITraverser;
 import visitor.api.IVisitor;
@@ -54,9 +55,18 @@ public class Model implements IModel, ITraverser {
 					p.accept(v);
 				}
 			}
+			
+			if (clazz.getPatterns().size() > 0) {
+				for (IPattern p : clazz.getPatterns()) {
+					p.accept(v);
+				}
+			}
+		
 		}
-
-
 	}
 
+	@Override
+	public ArrayList<IDeclaration> getAllClasses() {
+		return this.classList;
+	}
 }
