@@ -17,7 +17,7 @@ public class UMLMaker {
 		DesignParser parser = new DesignParser();
 		
 
-		DirectoryReader reader = new DirectoryReader("C:\\Users\\hennesbm\\Desktop\\CSSE374\\CSSE374V0id\\src");
+		DirectoryReader reader = new DirectoryReader("D:\\Bo Peng\\Development\\CSSE374\\Lab2-1\\src");
 
 
 		ArrayList<String> files = reader.readDirectory();
@@ -36,7 +36,7 @@ public class UMLMaker {
 		xmlOut.write("}".getBytes());
 
 		xmlOut.close();
-		UMLGenerator g = new UMLGenerator(title);
+		UMLGenerator g = new UMLGenerator(title, "docs/UML.txt");
 		g.execute();
 	}
 }

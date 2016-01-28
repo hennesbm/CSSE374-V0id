@@ -12,6 +12,7 @@ import org.objectweb.asm.Type;
 import component.api.IComponent;
 import component.api.IDeclaration;
 import component.api.IRelation;
+import component.impl.Decorator;
 import component.impl.Field;
 import component.impl.Method;
 import component.impl.Singleton;
@@ -82,7 +83,15 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 		write("shape=\"record\",");
 		for (IRelation r : c.getRelations()) {
 			if (r.getType().equals("Singleton")) {
-				write("color = \"blue\";");
+				write("fillcolor = \"blue\";style=\"filled\";");
+				break;
+			}
+			if (r.getType().equals("Decorator")) {
+				write("fillcolor = \"green\";style=\"filled\";");
+				break;
+			}
+			if (r.getType().equals("Component")) {
+				write("fillcolor = \"green\";style=\"filled\";");
 				break;
 			}
 		}
@@ -90,6 +99,14 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 		for (IRelation r : c.getRelations()) {
 			if (r.getType().equals("Singleton")) {
 				write("\\<\\<Singleton\\>\\>");
+				break;
+			}
+			if (r.getType().equals("Decorator")) {
+				write("\\<\\<Decorator\\>\\>");
+				break;
+			}
+			if (r.getType().equals("Component")) {
+				write("\\<\\<Component\\>\\>");
 				break;
 			}
 		}
@@ -122,66 +139,21 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 			String inter = i[i.length - 1];
 			write(namet[namet.length - 1] + " -> " + inter + " [arrowhead=\"onormal\", style=\"dashed\"];");
 		}
+		
+		for (IRelation r : c.getRelations()) {
+			if (r.getType().equals("Decorator")) {
+				Decorator rdec = (Decorator)r;
+				String[] rreference = rdec.getDecorated().split("/");
+				write(namet[namet.length - 1] + " -> " + rreference[rreference.length - 1] + " [arrowhead=\"onormal\", label = \"<<decorates>>\"];");
+				break;
+				//"label = "" "
+			}
+		}
+		
 		if (DesignParser.CLASSES == null) {
 			return;
 		}
-//		for (String clazz : DesignParser.CLASSES) {
-//			for (IComponent j : c.getComponents()) {
-//				String[] ca = c.getName().split("/");
-//
-//				if (j.getType().equals("Field")) {
-//					String name = j.getDescription();
-//					String[] s = clazz.split("\\.");
-//					String[] s2 = name.split("/");
-//					String field = s[s.length - 1];
-//					String name2 = s2[s2.length - 1].replace(";", "");
-//					if (name2.equals(field)) {
-//						if (!preventDuplicateUse.containsKey(ca[ca.length - 1] + field)) {
-//							write(ca[ca.length - 1] + " -> " + field + "[arrowhead=\"vee\", style=\"dashed\"];");
-//							preventDuplicateUse.put(ca[ca.length - 1] + field, 1);
-//						}
-//					}
-//					if (j.getSignature() != null) {
-//						String[] sig = j.getSignature().split("/");
-//						String signature = sig[sig.length - 1].replace(";>;", "");
-//						if (signature.equals(field)) {
-//							if (!preventDuplicateAssociation.containsKey(ca[ca.length - 1] + signature)) {
-//								write(ca[ca.length - 1] + " -> " + signature + "[arrowhead=\"vee\"];");
-//								preventDuplicateAssociation.put(ca[ca.length - 1] + signature, 1);
-//							}
-//						}
-//
-//					}
-//				}
-//
-//				else if (j.getType().equals("Method")) {
-//					String name = j.getDescription().split("\\)")[0];
-//					String[] s = clazz.split("\\.");
-//					String[] s2 = name.split("/");
-//					String method = s[s.length - 1];
-//					String name2 = s2[s2.length - 1].replace(";", "");
-//					if (name2.equals(method)) {
-//
-//						if (!preventDuplicateAssociation.containsKey(ca[ca.length - 1] + method)) {
-//							write(ca[ca.length - 1] + " -> " + method + "[arrowhead=\"vee\"];");
-//							preventDuplicateAssociation.put(ca[ca.length - 1] + method, 1);
-//
-//						}
-//					}
-//					if (j.getSignature() != null) {
-//						String[] sig = j.getSignature().split("/");
-//						String signature = sig[sig.length - 1].replace(";>;", "");
-//						if (signature.equals(method)) {
-//							if (!preventDuplicateAssociation.containsKey(ca[ca.length - 1] + signature)) {
-//
-//								write(ca[ca.length - 1] + " -> " + signature + "[arrowhead=\"vee\"];");
-//								preventDuplicateAssociation.put(ca[ca.length - 1] + signature, 1);
-//							}
-//						}
-//					}
-//				}
-//			}
-//		}
+
 	}
 
 	void addAccessLevel(int access) {

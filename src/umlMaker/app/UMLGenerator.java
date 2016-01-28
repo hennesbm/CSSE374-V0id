@@ -8,14 +8,17 @@ import java.io.OutputStream;
 
 public class UMLGenerator {
 	String fileName;
+	String path;
 
-	public UMLGenerator(String fileName) {
+	public UMLGenerator(String fileName, String path) {
 		this.fileName = fileName;
+		this.path = path;
 	}
 
 	public void execute() {
 		try {
-			String f = new File("docs\\UML.txt").getAbsoluteFile().getPath();
+			//"docs\\UML.txt"
+			String f = new File(path).getAbsoluteFile().getPath();
 			String y = "docs\\" + this.fileName + ".png";
 			String z = new File(y).getAbsoluteFile().getPath();
 			String path = "\"C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot\" -Tpng " + "\"" + f + "\"";
@@ -34,7 +37,7 @@ public class UMLGenerator {
 	}
 
 	public static void main(String[] args) {
-		UMLGenerator unifier = new UMLGenerator("Test0");
+		UMLGenerator unifier = new UMLGenerator("Test0","docs\\UML.txt");
 		unifier.execute();
 	}
 }

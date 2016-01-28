@@ -51,9 +51,12 @@ public class DesignParser {
 			ClassVisitor singletonVisitor = new SingletonVisitor(Opcodes.ASM5, methodVisitor, this.model);
 			
 			ClassVisitor usesVisitor = new UsesVisitor(Opcodes.ASM5, singletonVisitor, this.model);
+			
+			ClassVisitor decoratorVisitor = new ClassDecoratorVisitor(Opcodes.ASM5, usesVisitor, this.model);
+			
 			// Tell the Reader to use our (heavily decorated) ClassVisitor to
 			// visit the class
-			reader.accept(usesVisitor, ClassReader.EXPAND_FRAMES);
+			reader.accept(decoratorVisitor, ClassReader.EXPAND_FRAMES);
 //			System.out.println("\n]");
 		}
 //		System.out.println("End Of Code");

@@ -25,6 +25,7 @@ public class ClassDeclarationVisitor extends ClassVisitor {
 	public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
 
 		IDeclaration declaration = new Declaration(version, access, name, signature, superName, interfaces);
+
 		this._model.setCurrentClass(declaration);
 //		String nameforextend = name.replaceAll("/", ".");
 //		String supernameforextend = superName.replaceAll("/", ".");

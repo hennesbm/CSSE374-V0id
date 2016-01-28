@@ -28,6 +28,10 @@ public class Model implements IModel, ITraverser {
 		return this.currentClass;
 	}
 	
+	@Override
+	public ArrayList<IDeclaration> getClassList(){
+		return this.classList;
+	}
 	
 	@Override
 	public void accept(IVisitor v) {
