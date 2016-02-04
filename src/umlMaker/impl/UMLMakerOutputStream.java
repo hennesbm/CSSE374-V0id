@@ -131,7 +131,7 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 		write("\n\t" + namet[namet.length - 1] + "[\n\t\t");
 		write("shape=\"record\",\n\t\t");
 		if (!c.getPatterns().isEmpty()) {
-			write("color = \"" + c.getPatterns().iterator().next().getColor() + "\";\n\t\t");
+			write("style = \"filled\", fillcolor = \"" + c.getPatterns().iterator().next().getColor() + "\";\n\t\t");
 		}
 		write("label = \"{" + namet[namet.length - 1] + "\\n");
 		if (!c.getPatterns().isEmpty()) {
