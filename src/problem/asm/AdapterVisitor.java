@@ -3,7 +3,8 @@ package problem.asm;
 import java.util.ArrayList;
 
 import org.objectweb.asm.ClassVisitor;
-import org.objectweb.asm.FieldVisitor;
+//import org.objectweb.asm.FieldVisitor;
+import org.objectweb.asm.MethodVisitor;
 
 import com.sun.org.apache.bcel.internal.generic.Type;
 
@@ -16,6 +17,16 @@ public class AdapterVisitor extends ClassVisitor {
 	private String currentClass;
 	private ArrayList<String> interfaceClasses = new ArrayList<String>();
 	private ArrayList<String> fields = new ArrayList<String>();
+	private ArrayList<String> removedClasses = new ArrayList<String>();
+
+	{
+
+		this.removedClasses.add("int");
+		this.removedClasses.add("boolean");
+//		this.removedClasses.add("java");
+//		this.removedClasses.add("org");
+
+	}
 
 	public AdapterVisitor(int api, IModel model) {
 		super(api);
@@ -35,10 +46,28 @@ public class AdapterVisitor extends ClassVisitor {
 		}
 	}
 
-	public FieldVisitor visitField(int access, String name, String desc, String signature, Object value) {
-		FieldVisitor toDecorate = super.visitField(access, name, desc, signature, value);
-		String typeName = Type.getType(desc).toString();
-		fields.add(typeName);
+//	public FieldVisitor visitField(int access, String name, String desc, String signature, Object value) {
+//		FieldVisitor toDecorate = super.visitField(access, name, desc, signature, value);
+//		String typeName = Type.getType(desc).toString();
+//		fields.add(typeName);
+//		return toDecorate;
+//	}
+
+	public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
+		MethodVisitor toDecorate = super.visitMethod(access, name, desc, signature, exceptions);
+		if (name.equals("<init>")) {
+			if (desc != null) {
+				Type[] types = Type.getArgumentTypes(desc);
+				for (Type t : types) {
+					String typeName = t.toString();
+					String[] typeNameParts = typeName.split("\\.");
+					String[] finalParts = typeNameParts[typeNameParts.length-1].split("\\[");
+					if(!this.removedClasses.contains(typeNameParts[0]) && !finalParts[finalParts.length-1].equals("]")) {
+						fields.add(typeName);
+					}
+				}
+			}
+		}
 		return toDecorate;
 	}
 
@@ -46,37 +75,28 @@ public class AdapterVisitor extends ClassVisitor {
 		if (currentClass != null) {
 			if (!interfaceClasses.isEmpty()) {
 				if (!fields.isEmpty()) {
-					setPattern();
+					for (String interfaces : interfaceClasses) {
+						for (String fields : fields) {
+							setPattern(this.currentClass, interfaces, fields);
+						}
+					}
 				}
 			}
 		}
 	}
 
-	private void setPattern() {
+	private void setPattern(String adapter, String target, String adaptee) {
 		for (IDeclaration d : this._model.getAllClasses()) {
-			if (d.getName().equals(this.currentClass)) {
-				for (String s : this.fields) {
-					String[] className = this.currentClass.split("/");
-					String[] fieldName = s.split("\\.");
-					d.addPattern(
-							new Adapter(className[className.length - 1], "Adapter", fieldName[fieldName.length - 1]));
-				}
-			}
-			for (String s : this.interfaceClasses) {
-				for (IDeclaration dd : this._model.getAllClasses()) {
-					if (dd.getName().equals(s)) {
-						String[] fieldName = s.split("/");
-						dd.addPattern(new Adapter(fieldName[fieldName.length - 1], "Target", null));
-					}
-				}
-			}
-			for (String s : this.fields) {
-				for (IDeclaration dd : this._model.getAllClasses()) {
-					if (dd.getName().equals(s.replace(".", "/"))) {
-						String[] fieldName = s.split("\\.");
-						dd.addPattern(new Adapter(fieldName[fieldName.length - 1], "Adaptee", null));
-					}
-				}
+			if (d.getName().equals(adapter)) {
+				String[] className = this.currentClass.split("/");
+				String[] fieldName = adaptee.split("\\.");
+				d.addPattern(new Adapter(className[className.length - 1], "Adapter", fieldName[fieldName.length - 1]));
+			} else if (d.getName().equals(target)) {
+				String[] interfaceName = target.split("/");
+				d.addPattern(new Adapter(interfaceName[interfaceName.length - 1], "Target", null));
+			} else if (d.getName().equals(adaptee.replace(".", "/"))) {
+				String[] fieldName = adaptee.split("\\.");
+				d.addPattern(new Adapter(fieldName[fieldName.length - 1], "Adaptee", null));
 			}
 		}
 	}

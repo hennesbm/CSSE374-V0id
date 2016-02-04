@@ -2,6 +2,7 @@ package umlMaker.impl;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
@@ -23,9 +24,22 @@ import visitor.api.VisitorAdapter;
 
 public class UMLMakerOutputStream extends VisitorAdapter {
 	private final OutputStream out;
+	private final ArrayList<String> removedClasses = new ArrayList<String>();
 
 	public UMLMakerOutputStream(OutputStream out) throws IOException {
 		this.out = out;
+		this.removedClasses.add("String");
+		this.removedClasses.add("int");
+		this.removedClasses.add("boolean");
+		this.removedClasses.add("OutputStream");
+		this.removedClasses.add("ArrayList");
+		this.removedClasses.add("Object");
+		this.removedClasses.add("Collection");
+		this.removedClasses.add("Map");
+		this.removedClasses.add("Attribute");
+		this.removedClasses.add("TypePath");
+		this.removedClasses.add("Handle");
+		this.removedClasses.add("Label");
 	}
 
 	private void write(String m) {
@@ -64,16 +78,20 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 		write("\t");
 		if (r.getType().equals("Extends")) {
 			Extends e = (Extends) r;
-			write(e.getClassName() + " -> " + e.getReferenceName() + " [arrowhead=\"onormal\"];");
+			if (!this.removedClasses.contains(e.getReferenceName().split("\\[")[0]))
+				write(e.getClassName() + " -> " + e.getReferenceName() + " [arrowhead=\"onormal\"];");
 		} else if (r.getType().equals("Implements")) {
 			Implements i = (Implements) r;
-			write(i.getClassName() + " -> " + i.getReferenceName() + "[arrowhead=\"onormal\", style=\"dashed\"];");
+			if (!this.removedClasses.contains(i.getReferenceName().split("\\[")[0]))
+				write(i.getClassName() + " -> " + i.getReferenceName() + "[arrowhead=\"onormal\", style=\"dashed\"];");
 		} else if (r.getType().equals("Uses")) {
 			Uses u = (Uses) r;
-			write(u.getClassName() + " -> " + u.getReferenceName() + "[arrowhead=\"vee\", style=\"dashed\"];");
+			if (!this.removedClasses.contains(u.getReferenceName().split("\\[")[0]))
+				write(u.getClassName() + " -> " + u.getReferenceName() + "[arrowhead=\"vee\", style=\"dashed\"];");
 		} else if (r.getType().equals("Composition")) {
 			Composition c = (Composition) r;
-			write(c.getClassName() + " -> " + c.getReferenceName() + "[arrowhead=\"vee\"];");
+			if (!this.removedClasses.contains(c.getReferenceName().split("\\[")[0]))
+				write(c.getClassName() + " -> " + c.getReferenceName() + "[arrowhead=\"vee\"];");
 		}
 		write("\n");
 	}
@@ -83,19 +101,23 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 		write("\t");
 		if (p.getType().equals("Singleton")) {
 			Singleton s = (Singleton) p;
+			if (!this.removedClasses.contains(s.getClassName().split("\\[")[0]))
 			write(s.getClassName() + " -> " + s.getClassName() + "[arrowhead=\"vee\"];");
 		} else if (p.getType().equals("Adapter")) {
 			Adapter a = (Adapter) p;
 			if (a.getComponent().equals("Adapter")) {
+				if (!this.removedClasses.contains(a.getAdaptee().split("\\[")[0]))
 				write(a.getClassName() + " -> " + a.getAdaptee()
 						+ "[arrowhead=\"vee\", label=\"\\<\\<adapts\\>\\>\"];");
 			}
-		}else if(p.getType().equals("Decorator")){
+		} else if (p.getType().equals("Decorator")) {
 			Decorator d = (Decorator) p;
-			if(d.getComponent().equals("Decorator")){
+			if (d.getComponent().equals("Decorator")) {
 				String[] name = d.getClassName().split("/");
 				String[] decorates = d.getDecorates().split("/");
-				//System.out.println(name[name.length - 1] + " " +component[component.length - 1]);
+				// System.out.println(name[name.length - 1] + " "
+				// +component[component.length - 1]);
+				if (!this.removedClasses.contains(d.getDecorates().split("\\[")[0]))
 				write(name[name.length - 1] + " -> " + decorates[decorates.length - 1]
 						+ "[arrowhead=\"onormal\", label=\"\\<\\<decorates\\>\\>\"];");
 			}

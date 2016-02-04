@@ -47,10 +47,10 @@ public class ClassDecoratorVisitor extends ClassVisitor {
 	
 	public FieldVisitor visitField(int access, String name, String desc, String signature, Object value) {
 		FieldVisitor toDecorate = super.visitField(access, name, desc, signature, value);
-		System.out.println("name-field: " + name);
-		System.out.println("desc-field: " + desc);
-		System.out.println("signature-field: " + signature);
-		System.out.println("classtype-field: " + Type.getType(desc).getClassName());
+//		System.out.println("name-field: " + name);
+//		System.out.println("desc-field: " + desc);
+//		System.out.println("signature-field: " + signature);
+//		System.out.println("classtype-field: " + Type.getType(desc).getClassName());
 		
 		
 
@@ -77,7 +77,7 @@ public class ClassDecoratorVisitor extends ClassVisitor {
 				
 			}
 			this.superclass.clear();
-		System.out.println();
+//		System.out.println();
 		
 		
 		return toDecorate;

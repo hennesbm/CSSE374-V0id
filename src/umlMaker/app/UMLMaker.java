@@ -18,9 +18,11 @@ public class UMLMaker {
 		DesignParser parser = new DesignParser();
 		PatternParser parser2 = new PatternParser();
 		
-		DirectoryReader reader = new DirectoryReader("C:\\Users\\hennesbm\\Desktop\\CSSE374\\CSSE374V0id\\src");
+		DirectoryReader reader = new DirectoryReader("C:\\Users\\hennesbm\\Desktop\\CSSE374\\Labs\\Lab 5\\Lab5-1-Solution\\src");
 
 		ArrayList<String> files = reader.readDirectory();
+		files.add("java.util.Enumeration");
+		files.add("java.util.Iterator");
 		
 		parser.main(files);
 		parser2.main(files, parser.model);
@@ -29,7 +31,7 @@ public class UMLMaker {
 		IVisitor xmlWriter = new UMLMakerOutputStream(xmlOut);
 
 		ITraverser traverser = (ITraverser) parser2.model;
-		String title = "UMLMaker_Milestone5_UML";
+		String title = "Lab5_1";
 		xmlOut.write("digraph ".getBytes());
 		xmlOut.write(title.getBytes());
 		xmlOut.write(" { \n\trankdir=BT;\n\t".getBytes());
