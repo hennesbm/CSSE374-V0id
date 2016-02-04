@@ -102,6 +102,7 @@ public class ClassDecoratorVisitor extends ClassVisitor {
 		
 			}
 		}
+		
 		for(String s: currentsupernames){
 			for(IDeclaration d: classlist){
 				if(s.equals(d.getName())){

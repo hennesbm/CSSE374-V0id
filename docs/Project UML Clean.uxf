@@ -1,0 +1,1365 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="13.3">
+  <zoom_level>5</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>490</x>
+      <y>110</y>
+      <w>155</w>
+      <h>95</h>
+    </coordinates>
+    <panel_attributes>problem.asm::SingletonVisitor
+--
+-_model: IModel
+-currentClass: String
+-isSingleton = false: boolean
+-isField = false: boolean
+-isMethod = false: boolean
+--
++SingletonVisitor(int api, IModel model): ctor
++SingletonVisitor(int api, ClassVisitor decorated, IModel model): ctor
++visit(int version, int access, String name, String signature, String superName, String[] interfaces): void
++visitField(int access, String name, String desc, String signature, Object value): FieldVisitor
++visitMethod(int access, String name, String desc, String signature, String[] exceptions): MethodVisitor
+-setField(): void
+-setMethod(): void
+-setSingleton(): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>490</x>
+      <y>210</y>
+      <w>155</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>problem.asm::AdapterVisitor
+--
+-_model: IModel
+-currentClass: String
+-interfaceClasses = new ArrayList&lt;String&gt;(): ArrayList&lt;String&gt;
+-fields = new ArrayList&lt;String&gt;(): ArrayList&lt;String&gt;
+--
++AdapterVisitor(int api, IModel model): ctor
++AdapterVisitor(int api, ClassVisitor decorated, IModel model): ctor
++visit(int version, int access, String name, String signature, String superName, String[] interfaces): void
++visitField(int access, String name, String desc, String signature, Object value): FieldVisitor
++visitEnd(): void
+-setPattern(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>490</x>
+      <y>295</y>
+      <w>155</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>problem.asm::ClassDecoratorVisitor
+--
+-_model: IModel
+-superclass: ArrayList&lt;IDeclaration&gt;
+-current: IDeclaration
+--
++ClassDecoratorVisitor(int api, IModel model): ctor
++ClassDecoratorVisitor(int api, ClassVisitor decorated, IModel model): ctor
++visit(int version, int access, String name, String signature, String superName, String[] interfaces): void
++visitField(int access, String name, String desc, String signature, Object value): FieldVisitor
++findAllSuper(ArrayList&lt;IDeclaration&gt; l, String classname): void
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>490</x>
+      <y>405</y>
+      <w>155</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>problem.asm::ClassMethodVisitor
+--
+-_model: IModel
+-api: int
+--
++ClassMethodVisitor(int api, IModel model): ctor
++ClassMethodVisitor(int api, ClassVisitor decorated, IModel model): ctor
++visitMethod(int access, String name, String desc, String signature, String[] exceptions): MethodVisitor
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>490</x>
+      <y>470</y>
+      <w>155</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>problem.asm::CompositionVisitor
+--
+-_model: IModel
+--
++CompositionVisitor(int api, IModel model): ctor
++CompositionVisitor(int api, ClassVisitor decorated, IModel model): ctor
++visitField(int access, String name, String desc, String signature, Object value): FieldVisitor
+-setCompositionRelation(String referenceName): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>490</x>
+      <y>655</y>
+      <w>155</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>problem.asm::ExtensionVisitor
+--
+-_model: IModel
+--
++ExtensionVisitor(int api, IModel model): ctor
++ExtensionVisitor(int api, ClassVisitor decorated, IModel model): ctor
++visit(int version, int access, String name, String signature, String superName, String[] interfaces): void
+-setExtensionRelation(String referenceName): void
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>490</x>
+      <y>535</y>
+      <w>155</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>problem.asm::ImplementationVisitor
+--
+-_model: IModel
+--
++ImplementationVisitor(int api, IModel model): ctor
++ImplementationVisitor(int api, ClassVisitor decorated, IModel model): ctor
++visit(int version, int access, String name, String signature, String superName, String[] interfaces): void
+-setImplementationRelation(String referenceName): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>665</x>
+      <y>410</y>
+      <w>100</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>problem.asm::InvokeVisitor
+--
+-_model: IModel
+-methodname: String
+--
++InvokeVisitor(int api, IModel model): ctor
++InvokeVisitor(int api, MethodVisitor decorated, IModel model, String methodname): ctor
++visitMethodInsn(int opcode, String owner, String name, String desc, boolean itf): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>490</x>
+      <y>775</y>
+      <w>155</w>
+      <h>65</h>
+    </coordinates>
+    <panel_attributes>problem.asm::UsesVisitor
+--
+-_model: IModel
+--
++UsesVisitor(int api, IModel model): ctor
++UsesVisitor(int api, ClassVisitor decorated, IModel model): ctor
++visitMethod(int access, String name, String desc, String signature, String[] exceptions): MethodVisitor
+-setUsesRelation(String referenceName): void
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>490</x>
+      <y>720</y>
+      <w>155</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>problem.asm::ClassFieldVisitor
+--
+-_model: IModel
+--
++ClassFieldVisitor(int api, IModel model): ctor
++ClassFieldVisitor(int api, ClassVisitor decorated, IModel model): ctor
++visitField(int access, String name, String desc, String signature, Object value): FieldVisitor
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>300</x>
+      <y>540</y>
+      <w>130</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>problem.asm::DesignParser
+--
++CLASSES: ArrayList&lt;String&gt;
++markedSelected: String
++model: IModel
+--
++main(ArrayList&lt;String&gt; files): void
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>490</x>
+      <y>600</y>
+      <w>155</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>problem.asm::ClassDeclarationVisitor
+--
+-_model: IModel
+--
++ClassDeclarationVisitor(int api, IModel model): ctor
++visit(int version, int access, String name, String signature, String superName, String[] interfaces): void
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>280</x>
+      <y>220</y>
+      <w>160</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>problem.asm::PatternParser
+--
++CLASSES: ArrayList&lt;String&gt;
++model: IModel
+--
++main(ArrayList&lt;String&gt; files, IModel model): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>540</x>
+      <y>80</y>
+      <w>50</w>
+      <h>15</h>
+    </coordinates>
+    <panel_attributes>ClassVisitor</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>640</x>
+      <y>430</y>
+      <w>35</w>
+      <h>15</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>50.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>435</x>
+      <y>235</y>
+      <w>65</w>
+      <h>15</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>110.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>435</x>
+      <y>160</y>
+      <w>65</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>110.0;10.0;10.0;160.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>435</x>
+      <y>235</y>
+      <w>65</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>110.0;200.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>425</x>
+      <y>560</y>
+      <w>75</w>
+      <h>15</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>130.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>425</x>
+      <y>495</y>
+      <w>75</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>130.0;10.0;10.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>425</x>
+      <y>430</y>
+      <w>75</w>
+      <h>145</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>130.0;10.0;10.0;270.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>425</x>
+      <y>560</y>
+      <w>75</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>130.0;120.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>425</x>
+      <y>560</y>
+      <w>75</w>
+      <h>135</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>130.0;250.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>425</x>
+      <y>560</y>
+      <w>75</w>
+      <h>195</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>130.0;370.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>425</x>
+      <y>560</y>
+      <w>75</w>
+      <h>250</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>130.0;480.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>280</x>
+      <y>375</y>
+      <w>160</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>umlMaker.app::UMLGenerator
+--
+~fileName: String
+~path: String
+--
++UMLGenerator(String fileName, String path): ctor
++execute(): void
++main(String[] args): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>165</x>
+      <y>380</y>
+      <w>100</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>umlMaker.app::UMLMaker
+--
++main(String[] args): void
+bg=pink</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>260</x>
+      <y>395</y>
+      <w>30</w>
+      <h>15</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>40.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>355</x>
+      <y>255</y>
+      <w>15</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;240.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>355</x>
+      <y>420</y>
+      <w>15</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;240.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>150</x>
+      <y>460</y>
+      <w>140</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>umlMaker.impl::UMLMakerOutputStream
+--
+-out: OutputStream
+--
++UMLMakerOutputStream(OutputStream out): ctor
+-write(String m): void
++visit(IComponent c): void
++visit(IRelation r): void
++visit(IPattern p): void
++preVisit(IDeclaration c): void
++visit(IDeclaration c): void
++postVisit(IDeclaration c): void
+-addAccessLevel(int access): void
+-addReturnType(String desc): void
+-addArguments(String desc): void
+-addEnter(String signature): void
+-addColon(String name): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>965</x>
+      <y>215</y>
+      <w>90</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>component.impl::Field
+--
+-access: int
+-name: String
+-description: String
+-signature: String
+-value: Object
+-className: String
+--
++Field(int access, String name, String desc, String signature, Object value, String className): ctor
++getAccess(): int
++getName(): String
++getDescription(): String
++getSignature(): String
++getValue(): Object
++accept(IVisitor v): void
++getType(): String
++getClassName(): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>865</x>
+      <y>215</y>
+      <w>90</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>component.impl::Method
+--
+-access: int
+-name: String
+-description: String
+-signature: String
+-exceptions: String[]
+-className: String
+--
++Method(int access, String name, String desc, String signature, String[] exceptions, String className): ctor
++getAccess(): int
++getName(): String
++getDescription(): String
++getSignature(): String
++getExceptions(): String[]
++accept(IVisitor v): void
++getType(): String
++getClassName(): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1070</x>
+      <y>210</y>
+      <w>100</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+component.api::IStatement
+--
++getOpcode(): int
++getOwner(): String
++getName(): String
++getDescription(): String
++ifInterface(): boolean
++getClassName(): String
++getMethodName(): String
+
+fg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>770</x>
+      <y>120</y>
+      <w>130</w>
+      <h>75</h>
+    </coordinates>
+    <panel_attributes>component.impl::Model
+--
+-currentClass: IDeclaration
+-classList = new ArrayList&lt;IDeclaration&gt;(): ArrayList&lt;IDeclaration&gt;
+--
++setCurrentClass(IDeclaration clazz): void
++addCurrentClass(): void
++getCurrentClass(): IDeclaration
++accept(IVisitor v): void
++getAllClasses(): ArrayList&lt;IDeclaration&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>955</x>
+      <y>125</y>
+      <w>110</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+component.api::IComponent
+--
++getType(): String
++getName(): String
++getDescription(): String
++getSignature(): String
+--
+
+fg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1295</x>
+      <y>130</y>
+      <w>90</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+component.api::IPattern
+--
++getType(): String
++getComponent(): String
++getColor(): String
+--
+fg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>905</x>
+      <y>190</y>
+      <w>115</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>210.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1005</x>
+      <y>190</y>
+      <w>15</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1070</x>
+      <y>310</y>
+      <w>100</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>component.impl::Statement
+--
+-opcode: int
+-owner: String
+-name: String
+-desc: String
+-inter: boolean
+-className: String
+-methodName: String
+--
++Statement(int opcode, String owner, String name, String desc, boolean inter, String className, String methodname): ctor
++getType(): String
++getSignature(): String
++getOwner(): String
++getName(): String
++getDescription(): String
++ifInterface(): boolean
++accept(IVisitor v): void
++getOpcode(): int
++getClassName(): String
++getMethodName(): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1005</x>
+      <y>190</y>
+      <w>130</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;240.0;40.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1115</x>
+      <y>285</y>
+      <w>15</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1290</x>
+      <y>210</y>
+      <w>105</w>
+      <h>105</h>
+    </coordinates>
+    <panel_attributes>component.impl::Decorator
+--
+-decorates: String
+-className: String
+-component: String
+--
++Decorator(String className, String component): ctor
++Decorator(String className, String decorates, String component): ctor
++accept(IVisitor v): void
++getType(): String
++getDecorates(): String
++getComponent(): String
++getColor(): String
++getClassName(): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1400</x>
+      <y>210</y>
+      <w>100</w>
+      <h>95</h>
+    </coordinates>
+    <panel_attributes>component.impl::Adapter
+--
+-className: String
+-component: String
+-adaptee: String
+--
++Adapter(String className, String component, String adaptee): ctor
++getType(): String
++getComponent(): String
++getColor(): String
++accept(IVisitor v): void
++getClassName(): String
++getAdaptee(): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1335</x>
+      <y>180</y>
+      <w>15</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1335</x>
+      <y>180</y>
+      <w>125</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;230.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1190</x>
+      <y>210</y>
+      <w>95</w>
+      <h>75</h>
+    </coordinates>
+    <panel_attributes>component.impl::Singleton
+--
+-className: String
+--
++Singleton(String className): ctor
++getType(): String
++accept(IVisitor v): void
++getComponent(): String
++getColor(): String
++getClassName(): String
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1230</x>
+      <y>180</y>
+      <w>120</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>220.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1705</x>
+      <y>135</y>
+      <w>95</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+component.api::IRelation
+--
++getType(): String
+fg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1520</x>
+      <y>210</y>
+      <w>115</w>
+      <h>75</h>
+    </coordinates>
+    <panel_attributes>component.impl::Composition
+--
+-className: String
+-referenceName: String
+--
++Composition(String className, String referenceName): ctor
++accept(IVisitor v): void
++getType(): String
++getClassName(): String
++getReferenceName(): String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1640</x>
+      <y>210</y>
+      <w>115</w>
+      <h>75</h>
+    </coordinates>
+    <panel_attributes>component.impl::Extends
+--
+-className: String
+-referenceName: String
+--
++Extends(String className, String referenceName): ctor
++accept(IVisitor v): void
++getType(): String
++getClassName(): String
++getReferenceName(): String
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1760</x>
+      <y>210</y>
+      <w>115</w>
+      <h>75</h>
+    </coordinates>
+    <panel_attributes>component.impl::Implements
+--
+-className: String
+-referenceName: String
+--
++Implements(String className, String referenceName): ctor
++accept(IVisitor v): void
++getType(): String
++getClassName(): String
++getReferenceName(): String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1880</x>
+      <y>210</y>
+      <w>115</w>
+      <h>75</h>
+    </coordinates>
+    <panel_attributes>component.impl::Uses
+--
+-className: String
+-referenceName: String
+--
++Uses(String className, String referenceName): ctor
++accept(IVisitor v): void
++getType(): String
++getClassName(): String
++getReferenceName(): String
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1690</x>
+      <y>175</y>
+      <w>75</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>130.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1570</x>
+      <y>175</y>
+      <w>190</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>360.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1750</x>
+      <y>175</y>
+      <w>75</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;130.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1750</x>
+      <y>175</y>
+      <w>200</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;380.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>210</x>
+      <y>410</y>
+      <w>15</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1895</x>
+      <y>15</y>
+      <w>110</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+component.api::IDeclaration
+--
++getVersion(): int
++getAccess(): int
++getName(): String
++getSignature(): String
++getSuperClass(): String
++getInterfaces(): String[]
++addComponent(IComponent c): void
++getComponents(): Collection&lt;IComponent&gt;
++getRelations(): Collection&lt;IRelation&gt;
++addRelation(IRelation r): void
++getPatterns(): Collection&lt;IPattern&gt;
++addPattern(IPattern p): void
+--
+fg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>780</x>
+      <y>40</y>
+      <w>105</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+component.api::IModel
+--
++addCurrentClass(): void
++setCurrentClass(IDeclaration clazz): void
++getCurrentClass(): IDeclaration
++getAllClasses(): ArrayList&lt;IDeclaration&gt;
+
+fg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1295</x>
+      <y>55</y>
+      <w>85</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+visitor.api::ITraverser
+--
++accept(IVisitor v): void
+
+fg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1335</x>
+      <y>95</y>
+      <w>15</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1335</x>
+      <y>95</y>
+      <w>430</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;840.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1005</x>
+      <y>95</y>
+      <w>345</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>670.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>440</y>
+      <w>115</w>
+      <h>135</h>
+    </coordinates>
+    <panel_attributes>/visitor.api::VisitorAdapter/
+--
++preVisit(IDeclaration d): void
++visit(IDeclaration d): void
++postVisit(IDeclaration d): void
++preVisit(IComponent c): void
++visit(IComponent c): void
++postVisit(IComponent c): void
++preVisit(IRelation r): void
++visit(IRelation r): void
++postVisit(IRelation r): void
++preVisit(IPattern p): void
++visit(IPattern p): void
++postVisit(IPattern p): void
++preVisit(IStatement s): void
++visit(IStatement s): void
++postVisit(IStatement s): void
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>265</y>
+      <w>115</w>
+      <h>145</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+visitor.api::IVisitor
+--
++preVisit(IDeclaration d): void
++visit(IDeclaration d): void
++postVisit(IDeclaration d): void
++preVisit(IComponent c): void
++visit(IComponent c): void
++postVisit(IComponent c): void
++preVisit(IRelation r): void
++visit(IRelation r): void
++postVisit(IRelation r): void
++preVisit(IPattern p): void
++visit(IPattern p): void
++postVisit(IPattern p): void
++preVisit(IStatement s): void
++visit(IStatement s): void
++postVisit(IStatement s): void
+fg=blue
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>50</x>
+      <y>405</y>
+      <w>15</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>110</x>
+      <y>480</y>
+      <w>50</w>
+      <h>15</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;80.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>630</y>
+      <w>130</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>sdedit.app::SDEditGenerator
+--
+~fileName: String
+--
++SDEditGenerator(String fileName): ctor
++execute(): void
++main(String[] args): void
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>125</x>
+      <y>650</y>
+      <w>50</w>
+      <h>15</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;80.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>165</x>
+      <y>635</y>
+      <w>105</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>sdedit.app::SDEdit
+--
++main(String[] args): void
+-write(OutputStream o, String m): void
+-checkAndChange(): void
+
+
+bg=pink</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>210</x>
+      <y>600</y>
+      <w>15</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>165</x>
+      <y>535</y>
+      <w>105</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>SDEditOutputStream
+--
+-out: OutputStream
+-classFlag = 0: int
+-methodFlag = 0: int
+-fieldMap: Map&lt;String, String&gt;
+-counter = 0: int
++declare: ArrayList&lt;String&gt;
++methods: ArrayList&lt;String&gt;
+--
++SDEditOutputStream(OutputStream out): ctor
+-write(String m): void
++preVisit(IField f): void
++preVisit(IDeclaration c): void
+~addAccessLevel(int access): void
+~addReturnType(String desc): void
+~addArguments(String desc): void
+~addReturnTypeType(String signature): void
++preVisit(IStatement s): void
++visit(IMethod m): void
++visit(IStatement s): void
++postVisit(IStatement s): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>110</x>
+      <y>550</y>
+      <w>65</w>
+      <h>15</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;110.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>155</x>
+      <y>295</y>
+      <w>120</w>
+      <h>65</h>
+    </coordinates>
+    <panel_attributes>directory.reader::DirectoryReader
+--
+-projectDirectory = "": String
+-projectFolder: String
+-files = new ArrayList&lt;String&gt;(): ArrayList&lt;String&gt;
+-directories = new ArrayList&lt;String&gt;(): ArrayList&lt;String&gt;
++method: String
++className: String
+--
++DirectoryReader(String folder): ctor
++DirectoryReader(String folder, String directory): ctor
++DirectoryReader(String folder, String directory, String className, String method): ctor
++readDirectory(): ArrayList&lt;String&gt;
++getClassName(): String
++getMethod(): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>210</x>
+      <y>355</y>
+      <w>15</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1900</x>
+      <y>120</y>
+      <w>105</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Declaration
+--
+#version: int
+#access: int
+#name: String
+#signature: String
+#superName: String
+#interfaces: String[]
+#components: Collection
+--
++getVersion(): int
++getAccess(): int
++getName(): String
++getSignature(): String
++getSuperClass(): String
++getInterfaces(): String[]
++addComponent(IComponent c): void
++getComponents(): Collection&lt;IComponent&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1945</x>
+      <y>90</y>
+      <w>15</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>895</x>
+      <y>75</y>
+      <w>410</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>800.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>830</x>
+      <y>90</y>
+      <w>15</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1375</x>
+      <y>75</y>
+      <w>535</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;1050.0;100.0</additional_attributes>
+  </element>
+</diagram>

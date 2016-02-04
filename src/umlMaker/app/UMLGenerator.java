@@ -18,7 +18,7 @@ public class UMLGenerator {
 
 	public void execute() {
 		try {
-			String f = new File("docs\\input_output\\UML.txt").getAbsoluteFile().getPath();
+			String f = new File(this.path).getAbsoluteFile().getPath();
 			String y = "images\\" + this.fileName + ".png";
 			String z = new File(y).getAbsoluteFile().getPath();
 			String path = "\"C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot\" -Tpng " + "\"" + f + "\"";
@@ -39,8 +39,8 @@ public class UMLGenerator {
 		}
 	}
 
-	public static void main(String[] args) {
-		UMLGenerator unifier = new UMLGenerator("Test0","docs\\UML.txt");
-		unifier.execute();
-	}
+//	public static void main(String[] args) {
+//		UMLGenerator unifier = new UMLGenerator("Test0","docs\\UML.txt");
+//		unifier.execute();
+//	}
 }

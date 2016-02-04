@@ -40,7 +40,7 @@ public class UMLMaker {
 		xmlOut.write("\n}".getBytes());
 		
 		xmlOut.close();
-		UMLGenerator g = new UMLGenerator(title, "docs/UML.txt");
+		UMLGenerator g = new UMLGenerator(title, "docs/input_output/UML.txt");
 		g.execute();
 	}
 }
