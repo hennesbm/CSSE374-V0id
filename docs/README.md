@@ -103,7 +103,6 @@ Instructions:
 M4
 
 --------------------
-![alt tag](https://github.com/hennesbm/CSSE374-V0id/blob/master/docs/Project%20UML%20Clean.png)
 Design:
 
 We added the functionality to our UMLMaker to identify Singleton instances within the code. These are then highlighted blue on the resulting diagram and show the correct composition arrow pointing back to the given class.
@@ -129,3 +128,38 @@ Instructions:
 	
 --------------------
 --------------------
+
+M5 & M6
+
+--------------------
+![alt tag](https://github.com/hennesbm/CSSE374-V0id/blob/master/docs/Project%20UML%20Clean.png)
+Code Detection:
+	In order to detect specific patterns, we use visitors to go through files to get the information we need. We have a new interface called IPattern to store 	specific pattern information include the pattern name, the component name and also some other information related to the pattern. Then, we use our visitor to 	traverse all the files we want and add those IPattern to specific Declarations.
+	
+-------------------
+
+Responsibilities:
+
+- Brandon 
+	implemented the adapter pattern detection code and changed the structure of the current project.
+
+- Bo 
+	implemented the decorator pattern detection code and helped with testcases.
+	implemented the composite pattern detection code and helped with testcases.
+
+- Chi 
+	did most of the test cases and draw the UML diagram for current milestone.
+	updated manually generated UML diagrams
+	
+--------------------
+
+Instructions:
+	In order to use our pattern detector, you need to give the absolute path to the application. Also, you could give the packages name to limit the scope, which 	is optional. Then, after finishing executing the application, a brand new UML diagram will be generated and appeared automatically on the screen. It is saved 	under input_output folder of the current project.
+	
+--------------------
+
+New Custom Tests:
+Chi and Bo made tests for both of those patterns.
+
+-------------------
+-------------------
