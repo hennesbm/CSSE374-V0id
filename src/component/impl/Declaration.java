@@ -22,6 +22,7 @@ public class Declaration implements IDeclaration, ITraverser {
 	private Collection<IComponent> components = new ArrayList<>();
 	private Collection<IRelation> relations = new ArrayList<>();
 	private Collection<IPattern> patterns = new ArrayList<>();
+	private Collection<IDeclaration> hierarchy = new ArrayList<>();
 	//private boolean isabstract = false;
 
 	public Declaration(int version, int access, String name, String signature, String superName, String[] interfaces) {
@@ -120,5 +121,9 @@ public class Declaration implements IDeclaration, ITraverser {
 	public void addPattern(IPattern p) {
 		this.patterns.add(p);
 	}
-
+	
+	@Override
+	public Collection<IDeclaration> getHierarchy(){
+		return this.hierarchy;
+	}
 }

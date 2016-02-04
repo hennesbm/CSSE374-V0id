@@ -28,7 +28,12 @@ public class PatternParser {
 			
 			ClassVisitor decoratorVisitor = new ClassDecoratorVisitor(Opcodes.ASM5, adaptVisitor, this.model);
 			
-			reader.accept(decoratorVisitor, ClassReader.EXPAND_FRAMES);
+			//Test all those three visitors together, order matters.
+			ClassVisitor hierarchyVisitor = new HierarchyVisitor(Opcodes.ASM5, decoratorVisitor, this.model);
+			ClassVisitor compositeVisitor = new CompositeVisitor(Opcodes.ASM5, hierarchyVisitor, this.model);
+			ClassVisitor leafVisitor = new LeafVisitor(Opcodes.ASM5, compositeVisitor, this.model);
+			
+			reader.accept(leafVisitor, ClassReader.EXPAND_FRAMES);
 		}
 	}
 }

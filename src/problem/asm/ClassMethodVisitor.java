@@ -29,7 +29,8 @@ public class ClassMethodVisitor extends ClassVisitor {
 		// newMethodVisitor.visitInvokeInsn(access, name, desc);
 
 		String[] classNameParts = this._model.getCurrentClass().getName().split("/");
-		Method method = new Method(access, name, desc, signature, exceptions, classNameParts[classNameParts.length - 1]);		this._model.getCurrentClass().addComponent(method);
+		Method method = new Method(access, name, desc, signature, exceptions, classNameParts[classNameParts.length - 1]);
+		this._model.getCurrentClass().addComponent(method);
 		return newMethodVisitor;
 	}
 }

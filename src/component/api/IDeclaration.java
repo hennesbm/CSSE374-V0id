@@ -15,4 +15,5 @@ public interface IDeclaration {
 	public void addRelation(IRelation r);
 	public Collection<IPattern> getPatterns();
 	public void addPattern(IPattern p);
+	public Collection<IDeclaration> getHierarchy();
 }

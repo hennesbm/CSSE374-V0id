@@ -1,10 +1,20 @@
 package directory.reader;
 
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Frame;
+import java.awt.Panel;
+import java.awt.Window;
 import java.io.File;
 import java.util.ArrayList;
 
-public class DirectoryReader {
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JWindow;
 
+public class DirectoryReader {
+	public Component j;
 	private String projectDirectory = "";
 	private String projectFolder;
 	private ArrayList<String> files = new ArrayList<String>();
@@ -14,6 +24,7 @@ public class DirectoryReader {
 
 	public DirectoryReader(String folder) {
 		this.projectFolder = folder;
+		
 	}
 
 	public DirectoryReader(String folder, String directory) {

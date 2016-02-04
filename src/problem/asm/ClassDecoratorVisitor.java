@@ -1,6 +1,8 @@
 package problem.asm;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.Type;
@@ -8,6 +10,8 @@ import org.objectweb.asm.Type;
 import component.api.IDeclaration;
 import component.api.IModel;
 import component.api.IPattern;
+import component.api.IRelation;
+import component.impl.Component;
 import component.impl.Decorator;
 
 public class ClassDecoratorVisitor extends ClassVisitor {
@@ -43,10 +47,6 @@ public class ClassDecoratorVisitor extends ClassVisitor {
 	
 	public FieldVisitor visitField(int access, String name, String desc, String signature, Object value) {
 		FieldVisitor toDecorate = super.visitField(access, name, desc, signature, value);
-		System.out.println("name-field: " + name);
-		System.out.println("desc-field: " + desc);
-		System.out.println("signature-field: " + signature);
-		System.out.println("classtype-field: " + Type.getType(desc).getClassName());
 		
 		
 
@@ -73,7 +73,7 @@ public class ClassDecoratorVisitor extends ClassVisitor {
 				
 			}
 			this.superclass.clear();
-		System.out.println();
+//		System.out.println();
 		
 		
 		return toDecorate;
@@ -98,6 +98,7 @@ public class ClassDecoratorVisitor extends ClassVisitor {
 		
 			}
 		}
+		
 		for(String s: currentsupernames){
 			for(IDeclaration d: classlist){
 				if(s.equals(d.getName())){

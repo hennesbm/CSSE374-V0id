@@ -95,7 +95,6 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 			if(d.getComponent().equals("Decorator")){
 				String[] name = d.getClassName().split("/");
 				String[] decorates = d.getDecorates().split("/");
-				//System.out.println(name[name.length - 1] + " " +component[component.length - 1]);
 				write(name[name.length - 1] + " -> " + decorates[decorates.length - 1]
 						+ "[arrowhead=\"onormal\", label=\"\\<\\<decorates\\>\\>\"];");
 			}
