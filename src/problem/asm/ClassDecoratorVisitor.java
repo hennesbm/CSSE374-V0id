@@ -1,8 +1,6 @@
 package problem.asm;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.Type;
@@ -10,8 +8,6 @@ import org.objectweb.asm.Type;
 import component.api.IDeclaration;
 import component.api.IModel;
 import component.api.IPattern;
-import component.api.IRelation;
-import component.impl.Component;
 import component.impl.Decorator;
 
 public class ClassDecoratorVisitor extends ClassVisitor {
