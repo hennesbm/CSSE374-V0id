@@ -1,0 +1,143 @@
+digraph DecoratorPattern { rankdir=BT;
+	CompositeParser[
+		shape="record",
+		label = "{CompositeParser\n
+		|
+		+ CLASSES : ArrayList\l
+		+ model : IModel\l
+		|
+		+ CompositeParser() : void\l
+		+ main(ArrayList, IModel) : void\l
+		}"
+	];
+
+	
+	
+	CompositeParser -> IModel[arrowhead="vee"];
+	
+	CompositeParser -> IModel[arrowhead="vee", style="dashed"];
+
+	Menu[
+		shape="record",
+		style = "filled", fillcolor = "Yellow";
+		label = "{Menu\n\<\<Composite\>\>
+		
+		|
+		 menuComponents : ArrayList\l
+		 name : String\l
+		 description : String\l
+		|
+		+ Menu(String, String) : void\l
+		+ add(MenuComponent) : void\l
+		+ remove(MenuComponent) : void\l
+		+ getChild(int) : MenuComponent\l
+		+ getName() : String\l
+		+ getDescription() : String\l
+		+ print() : void\l
+		}"
+	];
+
+	Menu -> MenuComponent [arrowhead="onormal"];
+	
+	
+	
+	Menu -> MenuComponent[arrowhead="vee", style="dashed"];
+	
+	
+
+	MenuComponent[
+		shape="record",
+		style = "filled", fillcolor = "Yellow";
+		label = "{MenuComponent\n\<\<Component\>\>
+		
+		|
+		|
+		+ MenuComponent() : void\l
+		+ add(MenuComponent) : void\l
+		+ remove(MenuComponent) : void\l
+		+ getChild(int) : MenuComponent\l
+		+ getName() : String\l
+		+ getDescription() : String\l
+		+ getPrice() : double\l
+		+ isVegetarian() : boolean\l
+		+ print() : void\l
+		}"
+	];
+
+	
+	MenuComponent -> MenuComponent[arrowhead="vee", style="dashed"];
+	
+	
+	
+
+	MenuItem[
+		shape="record",
+		style = "filled", fillcolor = "Yellow";
+		label = "{MenuItem\n\<\<Leaf\>\>
+		
+		|
+		 name : String\l
+		 description : String\l
+		 vegetarian : boolean\l
+		 price : double\l
+		|
+		+ MenuItem(String, String, boolean, double) : void\l
+		+ getName() : String\l
+		+ getDescription() : String\l
+		+ getPrice() : double\l
+		+ isVegetarian() : boolean\l
+		+ print() : void\l
+		}"
+	];
+
+	MenuItem -> MenuComponent [arrowhead="onormal"];
+	
+	
+	MenuItem -> double[arrowhead="vee"];
+	
+	
+	MenuItem -> double[arrowhead="vee", style="dashed"];
+	
+	
+
+	MenuTestDrive[
+		shape="record",
+		label = "{MenuTestDrive\n
+		|
+		|
+		+ MenuTestDrive() : void\l
+		+ main(String[]) : void\l
+		}"
+	];
+
+	
+	
+
+	TestDecoratorPattern[
+		shape="record",
+		label = "{TestDecoratorPattern\n
+		|
+		|
+		+ TestDecoratorPattern() : void\l
+		+ main(String[]) : void\l
+		}"
+	];
+
+	
+	
+
+	Waitress[
+		shape="record",
+		label = "{Waitress\n
+		|
+		 allMenus : MenuComponent\l
+		|
+		+ Waitress(MenuComponent) : void\l
+		+ printMenu() : void\l
+		}"
+	];
+
+	
+	Waitress -> MenuComponent[arrowhead="vee"];
+	Waitress -> MenuComponent[arrowhead="vee", style="dashed"];
+}
