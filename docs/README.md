@@ -162,4 +162,31 @@ New Custom Tests:
 Chi and Bo made tests for both of those patterns.
 
 -------------------
+
+M6
+
+![alt tag](https://github.com/hennesbm/CSSE374-V0id/blob/master/docs/Project%20UML%20M6.png?raw=true)
+Added Composite pattern detection. Enable detection for leaf, component and composite.
 -------------------
+
+Responsibilities:
+
+- Brandon 
+refactor the design
+
+- Bo 
+implemented the composite pattern detection code and helped with testcases.
+
+- Chi 
+did most of the test cases and update the UML diagram for current milestone.
+updated manually generated UML diagrams
+
+--------------------
+
+Instructions:
+In order to use our pattern detector, you need to give the absolute path to the application. Also, you could give the packages name to limit the scope, which is optional. Then, after finishing executing the application, a brand new UML diagram will be generated and appeared automatically on the screen. It is saved under input_output folder of the current project.
+
+--------------------
+
+New Custom Tests:
+Chi and Bo made tests for composite pattern.
