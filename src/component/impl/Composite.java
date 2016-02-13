@@ -51,4 +51,14 @@ public class Composite implements IPattern{
 		return this.componentclassname;
 	}
 
+	@Override
+	public String getInvoker() {
+		return className;
+	}
+
+	@Override
+	public String getAccepter() {
+		return componentclassname;
+	}
+
 }

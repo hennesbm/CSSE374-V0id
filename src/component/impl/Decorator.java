@@ -51,6 +51,16 @@ public class Decorator implements IPattern {
 	public String getClassName(){
 		return this.className;
 	}
+
+	@Override
+	public String getInvoker() {
+		return this.className;
+	}
+
+	@Override
+	public String getAccepter() {
+		return this.decorates;
+	}
 	
 
 }

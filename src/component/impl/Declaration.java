@@ -23,6 +23,7 @@ public class Declaration implements IDeclaration, ITraverser {
 	private Collection<IRelation> relations = new ArrayList<>();
 	private Collection<IPattern> patterns = new ArrayList<>();
 	private Collection<IDeclaration> hierarchy = new ArrayList<>();
+	private boolean activity = true;
 	//private boolean isabstract = false;
 
 	public Declaration(int version, int access, String name, String signature, String superName, String[] interfaces) {
@@ -42,6 +43,14 @@ public class Declaration implements IDeclaration, ITraverser {
 	@Override
 	public int getAccess() {
 		return this.access;
+	}
+	
+	public void setActivity(boolean activity){
+		this.activity = activity;
+	}
+	
+	public boolean getActivity(){
+		return this.activity;
 	}
 
 	@Override

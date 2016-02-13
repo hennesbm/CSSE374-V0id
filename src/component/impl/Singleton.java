@@ -37,5 +37,15 @@ public class Singleton implements IPattern {
 		return this.className;
 	}
 
+	@Override
+	public String getInvoker() {
+		return this.className;
+	}
+
+	@Override
+	public String getAccepter() {
+		return "";
+	}
+
 
 }

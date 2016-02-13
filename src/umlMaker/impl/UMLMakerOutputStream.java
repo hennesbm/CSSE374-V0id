@@ -30,6 +30,7 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 		this.out = out;
 		this.removedClasses.add("String");
 		this.removedClasses.add("int");
+		this.removedClasses.add("java");
 		this.removedClasses.add("boolean");
 		this.removedClasses.add("OutputStream");
 		this.removedClasses.add("ArrayList");
@@ -138,29 +139,38 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 
 	@Override
 	public void preVisit(IDeclaration c) {
-		String[] namet = c.getName().split("/");
-		write("\n\t" + namet[namet.length - 1] + "[\n\t\t");
-		write("shape=\"record\",\n\t\t");
-		if (!c.getPatterns().isEmpty()) {
-			write("style = \"filled\", fillcolor = \"" + c.getPatterns().iterator().next().getColor() + "\";\n\t\t");
+		if(c.getActivity()){
+			String[] namet = c.getName().split("/");
+			write("\n\t" + namet[namet.length - 1] + "[\n\t\t");
+			write("shape=\"record\",\n\t\t");
+			if (!c.getPatterns().isEmpty()) {
+				write("style = \"filled\", fillcolor = \"" + c.getPatterns().iterator().next().getColor() + "\";\n\t\t");
+			}
+			write("label = \"{" + namet[namet.length - 1] + "\\n");
+			if (!c.getPatterns().isEmpty()) {
+				
+				write("\\<\\<" + c.getPatterns().iterator().next().getComponent() + "\\>\\>\n\t\t");
+			}
+			write("\n\t\t|\n\t\t");
 		}
-		write("label = \"{" + namet[namet.length - 1] + "\\n");
-		if (!c.getPatterns().isEmpty()) {
-			
-			write("\\<\\<" + c.getPatterns().iterator().next().getComponent() + "\\>\\>\n\t\t");
-		}
-		write("\n\t\t|\n\t\t");
+
 	}
 
 	@Override
 	public void visit(IDeclaration c) {
-		write("|\n\t\t");
+		if(c.getActivity()){
+			write("|\n\t\t");
+		}
+
 	}
 
 	@Override
 	public void postVisit(IDeclaration c) {
-		write("}\"\n\t");
-		write("];\n\n");
+		if(c.getActivity()){
+			write("}\"\n\t");
+			write("];\n\n");
+		}
+
 	}
 
 	private void addAccessLevel(int access) {

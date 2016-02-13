@@ -30,6 +30,15 @@ public class Model implements IModel, ITraverser {
 		return this.currentClass;
 	}
 	
+	public void setActive(String classname, boolean activity){
+		for(IDeclaration d: this.classList){
+			if(d.getName().replace("/", ".").equals(classname)){
+				((Declaration)d).setActivity(activity);
+			}
+		}
+	}
+	
+	
 	@Override
 	public void accept(IVisitor v) {
 		for (IDeclaration clazz : this.classList) {
@@ -41,43 +50,40 @@ public class Model implements IModel, ITraverser {
 			boolean change = false;
 			boolean toomuchmethod = false;
 			boolean toomuchfield = false;
-			if (clazz.getComponents().size() > 0) {
-				for (IComponent p : clazz.getComponents()) {
-					if (!p.getType().equals(type) && !change) {
-						v.visit(clazz);
-						change = true;
-					}
-					
-					
-					
-					
-					if(p.getType().equals("Field") && fieldcount <=10){
-						fieldcount++;
-						p.accept(v);
-					}
-					else if (p.getType().equals("Method") && methodcount <=10){
-						methodcount++;
-						p.accept(v);
-					}
-					else if(!p.getType().equals("Field") && !p.getType().equals("Method")){
-						p.accept(v);
-					}else if((p.getType().equals("Field") && fieldcount == 11 && !toomuchfield) ){
-						
-						toomuchfield = true;
-						Field field = (Field) p;
-						field.toomuchflag = true;
-						field.accept(v);
-					}else if((p.getType().equals("Method") && methodcount == 11 && !toomuchmethod) ){
-						toomuchmethod = true;
-						Method method = (Method) p;
-						method.toomuchflag = true;
-						method.accept(v);
-					}
-					
-					
+			if(clazz.getActivity()){
+				if (clazz.getComponents().size() > 0) {
+					for (IComponent p : clazz.getComponents()) {
+						if (!p.getType().equals(type) && !change) {
+							v.visit(clazz);
+							change = true;
+						}	
+						if(p.getType().equals("Field") && fieldcount <=10){
+							fieldcount++;
+							p.accept(v);
+						}
+						else if (p.getType().equals("Method") && methodcount <=10){
+							methodcount++;
+							p.accept(v);
+						}
+						else if(!p.getType().equals("Field") && !p.getType().equals("Method")){
+							p.accept(v);
+						}else if((p.getType().equals("Field") && fieldcount == 11 && !toomuchfield) ){
+							
+							toomuchfield = true;
+							Field field = (Field) p;
+							field.toomuchflag = true;
+							field.accept(v);
+						}else if((p.getType().equals("Method") && methodcount == 11 && !toomuchmethod) ){
+							toomuchmethod = true;
+							Method method = (Method) p;
+							method.toomuchflag = true;
+							method.accept(v);
+						}
 
+					}
 				}
 			}
+
 
 			v.postVisit(clazz);
 			
@@ -103,7 +109,11 @@ public class Model implements IModel, ITraverser {
 //					if(patterncount >= 10){
 //						break;
 //					}
-					p.accept(v);
+					String invoker = p.getInvoker();
+					String accepter = p.getAccepter();
+					if(relationCheck(invoker, accepter)){
+						p.accept(v);
+					}
 					patterncount++;
 				}
 			}
@@ -121,6 +131,12 @@ public class Model implements IModel, ITraverser {
 		ArrayList<String> classnames = new ArrayList<String>();
 		for(IDeclaration d: this.classList){
 			String[] name = d.getName().split("/");
+			if(name[name.length - 1].equals(invoker) || name[name.length - 1].equals(accepter)){
+				if(!d.getActivity()){
+					return false;
+				}
+			}
+			
 			classnames.add(name[name.length - 1]);
 		}
 		if(classnames.contains(invoker) && classnames.contains(accepter)){

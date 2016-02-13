@@ -44,4 +44,14 @@ public class Adapter implements IPattern {
 		return this.adaptee;
 	}
 
+	@Override
+	public String getInvoker() {
+		return this.className;
+	}
+
+	@Override
+	public String getAccepter() {
+		return this.adaptee;
+	}
+
 }

@@ -33,11 +33,11 @@ public class UMLMaker {
 //		files.add("javax.swing.JMenuBar");
 		files.add("java.awt.LayoutManager");
 		files.add("java.awt.GraphicsConfiguration");
-		files.add("javax.swing.JFrame");
+//		files.add("javax.swing.JFrame");
 		
 		parser.main(files);
 		parser2.main(files, parser.model);
-
+		parser2.model.setActive("java.awt.LayoutManager", false);
 		OutputStream xmlOut = new FileOutputStream("docs/input_output/UML.txt");
 		IVisitor xmlWriter = new UMLMakerOutputStream(xmlOut);
 

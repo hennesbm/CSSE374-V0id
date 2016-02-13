@@ -16,4 +16,5 @@ public interface IDeclaration {
 	public Collection<IPattern> getPatterns();
 	public void addPattern(IPattern p);
 	public Collection<IDeclaration> getHierarchy();
+	public boolean getActivity();
 }

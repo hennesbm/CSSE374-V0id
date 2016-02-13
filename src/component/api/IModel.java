@@ -7,4 +7,5 @@ public interface IModel {
 	public void setCurrentClass(IDeclaration clazz);
 	public IDeclaration getCurrentClass();
 	public ArrayList<IDeclaration> getAllClasses();
+	public void setActive(String classname, boolean activity);
 }
