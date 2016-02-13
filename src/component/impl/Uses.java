@@ -32,4 +32,14 @@ public class Uses implements IRelation, ITraverser {
 	public String getReferenceName() {
 		return this.referenceName;
 	}
+
+	@Override
+	public String getInvoker() {
+		return this.className;
+	}
+
+	@Override
+	public String getAccepter() {
+		return this.referenceName;
+	}
 }

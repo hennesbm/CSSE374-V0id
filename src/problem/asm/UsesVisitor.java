@@ -43,7 +43,19 @@ public class UsesVisitor extends ClassVisitor {
 				}
 			}
 		}
-
-		this._model.getCurrentClass().addRelation(new Uses(classNameParts[classNameParts.length - 1], referenceName));
+		if(referenceName.equals("GraphicsConfiguration")){
+			boolean f = true;
+			f= false;
+		}
+		boolean flag = false;
+		for(IRelation r: this._model.getCurrentClass().getRelations()){
+			if(r.getAccepter().equals(referenceName)){
+				flag = true;
+			}
+		}
+		if(!flag){
+			this._model.getCurrentClass().addRelation(new Uses(classNameParts[classNameParts.length - 1], referenceName));
+		}
+		
 	}
 }

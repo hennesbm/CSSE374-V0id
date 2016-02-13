@@ -11,6 +11,7 @@ public class Field implements IComponent, ITraverser {
 	private String signature;
 	private Object value;
 	private String className;
+	public boolean toomuchflag = false;
 
 	public Field(int access, String name, String desc, String signature, Object value, String className) {		this.access = access;
 		this.name = name;

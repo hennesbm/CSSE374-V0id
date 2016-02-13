@@ -33,4 +33,14 @@ public class Composition implements IRelation, ITraverser {
 		return this.referenceName;
 	}
 
+	@Override
+	public String getInvoker() {
+		return this.className;
+	}
+
+	@Override
+	public String getAccepter() {
+		return this.referenceName;
+	}
+
 }

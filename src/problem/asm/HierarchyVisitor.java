@@ -24,6 +24,11 @@ public class HierarchyVisitor extends ClassVisitor{
 		this._model = model;
 	}
 	
+	public HierarchyVisitor(int api, IModel model) {
+		super(api);
+		this._model = model;
+	}
+	
 	@Override
 	public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
 	

@@ -44,7 +44,7 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 
 	private void write(String m) {
 		try {
-			this.out.write(m.getBytes());
+			this.out.write(m.replace("$", "_").getBytes());
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -53,22 +53,33 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 	@Override
 	public void visit(IComponent c) {
 		if (c.getType().equals("Field")) {
+			
 			Field f = (Field) c;
-			String type = Type.getType(f.getDescription()).getClassName();
-			addAccessLevel(f.getAccess());
-			addColon(f.getName());
-			addEnter(type);
+			if(!f.toomuchflag){
+				String type = Type.getType(f.getDescription()).getClassName();
+				addAccessLevel(f.getAccess());
+				addColon(f.getName());
+				addEnter(type);
+			}
+			else{
+				write("...");
+			}
 		} else if (c.getType().equals("Method")) {
 			Method m = (Method) c;
-			addAccessLevel(m.getAccess());
-			if (m.getName().equals("<init>")) {
-				write(m.getClassName() + "(");
-			} else {
-				write(m.getName() + "(");
+			if(!m.toomuchflag){
+				addAccessLevel(m.getAccess());
+				if (m.getName().equals("<init>")) {
+					write(m.getClassName() + "(");
+				} else {
+					write((m.getName() + "("));
+				}
+				addArguments(m.getDescription());
+				write(") : ");
+				addReturnType(m.getDescription());
 			}
-			addArguments(m.getDescription());
-			write(") : ");
-			addReturnType(m.getDescription());
+			else{
+				write("...");
+			}
 		}
 		write("\\l\n\t\t");
 	}
@@ -135,6 +146,7 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 		}
 		write("label = \"{" + namet[namet.length - 1] + "\\n");
 		if (!c.getPatterns().isEmpty()) {
+			
 			write("\\<\\<" + c.getPatterns().iterator().next().getComponent() + "\\>\\>\n\t\t");
 		}
 		write("\n\t\t|\n\t\t");

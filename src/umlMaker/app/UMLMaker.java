@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
-import directory.reader.DirectoryReader;
 import problem.asm.DesignParser;
 import problem.asm.PatternParser;
 import umlMaker.impl.UMLMakerOutputStream;
@@ -17,12 +16,24 @@ public class UMLMaker {
 	public static void main(String[] args) throws IOException {
 		DesignParser parser = new DesignParser();
 		PatternParser parser2 = new PatternParser();
-		
-		DirectoryReader reader = new DirectoryReader("C:\\Users\\hennesbm\\Desktop\\CSSE374\\CSSE374V0id\\src");
-
-		ArrayList<String> files = reader.readDirectory();
-//		files.add("java.util.Enumeration");
-//		files.add("java.util.Iterator");
+//		DirectoryReader reader = new DirectoryReader("C:\\Users\\TF\\workspace\\Exam3\\src","com.facebook.core");
+//
+//		ArrayList<String> files = reader.readDirectory();
+		ArrayList<String> files = new ArrayList<String>();
+		files.add("java.awt.Component");
+		files.add("javax.swing.JComponent");
+		files.add("java.awt.Container");
+		files.add("java.awt.Window");
+		files.add("java.awt.Panel");
+		files.add("java.awt.Frame");
+//		files.add("java.awt.Dialog");
+//		files.add("javax.swing.JDialog");
+//		files.add("javax.swing.JButton");
+//		files.add("javax.swing.AbstractButton");
+//		files.add("javax.swing.JMenuBar");
+		files.add("java.awt.LayoutManager");
+		files.add("java.awt.GraphicsConfiguration");
+		files.add("javax.swing.JFrame");
 		
 		parser.main(files);
 		parser2.main(files, parser.model);
@@ -31,7 +42,7 @@ public class UMLMaker {
 		IVisitor xmlWriter = new UMLMakerOutputStream(xmlOut);
 
 		ITraverser traverser = (ITraverser) parser2.model;
-		String title = "Test";
+		String title = "Lab7_2";
 		xmlOut.write("digraph ".getBytes());
 		xmlOut.write(title.getBytes());
 		xmlOut.write(" { \n\trankdir=BT;\n\t".getBytes());

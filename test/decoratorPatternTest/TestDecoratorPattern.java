@@ -19,7 +19,7 @@ public class TestDecoratorPattern {
 		PatternParser parser2 = new PatternParser();
 		
 		DirectoryReader reader = new DirectoryReader(
-				"D:\\Bo Peng\\Development\\CSSE374\\CSSE374V0id\\test", "decoratorPattern");
+				"D:\\OldComputer\\Bo Peng\\Development\\CSSE374\\CSSE374V0id\\test", "decoratorPattern");
 
 		ArrayList<String> files = reader.readDirectory();
 

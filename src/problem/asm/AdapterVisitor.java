@@ -86,7 +86,10 @@ public class AdapterVisitor extends ClassVisitor {
 	}
 
 	private void setPattern(String adapter, String target, String adaptee) {
+		
+		
 		for (IDeclaration d : this._model.getAllClasses()) {
+			
 			if (d.getName().equals(adapter)) {
 				String[] className = this.currentClass.split("/");
 				String[] fieldName = adaptee.split("\\.");

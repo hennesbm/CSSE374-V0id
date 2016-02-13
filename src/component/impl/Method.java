@@ -11,6 +11,7 @@ public class Method implements IComponent, ITraverser {
 	private String signature;
 	private String[] exceptions;
 	private String className;
+	public boolean toomuchflag = false;
 
 	public Method(int access, String name, String desc, String signature, String[] exceptions, String className) {		this.access = access;
 		this.name = name;
