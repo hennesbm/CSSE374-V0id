@@ -17,10 +17,18 @@ import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import java.awt.FlowLayout;
+import java.awt.Image;
+import java.awt.Component;
 
-public class GUI {
+public class MainWindow {
 
 	private JFrame frame;
+	private JLabel label;
+	private ImageIcon picture;
+	private int scale = 10;
 
 	/**
 	 * Launch the application.
@@ -29,7 +37,7 @@ public class GUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GUI window = new GUI();
+					MainWindow window = new MainWindow();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,7 +49,7 @@ public class GUI {
 	/**
 	 * Create the application.
 	 */
-	public GUI() {
+	public MainWindow() {
 		initialize();
 	}
 
@@ -50,7 +58,6 @@ public class GUI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setResizable(false);
 		frame.setBounds(100, 100, 1000, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -99,9 +106,30 @@ public class GUI {
 				.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
 				.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE));
 
-		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon("C:\\Users\\hennesbm\\Desktop\\CSSE374\\CSSE374V0id\\images\\Test.png"));
+		label = new JLabel("");
+		picture = new ImageIcon("C:\\Users\\hennesbm\\Desktop\\CSSE374\\CSSE374V0id\\images\\Test.png");
+		label.setIcon(picture);
 		scrollPane_1.setViewportView(label);
+
+		JPanel panel = new JPanel();
+		scrollPane_1.setColumnHeaderView(panel);
+
+		JLabel lblZoom = new JLabel("Zoom:");
+		lblZoom.setAlignmentY(Component.TOP_ALIGNMENT);
+
+		JButton button = new JButton("+");
+		button.setAlignmentY(Component.TOP_ALIGNMENT);
+		button.addActionListener(new ZoomActionListener());
+		button.setActionCommand("Zoom In");
+
+		JButton button_1 = new JButton("-");
+		button_1.addActionListener(new ZoomActionListener());
+		button_1.setActionCommand("Zoom Out");
+
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		panel.add(lblZoom);
+		panel.add(button);
+		panel.add(button_1);
 
 		DefaultListModel<JCheckBox> model = new DefaultListModel<JCheckBox>();
 		JCheckBoxList checkBoxList = new JCheckBoxList(model);
@@ -120,12 +148,39 @@ public class GUI {
 			} else if ("Export".equals(e.getActionCommand())) {
 				System.out.println("Export");
 			} else if ("Instructions".equals(e.getActionCommand())) {
-				System.out.println("Instructions");
+				InstructionWindow.main(null);
 			} else if ("About".equals(e.getActionCommand())) {
-				System.out.println("About");
+				AboutWindow.main(null);
 			} else {
 				throw new UnsupportedOperationException();
 			}
 		}
+	}
+
+	class ZoomActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if ("Zoom In".equals(e.getActionCommand())) {
+				if (scale < 20) {
+					scale++;
+					resizeImage();
+				}
+			} else if ("Zoom Out".equals(e.getActionCommand())) {
+				if (scale > 1) {
+					scale--;
+					resizeImage();
+				}
+			} else {
+				throw new UnsupportedOperationException();
+			}
+		}
+	}
+
+	private void resizeImage() {
+		Image image = picture.getImage();
+		Image newimg = image.getScaledInstance((int) (picture.getIconWidth() * (scale / 10.0)),
+				(int) (picture.getIconHeight() * (scale / 10.0)), java.awt.Image.SCALE_SMOOTH);
+		ImageIcon newImage = new ImageIcon(newimg);
+		label.setIcon(newImage);
+		label.repaint();
 	}
 }
