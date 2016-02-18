@@ -143,6 +143,10 @@ public class Declaration implements IDeclaration, ITraverser {
 //		if(this.activity){
 //			
 //		}
+		String[] n = name.split("/");
+//		if(n[n.length-1].equals("Composite")){
+//			int flag = 1;
+//		}
 		this.patterns.add(p);
 	}
 	

@@ -7,8 +7,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JCheckBox;
-import javax.swing.JFileChooser;
-import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 
 import javax.swing.GroupLayout;
@@ -19,13 +17,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.FlowLayout;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Component;
 
@@ -139,7 +133,6 @@ public class MainWindow {
 
 		DefaultListModel<JCheckBox> model = new DefaultListModel<JCheckBox>();
 		JCheckBoxList checkBoxList = new JCheckBoxList(model);
-		model.addElement(new JCheckBox("Classes"));
 		model.addElement(new JCheckBox("Adapter"));
 		model.addElement(new JCheckBox("Composite"));
 		model.addElement(new JCheckBox("Decorator"));
@@ -151,25 +144,9 @@ public class MainWindow {
 	class MenuActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if ("Restart".equals(e.getActionCommand())) {
-				StartWindow.main(null);
-				frame.dispose();
+				System.out.println("Restart");
 			} else if ("Export".equals(e.getActionCommand())) {
-				JFileChooser fc = new JFileChooser();
-				int retrival = fc.showSaveDialog(null);
-			    if (retrival == JFileChooser.APPROVE_OPTION) {
-			        try {
-			            Image img = picture.getImage();
-
-			            BufferedImage bi = new BufferedImage(img.getWidth(null),img.getHeight(null),BufferedImage.TYPE_INT_ARGB);
-
-			            Graphics2D g2 = bi.createGraphics();
-			            g2.drawImage(img, 0, 0, null);
-			            g2.dispose();
-			            ImageIO.write(bi, "png", new File(fc.getSelectedFile()+".png"));
-			        } catch (Exception ex) {
-			            ex.printStackTrace();
-			        }
-			    }
+				System.out.println("Export");
 			} else if ("Instructions".equals(e.getActionCommand())) {
 				InstructionWindow.main(null);
 			} else if ("About".equals(e.getActionCommand())) {

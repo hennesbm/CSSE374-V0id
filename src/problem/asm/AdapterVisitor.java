@@ -10,6 +10,7 @@ import com.sun.org.apache.bcel.internal.generic.Type;
 
 import component.api.IDeclaration;
 import component.api.IModel;
+import component.api.IPattern;
 import component.impl.Adapter;
 
 public class AdapterVisitor extends ClassVisitor {
@@ -96,14 +97,65 @@ public class AdapterVisitor extends ClassVisitor {
 			allInfluencedClasses.add(interfaceName[interfaceName.length - 1]);
 			allInfluencedClasses.add(className[className.length - 1]);
 			allInfluencedClasses.add(fieldName[fieldName.length - 1]);
-			
+			boolean isThereAlready = false;
+
 			
 			if (d.getName().equals(adapter)) {
-				d.addPattern(new Adapter(className[className.length - 1], "Adapter", fieldName[fieldName.length - 1], allInfluencedClasses));
+				for(IPattern p: d.getPatterns()){
+					if(p instanceof Adapter){
+						Adapter adapt = (Adapter)p;
+						if(adapt.getType().equals("Adapter")){
+							//classname component adaptee
+							if(
+									adapt.getClassName().equals(className[className.length - 1])&&
+									adapt.getComponent().equals("Adapter")&&
+									adapt.getAdaptee().equals(fieldName[fieldName.length - 1])
+								){
+								isThereAlready = true;
+							}
+								
+						}
+					}
+				}
+				if(!isThereAlready){
+					d.addPattern(new Adapter(className[className.length - 1], "Adapter", fieldName[fieldName.length - 1], allInfluencedClasses));
+				}
 			} else if (d.getName().equals(target)) {
-				d.addPattern(new Adapter(interfaceName[interfaceName.length - 1], "Target", null,allInfluencedClasses));
+				for(IPattern p: d.getPatterns()){
+					if(p instanceof Adapter){
+						Adapter adapt = (Adapter)p;
+						if(adapt.getType().equals("Target")){
+							if(
+									adapt.getClassName().equals(interfaceName[interfaceName.length - 1])&&
+									adapt.getComponent().equals("Target")&&
+									adapt.getAdaptee().equals("")){
+								isThereAlready = true;
+							}
+								
+						}
+					}
+				}
+				if(!isThereAlready){
+					d.addPattern(new Adapter(interfaceName[interfaceName.length - 1], "Target", null,allInfluencedClasses));
+				}
 			} else if (d.getName().equals(adaptee.replace(".", "/"))) {
-				d.addPattern(new Adapter(fieldName[fieldName.length - 1], "Adaptee", null,allInfluencedClasses));
+				for(IPattern p: d.getPatterns()){
+					if(p instanceof Adapter){
+						Adapter adapt = (Adapter)p;
+						if(adapt.getType().equals("Adaptee")){
+							if(
+									adapt.getClassName().equals(fieldName[fieldName.length - 1])&&
+									adapt.getComponent().equals("Adaptee")&&
+									adapt.getAdaptee().equals("")){
+								isThereAlready = true;
+							}
+								
+						}
+					}
+				}
+				if(!isThereAlready){
+					d.addPattern(new Adapter(fieldName[fieldName.length - 1], "Adaptee", null,allInfluencedClasses));
+				}
 			}
 		}
 	}

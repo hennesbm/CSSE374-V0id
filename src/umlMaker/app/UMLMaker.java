@@ -41,7 +41,7 @@ public class UMLMaker {
 		
 //		parser2.model.setActive("java.awt.LayoutManager", false);		
 		
-//		HashMap<String, ArrayList<IPattern>> patternmap =  parser2.model.getAllPatterns();
+		HashMap<String, ArrayList<IPattern>> patternmap =  parser2.model.getAllPatterns();
 //		ArrayList<String> adapterlist = Model.getPatternNameList(patternmap, "Adapter");
 //		ArrayList<String> compositelist = Model.getPatternNameList(patternmap, "Composite");
 		
