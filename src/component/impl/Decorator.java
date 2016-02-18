@@ -2,6 +2,9 @@ package component.impl;
 
 import visitor.api.ITraverser;
 import visitor.api.IVisitor;
+
+import java.util.ArrayList;
+
 import component.api.IPattern;
 import component.api.IRelation;
 
@@ -14,6 +17,7 @@ public class Decorator implements IPattern {
 	public Decorator(String className, String component){
 		this.className = className;
 		this.component = component;
+		this.decorates = "";
 	}
 	
 	public Decorator(String className, String decorates, String component){
@@ -60,6 +64,14 @@ public class Decorator implements IPattern {
 	@Override
 	public String getAccepter() {
 		return this.decorates;
+	}
+
+	@Override
+	public ArrayList<String> getAllInfluencedClasses() {
+		ArrayList<String> allInfluencedClasses = new ArrayList<String>();
+		allInfluencedClasses.add(this.className);
+		allInfluencedClasses.add(this.decorates);
+		return allInfluencedClasses;
 	}
 	
 

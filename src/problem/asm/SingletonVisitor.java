@@ -76,6 +76,7 @@ public class SingletonVisitor extends ClassVisitor {
 
 	private void setSingleton() {
 		this.isSingleton = true;
-		this._model.getCurrentClass().addPattern(new Singleton(this.currentClass.split("/")[0]));
+		String[] name = this.currentClass.split("/");
+		this._model.getCurrentClass().addPattern(new Singleton(name[name.length-1]));
 	}
 }

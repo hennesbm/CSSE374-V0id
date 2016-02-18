@@ -89,17 +89,21 @@ public class AdapterVisitor extends ClassVisitor {
 		
 		
 		for (IDeclaration d : this._model.getAllClasses()) {
+			ArrayList<String> allInfluencedClasses = new ArrayList<String>();
+			String[] interfaceName = target.split("/");
+			String[] fieldName = adaptee.split("\\.");
+			String[] className = this.currentClass.split("/");
+			allInfluencedClasses.add(interfaceName[interfaceName.length - 1]);
+			allInfluencedClasses.add(className[className.length - 1]);
+			allInfluencedClasses.add(fieldName[fieldName.length - 1]);
+			
 			
 			if (d.getName().equals(adapter)) {
-				String[] className = this.currentClass.split("/");
-				String[] fieldName = adaptee.split("\\.");
-				d.addPattern(new Adapter(className[className.length - 1], "Adapter", fieldName[fieldName.length - 1]));
+				d.addPattern(new Adapter(className[className.length - 1], "Adapter", fieldName[fieldName.length - 1], allInfluencedClasses));
 			} else if (d.getName().equals(target)) {
-				String[] interfaceName = target.split("/");
-				d.addPattern(new Adapter(interfaceName[interfaceName.length - 1], "Target", null));
+				d.addPattern(new Adapter(interfaceName[interfaceName.length - 1], "Target", null,allInfluencedClasses));
 			} else if (d.getName().equals(adaptee.replace(".", "/"))) {
-				String[] fieldName = adaptee.split("\\.");
-				d.addPattern(new Adapter(fieldName[fieldName.length - 1], "Adaptee", null));
+				d.addPattern(new Adapter(fieldName[fieldName.length - 1], "Adaptee", null,allInfluencedClasses));
 			}
 		}
 	}

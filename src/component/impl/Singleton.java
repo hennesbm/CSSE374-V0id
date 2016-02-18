@@ -1,5 +1,7 @@
 package component.impl;
 
+import java.util.ArrayList;
+
 import component.api.IPattern;
 import visitor.api.IVisitor;
 
@@ -45,6 +47,13 @@ public class Singleton implements IPattern {
 	@Override
 	public String getAccepter() {
 		return "";
+	}
+
+	@Override
+	public ArrayList<String> getAllInfluencedClasses() {
+		ArrayList<String> allInfluencedClasses = new ArrayList<String>();
+		allInfluencedClasses.add(this.className);
+		return allInfluencedClasses;
 	}
 
 
