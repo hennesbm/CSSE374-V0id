@@ -47,7 +47,7 @@ public class ClassDecoratorVisitorTest {
 		xmlOut.write("}".getBytes());
 
 		xmlOut.close();
-		File f = new File("docs/AdapterPatternVisitorTest.txt").getAbsoluteFile();
+		File f = new File("docs/ClassDecoratorVisitorTest.txt").getAbsoluteFile();
 		ip = new FileInputStream(f);
 		File cf = new File("test/visitorTests/ClassDecoratorVisitorTest.txt").getAbsoluteFile();
 		cip = new FileInputStream(cf);

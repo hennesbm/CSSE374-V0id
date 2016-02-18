@@ -1,0 +1,97 @@
+digraph compositePatternVisitorTest { rankdir=BT;
+	CompositeParser[
+		shape="record",
+		label = "{CompositeParser\n
+		|
+		+ CLASSES : ArrayList\l
+		+ model : IModel\l
+		|
+		+ CompositeParser() : void\l
+		+ main(ArrayList, IModel) : void\l
+		}"
+	];
+
+
+	CompositePattern[
+		shape="record",
+		label = "{CompositePattern\n
+		|
+		 passTest : boolean\l
+		|
+		+ CompositePattern() : void\l
+		+ isPassTest() : boolean\l
+		- isEqual(InputStream, InputStream) : boolean\l
+		}"
+	];
+
+
+	Menu[
+		shape="record",
+		label = "{Menu\n
+		|
+		 menuComponents : ArrayList\l
+		 name : String\l
+		 description : String\l
+		|
+		+ Menu(String, String) : void\l
+		+ add(MenuComponent) : void\l
+		+ remove(MenuComponent) : void\l
+		+ getChild(int) : MenuComponent\l
+		+ getName() : String\l
+		+ getDescription() : String\l
+		+ print() : void\l
+		}"
+	];
+
+	Menu -> MenuComponent [arrowhead="onormal"];
+
+	MenuComponent[
+		shape="record",
+		label = "{MenuComponent\n
+		|
+		|
+		+ MenuComponent() : void\l
+		+ add(MenuComponent) : void\l
+		+ remove(MenuComponent) : void\l
+		+ getChild(int) : MenuComponent\l
+		+ getName() : String\l
+		+ getDescription() : String\l
+		+ getPrice() : double\l
+		+ isVegetarian() : boolean\l
+		+ print() : void\l
+		}"
+	];
+
+	MenuComponent -> MenuComponent[arrowhead="vee", style="dashed"];
+
+	MenuItem[
+		shape="record",
+		label = "{MenuItem\n
+		|
+		 name : String\l
+		 description : String\l
+		 vegetarian : boolean\l
+		 price : double\l
+		|
+		+ MenuItem(String, String, boolean, double) : void\l
+		+ getName() : String\l
+		+ getDescription() : String\l
+		+ getPrice() : double\l
+		+ isVegetarian() : boolean\l
+		+ print() : void\l
+		}"
+	];
+
+	MenuItem -> MenuComponent [arrowhead="onormal"];
+
+	MenuTestDrive[
+		shape="record",
+		label = "{MenuTestDrive\n
+		|
+		|
+		+ MenuTestDrive() : void\l
+		+ main(String[]) : void\l
+		}"
+	];
+
+}
