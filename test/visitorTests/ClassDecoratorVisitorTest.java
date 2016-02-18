@@ -1,6 +1,6 @@
 package visitorTests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+
 import org.junit.Test;
 
 import directory.reader.DirectoryReader;
@@ -17,29 +18,28 @@ import umlMaker.impl.UMLMakerOutputStream;
 import visitor.api.ITraverser;
 import visitor.api.IVisitor;
 
-public class AdapterVisitorTest {
-
+public class ClassDecoratorVisitorTest {
 	InputStream ip;
 	InputStream cip;
 	boolean passTest = false;
 
-	public AdapterVisitorTest() throws IOException {
+	public ClassDecoratorVisitorTest() throws IOException {
 
 		DesignParser parser = new DesignParser();
-		AdapterVisitorParser parser2 = new AdapterVisitorParser();
+		ClassDecoratorVisitorParser parser2 = new ClassDecoratorVisitorParser();
 
-		DirectoryReader reader = new DirectoryReader(new File("test/").getAbsoluteFile().getPath(), "adapterPattern");
+		DirectoryReader reader = new DirectoryReader(new File("test/").getAbsoluteFile().getPath(), "decoratorPattern");
 
 		ArrayList<String> files = reader.readDirectory();
 
 		parser.main(files);
 		parser2.main(files, parser.model);
 
-		OutputStream xmlOut = new FileOutputStream("docs/AdapterPatternVisitorTest.txt");
+		OutputStream xmlOut = new FileOutputStream("docs/ClassDecoratorVisitorTest.txt");
 		IVisitor xmlWriter = new UMLMakerOutputStream(xmlOut);
 
 		ITraverser traverser = (ITraverser) parser2.model;
-		String title = "AdapterPatternVisitorTest";
+		String title = "ClassDecoratorVisitorTest";
 		xmlOut.write("digraph ".getBytes());
 		xmlOut.write(title.getBytes());
 		xmlOut.write(" { rankdir=BT;".getBytes());
@@ -49,7 +49,7 @@ public class AdapterVisitorTest {
 		xmlOut.close();
 		File f = new File("docs/AdapterPatternVisitorTest.txt").getAbsoluteFile();
 		ip = new FileInputStream(f);
-		File cf = new File("test/visitorTests/AdapterPatternVisitorTest.txt").getAbsoluteFile();
+		File cf = new File("test/visitorTests/ClassDecoratorVisitorTest.txt").getAbsoluteFile();
 		cip = new FileInputStream(cf);
 		this.passTest = isEqual(ip, cip);
 
@@ -82,5 +82,4 @@ public class AdapterVisitorTest {
 				i2.close();
 		}
 	}
-
 }

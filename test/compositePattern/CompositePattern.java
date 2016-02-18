@@ -48,7 +48,7 @@ public class CompositePattern {
 		File f = new File("docs/UMLTestAdapterPattern.txt").getAbsoluteFile();
 		InputStream ip = new FileInputStream(f);
 		File cf = new File("test/compositePatternTest/UMLTestAdapterPattern.txt").getAbsoluteFile();
-		InputStream cip = new FileInputStream(f);
+		InputStream cip = new FileInputStream(cf);
 		this.passTest = isEqual(ip, cip);
 
 	}
