@@ -16,7 +16,7 @@ public class AdapterTest {
 		className = "CSSE374";
 		component = "code";
 		adaptee = "CSSE120";
-		this.a = new Adapter(className, component, adaptee);
+		this.a = new Adapter(className, component, adaptee, null);
 	}
 
 	@Test
