@@ -28,19 +28,19 @@ public class UMLMakerOutputStream extends VisitorAdapter {
 
 	public UMLMakerOutputStream(OutputStream out) throws IOException {
 		this.out = out;
-		this.removedClasses.add("String");
-		this.removedClasses.add("int");
-		this.removedClasses.add("java");
-		this.removedClasses.add("boolean");
-		this.removedClasses.add("OutputStream");
-		this.removedClasses.add("ArrayList");
-		this.removedClasses.add("Object");
-		this.removedClasses.add("Collection");
-		this.removedClasses.add("Map");
-		this.removedClasses.add("Attribute");
-		this.removedClasses.add("TypePath");
-		this.removedClasses.add("Handle");
-		this.removedClasses.add("Label");
+//		this.removedClasses.add("String");
+//		this.removedClasses.add("int");
+//		this.removedClasses.add("java");
+//		this.removedClasses.add("boolean");
+//		this.removedClasses.add("OutputStream");
+//		this.removedClasses.add("ArrayList");
+//		this.removedClasses.add("Object");
+//		this.removedClasses.add("Collection");
+//		this.removedClasses.add("Map");
+//		this.removedClasses.add("Attribute");
+//		this.removedClasses.add("TypePath");
+//		this.removedClasses.add("Handle");
+//		this.removedClasses.add("Label");
 	}
 
 	private void write(String m) {

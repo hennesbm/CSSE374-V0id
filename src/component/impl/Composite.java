@@ -1,6 +1,9 @@
 package component.impl;
 
 import visitor.api.IVisitor;
+
+import java.util.ArrayList;
+
 import component.api.IPattern;
 
 public class Composite implements IPattern{
@@ -13,6 +16,7 @@ public class Composite implements IPattern{
 	public Composite(String className, String component){
 		this.className = className;
 		this.component = component;
+		this.componentclassname = "";
 	}
 	
 	public Composite(String className, String componentclassname, String component){
@@ -59,6 +63,14 @@ public class Composite implements IPattern{
 	@Override
 	public String getAccepter() {
 		return componentclassname;
+	}
+
+	@Override
+	public ArrayList<String> getAllInfluencedClasses() {
+		ArrayList<String> allInfluencedClasses = new ArrayList<String>();
+		allInfluencedClasses.add(this.className);
+		allInfluencedClasses.add(this.componentclassname);
+		return allInfluencedClasses;
 	}
 
 }

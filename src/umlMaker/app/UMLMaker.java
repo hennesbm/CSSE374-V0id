@@ -4,7 +4,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
 
+import component.api.IPattern;
+import component.impl.Model;
+import directory.reader.DirectoryReader;
 import problem.asm.DesignParser;
 import problem.asm.PatternParser;
 import umlMaker.impl.UMLMakerOutputStream;
@@ -16,28 +21,30 @@ public class UMLMaker {
 	public static void main(String[] args) throws IOException {
 		DesignParser parser = new DesignParser();
 		PatternParser parser2 = new PatternParser();
-//		DirectoryReader reader = new DirectoryReader("C:\\Users\\TF\\workspace\\Exam3\\src","com.facebook.core");
-//
-//		ArrayList<String> files = reader.readDirectory();
-		ArrayList<String> files = new ArrayList<String>();
-		files.add("java.awt.Component");
-		files.add("javax.swing.JComponent");
-		files.add("java.awt.Container");
-		files.add("java.awt.Window");
-		files.add("java.awt.Panel");
-		files.add("java.awt.Frame");
-//		files.add("java.awt.Dialog");
-//		files.add("javax.swing.JDialog");
-//		files.add("javax.swing.JButton");
-//		files.add("javax.swing.AbstractButton");
-//		files.add("javax.swing.JMenuBar");
-		files.add("java.awt.LayoutManager");
-		files.add("java.awt.GraphicsConfiguration");
-//		files.add("javax.swing.JFrame");
 		
+		DirectoryReader reader = new DirectoryReader("C:\\Users\\TF\\workspace\\CSSE374V0id\\src");
+		ArrayList<String> files = reader.readDirectory();
+		
+//		ArrayList<String> files = new ArrayList<String>();
+//		files.add("java.awt.Component");
+//		files.add("javax.swing.JComponent");
+//		files.add("java.awt.Container");
+//		files.add("java.awt.Window");
+//		files.add("java.awt.Panel");
+//		files.add("java.awt.Frame");
+//		files.add("java.awt.LayoutManager");
+//		files.add("java.awt.GraphicsConfiguration");
+		
+		files.add("java.lang.String");
 		parser.main(files);
 		parser2.main(files, parser.model);
-		parser2.model.setActive("java.awt.LayoutManager", false);
+		
+//		parser2.model.setActive("java.awt.LayoutManager", false);		
+		
+//		HashMap<String, ArrayList<IPattern>> patternmap =  parser2.model.getAllPatterns();
+//		ArrayList<String> adapterlist = Model.getPatternNameList(patternmap, "Adapter");
+//		ArrayList<String> compositelist = Model.getPatternNameList(patternmap, "Composite");
+		
 		OutputStream xmlOut = new FileOutputStream("docs/input_output/UML.txt");
 		IVisitor xmlWriter = new UMLMakerOutputStream(xmlOut);
 
@@ -54,4 +61,6 @@ public class UMLMaker {
 		UMLGenerator g = new UMLGenerator(title, "docs/input_output/UML.txt");
 		g.execute();
 	}
+	
+
 }

@@ -2,6 +2,8 @@ package component.impl;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
 
 import component.api.IComponent;
 import component.api.IDeclaration;
@@ -90,12 +92,13 @@ public class Model implements IModel, ITraverser {
 			if (clazz.getRelations().size() > 0) {
 				int relationcount = 0;
 				for (IRelation p : clazz.getRelations()) {
-//					if(relationcount >= 10){
-//						break;
-//					}
+					//traverse all relations
 					String invoker = p.getInvoker();
+					//find the relation that starts from
 					String accepter = p.getAccepter();
+					//find the relation that accepts
 					if(relationCheck(invoker, accepter)){
+						
 						p.accept(v);
 					}
 					relationcount++;
@@ -104,16 +107,18 @@ public class Model implements IModel, ITraverser {
 			}
 			
 			if (clazz.getPatterns().size() > 0) {
+				String[] name = clazz.getName().split("/");
+				if(name[name.length-1].equals("String")){
+					int a= 1;
+				}
+				
 				int patterncount = 0;
 				for (IPattern p : clazz.getPatterns()) {
-//					if(patterncount >= 10){
-//						break;
-//					}
-					String invoker = p.getInvoker();
-					String accepter = p.getAccepter();
-					if(relationCheck(invoker, accepter)){
+					ArrayList<String> allInfluencedClasses = p.getAllInfluencedClasses();
+					if(patternCheck(allInfluencedClasses)){
 						p.accept(v);
 					}
+//					p.accept(v);
 					patterncount++;
 				}
 			}
@@ -130,9 +135,14 @@ public class Model implements IModel, ITraverser {
 	public boolean relationCheck(String invoker, String accepter){
 		ArrayList<String> classnames = new ArrayList<String>();
 		for(IDeclaration d: this.classList){
+			//traverse all classes
 			String[] name = d.getName().split("/");
+			//name[name.length-1] will be the current class name
 			if(name[name.length - 1].equals(invoker) || name[name.length - 1].equals(accepter)){
+				//if there is any string that match invoker or accepter
+				//which means current class is part of the current relation
 				if(!d.getActivity()){
+					//if current class is not active, the relation should not be invoked
 					return false;
 				}
 			}
@@ -145,6 +155,65 @@ public class Model implements IModel, ITraverser {
 		return false;
 	}
 	
+	public boolean patternCheck(ArrayList<String> allInfluencedClasses){
+		ArrayList<String> classnames = new ArrayList<String>();
+		for(IDeclaration d: this.classList){
+			//traverse all classes
+			String[] name = d.getName().split("/");
+			//name[name.length-1] will be the current class name
+			if(allInfluencedClasses.contains(name[name.length-1])){
+				//if there is any string that match invoker or accepter
+				//which means current class is part of the current relation
+				if(!d.getActivity()){
+					//if current class is not active, the relation should not be invoked
+					return false;
+				}
+			}
+			
+			classnames.add(name[name.length - 1]);
+		}
+		if(classnames.containsAll(allInfluencedClasses)){
+			return true;
+		}
+		return false;
+	}
 
+	@Override
+	public HashMap<String, ArrayList<IPattern>> getAllPatterns() {
+		HashMap<String, ArrayList<IPattern>> patternmap = new HashMap<String, ArrayList<IPattern>>();
+		for(IDeclaration d :getAllClasses()){
+			for(IPattern p: d.getPatterns()){
+				String type = p.getType();
+				if(patternmap.containsKey(type)){
+					ArrayList<IPattern> typeOfPattern = patternmap.get(type);
+					typeOfPattern.add(p);
+				}else{
+					ArrayList<IPattern> newTypeOfPattern = new ArrayList<IPattern>();
+					newTypeOfPattern.add(p);
+					patternmap.put(type, newTypeOfPattern);
+				}
+			}
+			
+		}
+		return patternmap;
+	}
+	
+	public static ArrayList<String> getPatternNameList(HashMap<String, ArrayList<IPattern>> sourceMap, String type){
+		ArrayList<String> nameList = new ArrayList<String>();
+		Set<String> keyset = sourceMap.keySet();
+		if(keyset.contains(type)){
+			ArrayList<IPattern> patternlist = sourceMap.get(type);
+			for(IPattern p: patternlist){
+				String unfixedname = p.getInvoker();
+				String[] namet = unfixedname.split("/");
+				String fixedname = namet[namet.length - 1];
+				if(!nameList.contains(fixedname)){
+					nameList.add(fixedname);
+				}
+
+			}
+		}
+		return nameList;
+	}
 
 }

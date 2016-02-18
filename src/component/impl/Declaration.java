@@ -128,6 +128,21 @@ public class Declaration implements IDeclaration, ITraverser {
 
 	@Override
 	public void addPattern(IPattern p) {
+//		for(IPattern pattern: this.patterns){
+//			IPattern t = pattern;
+//			//System.out.println(p.getAccepter()+ p.getComponent()+p.getType() +p.getInvoker());
+//			if(
+//			pattern.getAccepter().equals(p.getAccepter())&&
+//			pattern.getComponent().equals(p.getComponent())&&
+//			pattern.getType().equals(p.getType())&&
+//			pattern.getInvoker().equals(p.getInvoker())){
+//				return;
+//			}
+//		}
+//		
+//		if(this.activity){
+//			
+//		}
 		this.patterns.add(p);
 	}
 	
