@@ -139,6 +139,7 @@ public class MainWindow {
 
 		DefaultListModel<JCheckBox> model = new DefaultListModel<JCheckBox>();
 		JCheckBoxList checkBoxList = new JCheckBoxList(model);
+		model.addElement(new JCheckBox("Classes"));
 		model.addElement(new JCheckBox("Adapter"));
 		model.addElement(new JCheckBox("Composite"));
 		model.addElement(new JCheckBox("Decorator"));
