@@ -1,0 +1,78 @@
+digraph ClassDecoratorVisitorTest { rankdir=BT;
+	AbstractDecorator[
+		shape="record",
+		style = "filled", fillcolor = "Green";
+		label = "{AbstractDecorator\n\<\<Decorator\>\>
+		
+		|
+		+ c : IComponent\l
+		|
+		+ AbstractDecorator() : void\l
+		+ method1() : void\l
+		+ method2() : void\l
+		}"
+	];
+
+	AbstractDecorator -> IComponent[arrowhead="onormal", style="dashed"];
+	AbstractDecorator -> IComponent[arrowhead="vee"];
+
+	ConcreteComponent[
+		shape="record",
+		label = "{ConcreteComponent\n
+		|
+		|
+		+ ConcreteComponent() : void\l
+		+ method1() : void\l
+		+ method2() : void\l
+		}"
+	];
+
+	ConcreteComponent -> IComponent[arrowhead="onormal", style="dashed"];
+
+	ConcreteDecorator1[
+		shape="record",
+		style = "filled", fillcolor = "Green";
+		label = "{ConcreteDecorator1\n\<\<Decorator\>\>
+		
+		|
+		 c : IComponent\l
+		|
+		+ ConcreteDecorator1() : void\l
+		+ method1() : void\l
+		+ method2() : void\l
+		}"
+	];
+
+	ConcreteDecorator1 -> AbstractDecorator [arrowhead="onormal"];
+	ConcreteDecorator1 -> IComponent[arrowhead="vee"];
+
+	ConcreteDecorator2[
+		shape="record",
+		style = "filled", fillcolor = "Green";
+		label = "{ConcreteDecorator2\n\<\<Decorator\>\>
+		
+		|
+		 c : IComponent\l
+		|
+		+ ConcreteDecorator2() : void\l
+		+ method1() : void\l
+		+ method2() : void\l
+		}"
+	];
+
+	ConcreteDecorator2 -> AbstractDecorator [arrowhead="onormal"];
+	ConcreteDecorator2 -> IComponent[arrowhead="vee"];
+
+	IComponent[
+		shape="record",
+		style = "filled", fillcolor = "Green";
+		label = "{IComponent\n\<\<Component\>\>
+		
+		|
+		|
+		+ method1() : void\l
+		+ method2() : void\l
+		}"
+	];
+
+}
